@@ -22,8 +22,13 @@ Deadline submission: **17 November 2026**
 |---|---|---|
 | **[Aturan possession](possession-rules.md)** | Aturan `D` vs `H`/`A` yang bisa dikodekan | Seat 1 — Dyang |
 | **[Lembar transisi GT publik](gt-public-transitions.md)** | 21 transisi + 17 possession, lengkap dengan durasinya | Seat 1 — Dyang |
-| **[Glosarium](../GLOSSARY.md)** | Istilah kanonik: possession, dead ball, spellF1, ATD | semua orang |
-| **[Catatan metrik](../metrics/README.md)** | Cara mengukur tanpa menipu diri sendiri | Seat 4 — Yona |
+| **[Glosarium](https://github.com/DyangPB/mtah-DeculGirl/blob/main/GLOSSARY.md)** | Istilah kanonik: possession, dead ball, spellF1, ATD | semua orang |
+| **[Catatan metrik](https://github.com/DyangPB/mtah-DeculGirl/blob/main/metrics/README.md)** | Cara mengukur tanpa menipu diri sendiri | Seat 4 — Yona |
+
+> **Kenapa dua link terakhir ke github.com, bukan link biasa?** Karena file-nya ada di luar folder
+> `docs/`, dan Jekyll hanya bisa menyajikan yang ada di dalam folder itu. Link biasa ke `../` akan
+> mati di halaman ini. Jadi keduanya sengaja menunjuk ke GitHub — di sana keduanya tampil sebagai
+> halaman yang rapi. Kalau nama repo berubah, tiga alamat di file ini perlu diperbarui.
 
 ---
 
@@ -35,8 +40,8 @@ terjadi malam ini.
 
 ## Kalau kamu mau menyumbang kode
 
-Mulai dari **[`../README.md`](../README.md)** — di situ ada cara menjalankan pipeline dan struktur
-foldernya. Perintahnya tiga:
+Mulai dari **[`README.md`](https://github.com/DyangPB/mtah-DeculGirl/blob/main/README.md)** — di situ ada
+cara menjalankan pipeline dan struktur foldernya. Perintahnya tiga:
 
 ```
 python tools/fetch_official.py

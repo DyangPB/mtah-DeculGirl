@@ -261,7 +261,7 @@ kita punya skor `spellF1` terukur di jendela publik.
 Daftar kerja:
 1. **Dyang: enroll + tanda tangan ToU.** Malam ini, bukan nanti. Kalau ada jeda antara mendaftar dan
    link download, jeda itu mulai berjalan sekarang.
-2. Bikin repo `mtah-2027-deculgirl`, publik dari awal. Invite `raisinmee`, `nabilland`, `yonakatitin`
+2. Bikin repo `mtah-DeculGirl`, publik dari awal. Invite `raisinmee`, `nabilland`, `yonakatitin`
    sebagai collaborator **write**.
 3. **Sudah disiapkan:** `tools/fetch_official.py` — ambil repo resmi di commit `f8f2629` ke
    `third_party/`. Kalian cuma perlu menjalankannya.
@@ -635,7 +635,7 @@ Dijalankan **15 November**, tidak boleh lebih lambat.
       kalian, bukan 0% dan bukan 100%
 
 **Repo publik**
-- [ ] `mtah-2027-deculgirl` **public**, URL bisa dibuka di jendela incognito
+- [ ] `mtah-DeculGirl` **public**, URL bisa dibuka di jendela incognito
 - [ ] `data/` **tidak ada** di repo
 - [ ] `run.py` mereproduksi file yang identik, diuji di laptop orang lain
 - [ ] Dependensi di-pin (`requirements.txt` dengan versi)

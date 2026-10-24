@@ -91,7 +91,7 @@ Hari ini Sabtu **24 Okt**. Deadline Selasa **17 Nov**.
 
 1. **Malam ini:** satu orang enroll + tanda tangan ToU. Fase kerjanya sudah jalan sejak 20 Oktober;
    kalian sudah kehilangan 4 hari.
-2. **Besok:** bikin repo kosong `mtah-2027-deculgirl`, invite tiga lainnya sebagai **write**.
+2. **Besok:** bikin repo kosong `mtah-DeculGirl`, invite tiga lainnya sebagai **write**.
 3. **Besok:** `git push`, lalu `python tools/fetch_official.py && python tools/gate0.py`.
 4. **Besok:** **hapus `team-research.md`** — isinya data pribadi, jangan pernah masuk repo publik.
 5. **Sepanjang waktu:** tidak ada hand label, dalam bentuk apa pun, untuk tujuan apa pun — termasuk

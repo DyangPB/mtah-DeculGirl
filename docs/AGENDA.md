@@ -45,7 +45,7 @@ bergerak 0,04, `spellF1` bergerak 11×. Itu satu-satunya konsep yang wajib dipah
 | # | Keputusan | Usulan | Catatan |
 |---|---|---|---|
 | 1 | Owner repo | **Dyang** (`DyangPB`) | Kamu sudah punya badge Pull Shark — ini bukan kerjaan baru bagimu |
-| 2 | Nama repo | **`mtah-2027-deculgirl`** | Publik dari hari pertama |
+| 2 | Nama repo | **`mtah-DeculGirl`** | Publik dari hari pertama |
 | 3 | Seat 1–4 | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** — setelah Gate 1 mulai, mengubahnya mahal |
 | 4 | Siapa enroll | **Dyang** | Malam ini |
 | 5 | Jam sync harian | **Putuskan di sini** | 20 menit, jam tetap. Tanpa ini, tim remote akan drift dalam 4 hari |
