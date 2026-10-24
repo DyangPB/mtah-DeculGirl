@@ -67,10 +67,12 @@ data/broadcast/BAR-ATH_broadcast.mp4 | _atd.xml | _atd.txt | _homography.csv
 
 ```
 docs/
-  PLAYBOOK.md              rencana lengkap 25 hari — mulai dari sini
+  SUMMARY.md               ringkasan satu halaman — mulai dari sini kalau cuma punya 5 menit
+  PLAYBOOK.md              rencana lengkap 25 hari
   AGENDA.md                agenda rapat perdana
   possession-rules.md      ATURAN: D vs H/A. Pemilik Seat 1
-  gt-public-transitions.md lembar kerja 21 transisi GT publik. Pemilik Seat 1
+  experiments.md           CATATAN EKSPERIMEN: apa yang dicoba, angkanya, putusannya. Pemilik Seat 1
+  gt-public-transitions.md lembar kerja 21 transisi GT publik. Seat 1 + Seat 2
   decisions.md             catatan keputusan. Satu keputusan = satu baris
 src/deculgirl/
   submit.py                data -> CSV submission

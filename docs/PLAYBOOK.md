@@ -163,25 +163,31 @@ kalau output-nya tidak ada, seat itu merah.
 >
 > **PM sengaja dikosongkan** (lihat §4.5). Sisanya tetap harus punya nama.
 
-### Seat 1 — Domain & Aturan · **Dyang** (`DyangPB`)
+### Seat 1 — Domain, Aturan & Eksperimen · **Dyang** (`DyangPB`)
 
-**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Seat
-ini 80%-nya penilaian, bukan koding — dan itu tetap alasan utamanya.
+**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Dua
+dari tiga topi seat ini adalah penilaian, bukan koding — dan itu tetap alasan utamanya.
 
 **Tugas:**
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
   Dibagi dengan Raissa, yang juga paham bola.
 - Menuliskan aturan `D` vs `H`/`A` dalam bentuk yang **bisa dikodekan** Billa.
 - Pemilik kebijakan `X`: kapan sistem menyerah, kapan wajib menebak.
-- **Topi kedua — tooling & diagnosa.** Kamu juga menulis kode: pemilik alat yang dipakai semua orang
+- **Topi kedua — alat & diagnosa.** Kamu juga menulis kode: pemilik alat yang dipakai semua orang
   untuk melihat apa yang sedang terjadi (§8). Plot bola di jendela publik, ringkasan laporan transisi
-  dari evaluator, perbandingan dua versi. Ini pekerjaan visual/dashboard, dan jejak kode GitHub-mu
-  (TypeScript, Blade, UI/UX) memang paling kuat di situ.
+  dari evaluator, tampilan perbandingan dua versi.
+- **Topi ketiga — penjalan eksperimen.** Setiap perubahan yang bisa diukur: kamu yang menjalankannya,
+  kamu yang menyalin angkanya, kamu yang menulis putusannya. Termasuk yang gagal — **terutama** yang
+  gagal, karena itulah isi bagian *"tried and dropped"* yang diwajibkan di dokumen teknis (§7.7).
+  Ini bukan pekerjaan pendamping: ini satu-satunya cara tim tahu apakah sebuah perubahan benar-benar
+  perbaikan, atau cuma selisih di dalam noise band.
 
-**Output yang bisa dicek:** `docs/possession-rules.md` · alat diagnosa di `metrics/` · laporan
-perbandingan versi
+**Output yang bisa dicek:** `docs/possession-rules.md` · `docs/experiments.md` · alat diagnosa di
+`metrics/`
 
 **Definisi selesai:** Billa bisa mengimplementasikan deteksi dead-ball **tanpa bertanya lagi** ke Dyang.
+**Definisi selesai (topi eksperimen):** setiap perubahan yang masuk `main` punya entri di
+`docs/experiments.md`, lengkap dengan angka dan putusan ✅/❌/⚠️ — bukan cuma "terasa lebih baik".
 
 **Catatan risiko — direvisi 24 Oktober.** Rencana awal menganggap Dyang satu-satunya yang paham bola di
 tim ini, dan memperlakukan itu sebagai *single point of failure*. **Itu keliru:** Raissa juga paham bola.
@@ -556,7 +562,9 @@ aturan.** Model sekuensial itu bonus, bukan jalan keluar.
 
 1. **Pendekatan dan alasannya** — kenapa begitu, bukan cuma apa.
 2. **Aset mana yang dipakai dan bagaimana** — termasuk **yang sudah dicoba lalu dibuang**. Bagian ini
-   yang paling sering dilewatkan orang, dan justru yang paling menunjukkan kalian serius.
+   yang paling sering dilewatkan orang, dan justru yang paling menunjukkan kalian serius. Isinya
+   diambil apa adanya dari `docs/experiments.md` — **itu sebabnya file itu ada**, dan itu sebabnya ia
+   harus diisi sementara kalian bekerja, bukan direkonstruksi di bulan November.
 3. **Data latih** — setiap dataset berlabel, sumbernya, siapa yang melabeli, berapa banyak. Kalau tidak
    ada, tulis "tidak ada" — itu jawaban yang sah.
 4. **Aturan possession yang diimplementasikan** — dari `docs/possession-rules.md`.

@@ -62,7 +62,7 @@ possession itu **gratis**; diam di titik hand-over itu **bencana**.
 
 | Seat | Orang | Tugas | Output yang dicek |
 |---|---|---|---|
-| 1 | **Dyang** | Domain + aturan + owner repo **+ alat diagnosa** | `docs/possession-rules.md`, laporan diagnosa |
+| 1 | **Dyang** | Domain + aturan + owner repo **+ alat diagnosa + penjalan eksperimen** | `possession-rules.md`, `experiments.md` |
 | 2 | **Raissa** | Data, alignment, fitur per frame **+ co-owner domain** | `features.parquet`, laporan diagnosa |
 | 3 | **Billa** | Dead-ball, atribusi, segmentasi, dokumen teknis | `src/deculgirl/model/`, draf dokumen |
 | 4 | **Yona** | Metrik, validasi, reproducibility (paruh waktu) | `metrics/`, `run.py`, CI |

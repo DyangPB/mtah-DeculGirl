@@ -21,7 +21,8 @@ Deadline submission: **17 November 2026**
 | Dokumen | Isi | Pemilik |
 |---|---|---|
 | **[Aturan possession](possession-rules.md)** | Aturan `D` vs `H`/`A` yang bisa dikodekan | Seat 1 — Dyang |
-| **[Lembar transisi GT publik](gt-public-transitions.md)** | 21 transisi + 17 possession, lengkap dengan durasinya | Seat 1 — Dyang |
+| **[Catatan eksperimen](experiments.md)** | Apa yang dicoba, angkanya, dan putusannya — termasuk yang gagal | Seat 1 — Dyang |
+| **[Lembar transisi GT publik](gt-public-transitions.md)** | 21 transisi + 17 possession, lengkap dengan durasinya | Seat 1 + Seat 2 |
 | **[Glosarium](https://github.com/DyangPB/mtah-DeculGirl/blob/main/GLOSSARY.md)** | Istilah kanonik: possession, dead ball, spellF1, ATD | semua orang |
 | **[Catatan metrik](https://github.com/DyangPB/mtah-DeculGirl/blob/main/metrics/README.md)** | Cara mengukur tanpa menipu diri sendiri | Seat 4 — Yona |
 

@@ -88,7 +88,7 @@ Pembagian **tiga hari ke depan**:
 
 | Orang | Sabtu–Minggu | Senin |
 |---|---|---|
-| **Dyang** | Enroll + tanda tangan ToU. Bikin repo kosong (**tanpa** README/`.gitignore`/license — biar push pertama tidak konflik), invite tiga lainnya sebagai **write** | Mulai `docs/possession-rules.md` pakai `docs/gt-public-transitions.md` |
+| **Dyang** | Repo sudah jadi dan ter-push. Invite tiga lainnya sebagai **write** | Mulai `docs/possession-rules.md` pakai `docs/gt-public-transitions.md`, dan buka `docs/experiments.md` — catat variasi pertama kalian di situ |
 | **Raissa** | `tools/fetch_official.py`, `tools/gate0.py`, pastikan evaluator resmi jalan di laptopmu. Unpack data ke `data/`, konfirmasi tracking = **199.319 baris** | `src/deculgirl/features/` — loader + kanonikalisasi |
 | **Billa** | Baca `CHALLENGE.md` + `FAQ.md` sampai habis. Renungkan §7.1 playbook | Rancang dead-ball classifier (§7.1) |
 | **Yona** | `run.py`, `metrics/`, CI. Ukur baseline resmi di jendela publik — angka itu jadi titik nol | Regression suite + bootstrap CI |
