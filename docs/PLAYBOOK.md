@@ -175,23 +175,29 @@ kalau output-nya tidak ada, seat itu merah.
 **Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola.
 
 **Tugas:**
+
+*Fase 1 — domain (3–4 hari pertama, pekerjaan terdepan):*
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
   Dibagi dengan Raissa, yang juga paham bola.
-- Menuliskan aturan `D` vs `H`/`A` dalam bentuk yang **bisa dikodekan** Billa.
+- Menuliskan aturan `D` vs `H`/`A` dalam bentuk yang bisa dikodekan.
+
+*Fase 2 — teknis (sisa waktu, jalan terus):*
+- **Menulis kode fitur dead-ball** di `src/deculgirl/features/`. Aturan yang kamu tulis di `possession-rules.md`
+  langsung jadi fungsi di situ — dan **kamu yang menulisnya**, bukan Billa. Ini terjemahan paling langsung
+  dari cara berpikirmu ke kode, dan tidak ada orang lain yang bisa menuliskannya lebih tepat. Billa
+  membangun model **di atas** fitur itu, bukan menggantikannya.
+- **Alat diagnosa & harness eksperimen** — `metrics/diagnose.py` dan `metrics/compare.py`. Ini yang dipakai
+  seluruh tim untuk melihat di mana kesalahannya (§8), dan kamu yang memutuskan bentuknya.
+- **Penjalan eksperimen** — setiap perubahan yang bisa diukur kamu jalankan dan kamu catat di
+  `docs/experiments.md`, lengkap dengan putusannya. Termasuk yang gagal, **terutama** yang gagal: itu isi
+  bagian *"tried and dropped"* yang diwajibkan di dokumen teknis (§7.7).
 - Pemilik kebijakan `X`: kapan sistem menyerah, kapan wajib menebak.
-- **Topi kedua — alat & diagnosa.** Kamu juga menulis kode: pemilik alat yang dipakai semua orang
-  untuk melihat apa yang sedang terjadi (§8). Plot bola di jendela publik, ringkasan laporan transisi
-  dari evaluator, tampilan perbandingan dua versi.
-- **Topi ketiga — penjalan eksperimen.** Setiap perubahan yang bisa diukur: kamu yang menjalankannya,
-  kamu yang menyalin angkanya, kamu yang menulis putusannya. Termasuk yang gagal — **terutama** yang
-  gagal, karena itulah isi bagian *"tried and dropped"* yang diwajibkan di dokumen teknis (§7.7).
-  Ini bukan pekerjaan pendamping: ini satu-satunya cara tim tahu apakah sebuah perubahan benar-benar
-  perbaikan, atau cuma selisih di dalam noise band.
 
-**Output yang bisa dicek:** `docs/possession-rules.md` · `docs/experiments.md` · alat diagnosa di
-`metrics/`
+**Output yang bisa dicek:** `docs/possession-rules.md` · fitur dead-ball di `src/deculgirl/features/` ·
+`metrics/diagnose.py` · `docs/experiments.md`
 
-**Definisi selesai:** Billa bisa mengimplementasikan deteksi dead-ball **tanpa bertanya lagi** ke Dyang.
+**Definisi selesai:** Billa bisa membangun model dead-ball **tanpa bertanya lagi** ke Dyang, karena
+fiturnya sudah ada dan sudah terdokumentasi.
 **Definisi selesai (topi eksperimen):** setiap perubahan yang masuk `main` punya entri di
 `docs/experiments.md`, lengkap dengan angka dan putusan ✅/❌/⚠️ — bukan cuma "terasa lebih baik".
 
