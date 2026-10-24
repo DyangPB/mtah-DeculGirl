@@ -172,26 +172,7 @@ kalau output-nya tidak ada, seat itu merah.
 
 ### Seat 1 — Domain, Aturan & Eksperimen · **Dyang** (`DyangPB`)
 
-**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Di sisi
-teknis: **rekam jejak EDA, clustering, segmentation, dan dashboard** dari Startup Campus Data Science
-Batch 5, plus sertifikasi DataCamp Associate Data Analyst.
-
-Tiga topi seat ini: **menetapkan aturan** (penilaian), **membangun alat diagnosa** (koding), dan
-**menjalankan eksperimen** (koding + analisis). Dua dari tiga menuntut menulis kode — tapi bukan kode
-yang melatih model: kode yang **menghasilkan bukti**. Plot bola di jendela publik, ringkasan laporan
-transisi, perbandingan dua versi berdampingan, dan angka yang orang lain bisa percaya. Itu jenis
-pekerjaan teknik yang berbeda dari yang dikerjakan Billa dan Raissa, dan sama pentingnya: **tanpa itu,
-tidak ada yang tahu apakah perubahan kodenya benar-benar perbaikan, atau cuma selisih di dalam noise
-band.**
-
-> **Catatan: repo ini adalah bukti publik.** Semua yang dikerjakan di sini akan terbaca orang lain —
-> termasuk juri Innovation Challenge kalau kalian lolos. Itu berlaku untuk berempat, bukan untuk satu
-> orang: ini tim yang rekam jejaknya kuat, dan sebagian besarnya tidak pernah dipublikasikan karena
-> proyek-proyeknya memang berhenti di laptop masing-masing. Itu hal biasa dan bukan kekurangan.
->
-> Yang membuat repo ini berbeda: isinya **kerja nyata selama 25 hari, dan bisa diperiksa**. Itu lebih
-> meyakinkan daripada daftar sertifikat — bukan karena sertifikatnya kurang, tapi karena repo bisa
-> dibuka dan dinilai sendiri oleh orang yang membacanya.
+**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola.
 
 **Tugas:**
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
