@@ -174,14 +174,24 @@ kalau output-nya tidak ada, seat itu merah.
 
 **Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Di sisi
 teknis: **rekam jejak EDA, clustering, segmentation, dan dashboard** dari Startup Campus Data Science
-Batch 5, plus sertifikasi DataCamp Associate Data Analyst. Dua dari tiga topi seat ini adalah penilaian,
-bukan koding — dan itu tetap alasan utamanya.
+Batch 5, plus sertifikasi DataCamp Associate Data Analyst.
 
-> **Catatan soal jejak yang terlihat.** Kode publik di GitHub-mu saat ini seluruhnya web (TypeScript,
-> Blade, PHP) — tidak ada satu pun notebook Python. Itu bukan ukuran kemampuan, tapi itu yang **terlihat**
-> orang lain. Kalau kamu ingin rekam jejak data-mu ikut terlihat, pekerjaan Seat 2 (`features/` dalam
-> Python) adalah satu-satunya tempat di proyek ini yang menghasilkan bukti seperti itu — dan repo ini
-> publik, jadi hasil kerjamu di sini akan terbaca sebagai portofolio, bukan cuma sebagai submission.
+Tiga topi seat ini: **menetapkan aturan** (penilaian), **membangun alat diagnosa** (koding), dan
+**menjalankan eksperimen** (koding + analisis). Dua dari tiga menuntut menulis kode — tapi bukan kode
+yang melatih model: kode yang **menghasilkan bukti**. Plot bola di jendela publik, ringkasan laporan
+transisi, perbandingan dua versi berdampingan, dan angka yang orang lain bisa percaya. Itu jenis
+pekerjaan teknik yang berbeda dari yang dikerjakan Billa dan Raissa, dan sama pentingnya: **tanpa itu,
+tidak ada yang tahu apakah perubahan kodenya benar-benar perbaikan, atau cuma selisih di dalam noise
+band.**
+
+> **Catatan: repo ini adalah bukti publik.** Semua yang dikerjakan di sini akan terbaca orang lain —
+> termasuk juri Innovation Challenge kalau kalian lolos. Itu berlaku untuk berempat, bukan untuk satu
+> orang: ini tim yang rekam jejaknya kuat, dan sebagian besarnya tidak pernah dipublikasikan karena
+> proyek-proyeknya memang berhenti di laptop masing-masing. Itu hal biasa dan bukan kekurangan.
+>
+> Yang membuat repo ini berbeda: isinya **kerja nyata selama 25 hari, dan bisa diperiksa**. Itu lebih
+> meyakinkan daripada daftar sertifikat — bukan karena sertifikatnya kurang, tapi karena repo bisa
+> dibuka dan dinilai sendiri oleh orang yang membacanya.
 
 **Tugas:**
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
@@ -215,8 +225,8 @@ bisa menggantikan.
 
 ### Seat 2 — Data & Sinyal Bola · **Raissa** (`raisinmee`)
 
-**Kenapa dia:** rekam jejak EDA, clustering, segmentation, dan dashboard — pekerjaan yang 80%-nya
-sanitasi data dan pemeriksaan distribusi. **Dan dia juga paham sepak bola** — jadi dia co-owner domain
+**Kenapa dia:** rekam jejak EDA, clustering, segmentation, dan dashboard — pekerjaan yang sebagian besar
+isinya sanitasi data dan pemeriksaan distribusi. **Dan dia juga paham sepak bola** — jadi dia co-owner domain
 bersama Dyang, bukan cuma penerima aturan.
 
 > Seat ini bisa ditukar dengan Seat 1: Dyang punya rekam jejak EDA/clustering/segmentation/dashboard
