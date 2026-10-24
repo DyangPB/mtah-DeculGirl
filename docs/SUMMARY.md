@@ -62,7 +62,7 @@ possession itu **gratis**; diam di titik hand-over itu **bencana**.
 
 | Seat | Orang | Tugas | Output yang dicek |
 |---|---|---|---|
-| 1 | **Dyang** | Domain + aturan + owner repo **+ alat diagnosa + penjalan eksperimen** | `possession-rules.md`, `experiments.md` |
+| 1 | **Dyang** | Domain + aturan + alat diagnosa + penjalan eksperimen | `possession-rules.md`, `experiments.md` |
 | 2 | **Raissa** | Data, alignment, fitur per frame **+ co-owner domain** | `features.parquet`, laporan diagnosa |
 | 3 | **Billa** | Dead-ball, atribusi, segmentasi, dokumen teknis | `src/deculgirl/model/`, draf dokumen |
 | 4 | **Yona** | Metrik, validasi, reproducibility (paruh waktu) | `metrics/`, `run.py`, CI |
@@ -87,16 +87,17 @@ Hari ini Sabtu **24 Okt**. Deadline Selasa **17 Nov**.
 | 🟡 **2** — model sekuensial | 3–9 Nov | Menang pada CI yang tidak tumpang tindih |
 | 🟢 **3** — reproducibility & dokumen | 10–17 Nov | Orang lain bisa reproduksi file identik |
 
-**Registrasi tutup 10 November** — dan kalian belum enroll.
+**Registrasi tutup 10 November** — kalian sudah terdaftar, jadi tanggal itu tidak lagi relevan untuk kalian.
 
 ---
 
 ## Lima hal yang harus terjadi sekarang
 
-1. **Malam ini:** satu orang enroll + tanda tangan ToU. Fase kerjanya sudah jalan sejak 20 Oktober;
-   kalian sudah kehilangan 4 hari.
-2. **Besok:** bikin repo kosong `mtah-DeculGirl`, invite tiga lainnya sebagai **write**.
-3. **Besok:** `git push`, lalu `python tools/fetch_official.py && python tools/gate0.py`.
+1. **Sudah selesai:** terdaftar, bundle terlihat di Drive, repo publik, situs dokumen hidup.
+2. **Sekarang:** unduh bundle ke `data\tactical\` dengan nama file persis. Yang dibutuhkan cuma empat
+   file — `tactical.mp4` tidak dipakai. Kalau Drive tidak mengizinkan unduh, email penyelenggara hari ini.
+3. **Besok:** invite tiga lainnya sebagai **write**, lalu `python tools/fetch_official.py` dan
+   `python tools/gate0.py` di laptop masing-masing.
 4. **Besok:** **hapus `team-research.md`** — isinya data pribadi, jangan pernah masuk repo publik.
 5. **Sepanjang waktu:** tidak ada hand label, dalam bentuk apa pun, untuk tujuan apa pun — termasuk
    **ingatan kalian sendiri soal pertandingan aslinya**, dan jangan pernah upload data ke LLM cloud.

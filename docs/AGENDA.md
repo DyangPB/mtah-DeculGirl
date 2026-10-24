@@ -8,18 +8,26 @@ Dipimpin: Dyang. Notulen: siapa pun yang paling cepat mengetik.
 
 ---
 
-## ⚡ Sebelum rapat — 10 menit, malam ini, jangan tunggu besok
+## ✅ Sudah selesai sebelum rapat
 
-**Dyang: enroll di https://landing.mobileworldcapital.com/more-than-a-hack-2027**
+**Kalian sudah terdaftar, dan bundle pertandingannya sudah ada** — lima file di folder Drive:
+`tactical.mp4`, `atd.txt`, `atd.xml`, `smart_tagging.xml`, `homography.csv`.
 
-Alasannya bukan karena registrasi tutup 10 November. Registrasi memang tutup 10 November, tapi **fase
-kerjanya sudah jalan sejak 20 Oktober** — kalian sudah kehilangan empat hari. Kalau ada jeda antara
-mendaftar dan kirim link download, jeda itu mulai berjalan malam ini, bukan besok.
+Yang perlu dipastikan di rapat cuma satu: **bisa diunduh**, bukan cuma dilihat. Ikon "shared" di Drive
+itu tanda file-nya dibagikan, bukan tanda kalian boleh mengunduhnya.
 
-Yang perlu disiapkan: tanda tangan ToU (baca dulu, terutama bagian larangan hand annotation dan
-larangan upload data), dan satu akun Google untuk form submission nanti.
+- **Kalau bisa diunduh** → taruh di `data\tactical\` dengan **nama file persis seperti aslinya**, lalu
+  jalankan `python run.py`. Angka `spellF1` pertama kalian akan muncul.
+- **Kalau tidak bisa** → kirim email ke **hackathon.talentarena@mobileworldcapital.com** sekarang,
+  jangan tunggu besok. Ini satu-satunya hal di proyek ini yang tidak bisa dikejar dengan kerja keras.
 
-**Aksi ini lebih penting dari seluruh isi rapat di bawah.**
+Dan yang **tidak** kalian butuhkan: `tactical.mp4`. Itu 2¼ jam video yang tidak dipakai pipeline kita
+sama sekali — alasannya di `decisions.md` #005. Kalau ukuran file-nya yang jadi masalah, lewati saja.
+
+Satu catatan soal administrasi: **tidak ada tanda tangan yang diminta di form itu, dan itu tidak
+mengurangi apa pun.** Aturan di `RULES.md` berlaku karena kalian peserta, bukan karena kalian
+menandatangani sesuatu — larangan hand label dan larangan mengunggah data ke LLM cloud tetap berlaku
+penuh. Jangan sampai "tidak ada tanda tangan" terbaca sebagai "tidak ada aturan".
 
 ---
 
@@ -44,15 +52,29 @@ bergerak 0,04, `spellF1` bergerak 11×. Itu satu-satunya konsep yang wajib dipah
 
 | # | Keputusan | Usulan | Catatan |
 |---|---|---|---|
-| 1 | Owner repo | **Dyang** (`DyangPB`) | Kamu sudah punya badge Pull Shark — ini bukan kerjaan baru bagimu |
+| 1 | Akses repo | **Owner: Dyang** (`DyangPB`) · **co-admin: Billa** (`nabilland`) · Raissa & Yona: **Write** | Dua admin, bukan satu — lihat alasannya di bawah |
 | 2 | Nama repo | **`mtah-DeculGirl`** | Publik dari hari pertama |
 | 3 | Seat 1–4 (domain · data · model · metrik) | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** |
 | 4 | **Siapa jadi PM** | **Sengaja dikosongkan** | Tidak harus Dyang. Tanyakan langsung di rapat — siapa yang bersedia |
-| 5 | Siapa enroll | **Dyang** | Malam ini |
+| 5 | Akses bundle data | **Sudah ada** | Pastikan bisa diunduh, bukan cuma dilihat |
 | 6 | Jam sync harian | **Putuskan di sini** | 20 menit, jam tetap. Tanpa ini, tim remote akan drift dalam 4 hari |
 | 7 | Zona waktu | Semua WIB | Konfirmasi cepat |
 
 Dua keputusan di atas yang paling sering dilewatkan, dan keduanya mahal:
+
+**#1 — Kenapa dua admin.** Di GitHub tidak ada peran "co-owner"; yang ada **Admin** di samping Read,
+Triage, Write, dan Maintain. Jadi "co-admin" maksudnya Billa diberi role **Admin**, bukan Write.
+
+Alasannya bukan berbagi beban, tapi **bus factor**. Admin adalah satu-satunya role yang bisa mengubah
+Settings, mengatur siapa punya akses, menyalakan branch protection, dan menyentuh Actions. Kalau cuma
+satu orang yang bisa membuka pintu itu, dan orang itu tidak bisa dihubungi di 14 November, tim kalian
+kehilangan kemampuan memperbaiki repo tepat di minggu paling berbahaya. Dua admin adalah kelaziman,
+bukan kelebihan.
+
+Dan Billa memang orang yang tepat: dia satu-satunya yang sudah pernah bekerja di dalam dua GitHub
+Organization (`Solo-Digital-Solution` dan `ppw24-teaching-assistant`), jadi urusan akses, review PR,
+dan merge bukan hal baru baginya. Raissa dan Yona cukup **Write** — mereka perlu push dan buka PR, tidak
+perlu mengubah setting.
 
 **#4 — PM.** Tidak ada satu pun bagian teknis di proyek ini yang bergantung pada adanya PM. Yang
 bergantung padanya adalah hal-hal yang tidak dihitung sampai semuanya telat: menjaga sync tetap jalan,
@@ -122,8 +144,8 @@ melaporkan satu hal yang mengejutkan di sync besok.
 
 ## Aksi setelah rapat
 
-**Malam ini:** Dyang enroll.
-**Besok pagi:** repo dibuat, tiga orang di-invite, `tools/gate0.py` dijalankan berempat.
+**Sudah selesai:** enrollment, repo publik, commit pertama, situs dokumen.
+**Besok:** unduh bundle ke `data\tactical\`, invite tiga lainnya sebagai **write**, jalankan `tools/gate0.py` berempat.
 **Senin malam:** submission valid pertama ada. Angka `spellF1` pertama tercatat.
 **Mulai Selasa:** Gate 1 — empat pilar, empat seat, paralel.
 

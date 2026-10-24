@@ -162,11 +162,26 @@ kalau output-nya tidak ada, seat itu merah.
 > keputusan. Rapat pertama yang mengunci — dan sesudah Gate 1 mulai, mengubahnya jadi mahal.
 >
 > **PM sengaja dikosongkan** (lihat §4.5). Sisanya tetap harus punya nama.
+>
+> **Seat 1 dan Seat 2 bisa ditukar.** Dyang dan Raissa punya profil yang tumpang tindih hampir
+> seluruhnya: keduanya lewat Startup Campus Data Science Batch 5, keduanya punya rekam jejak EDA,
+> clustering, segmentation, dan dashboard — **dan keduanya sama-sama paham sepak bola.** Jadi
+> pembagiannya sebaiknya ditentukan oleh **preferensi**, bukan oleh kemampuan. Yang **tidak** bisa
+> ditukar: Seat 3 (Billa satu-satunya dengan jejak *sequence labelling*) dan Seat 4 (Yona satu-satunya
+> dengan kode berbentuk produksi).
 
 ### Seat 1 — Domain, Aturan & Eksperimen · **Dyang** (`DyangPB`)
 
-**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Dua
-dari tiga topi seat ini adalah penilaian, bukan koding — dan itu tetap alasan utamanya.
+**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Di sisi
+teknis: **rekam jejak EDA, clustering, segmentation, dan dashboard** dari Startup Campus Data Science
+Batch 5, plus sertifikasi DataCamp Associate Data Analyst. Dua dari tiga topi seat ini adalah penilaian,
+bukan koding — dan itu tetap alasan utamanya.
+
+> **Catatan soal jejak yang terlihat.** Kode publik di GitHub-mu saat ini seluruhnya web (TypeScript,
+> Blade, PHP) — tidak ada satu pun notebook Python. Itu bukan ukuran kemampuan, tapi itu yang **terlihat**
+> orang lain. Kalau kamu ingin rekam jejak data-mu ikut terlihat, pekerjaan Seat 2 (`features/` dalam
+> Python) adalah satu-satunya tempat di proyek ini yang menghasilkan bukti seperti itu — dan repo ini
+> publik, jadi hasil kerjamu di sini akan terbaca sebagai portofolio, bukan cuma sebagai submission.
 
 **Tugas:**
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
@@ -203,6 +218,10 @@ bisa menggantikan.
 **Kenapa dia:** rekam jejak EDA, clustering, segmentation, dan dashboard — pekerjaan yang 80%-nya
 sanitasi data dan pemeriksaan distribusi. **Dan dia juga paham sepak bola** — jadi dia co-owner domain
 bersama Dyang, bukan cuma penerima aturan.
+
+> Seat ini bisa ditukar dengan Seat 1: Dyang punya rekam jejak EDA/clustering/segmentation/dashboard
+> yang setara dan juga paham bola. Kalau kalian bertukar, tidak ada yang hilang — yang berpindah cuma
+> siapa memegang aturan dan siapa memegang fitur.
 
 **Tugas:**
 - Memuat ATD (EPTS XML + raw txt), Smart Tagging, dan homography. **Mengkanonikalisasi** semuanya ke satu
@@ -307,13 +326,18 @@ Hari ini **Sabtu, 24 Oktober 2026**. Deadline **Selasa, 17 November 2026**. Regi
 **Angka hijau:** `run.py` menghasilkan file 199.319 baris yang **lolos `validate_submission.py`**, dan
 kita punya skor `spellF1` terukur di jendela publik.
 
-**Angka kedua:** kita sudah **enrolled dan sudah pegang bundle data**.
+**Angka kedua:** kita sudah **terdaftar dan sudah pegang bundle data.**
 
 Daftar kerja:
-1. **Dyang: enroll + tanda tangan ToU.** Malam ini, bukan nanti. Kalau ada jeda antara mendaftar dan
-   link download, jeda itu mulai berjalan sekarang.
-2. Bikin repo `mtah-DeculGirl`, publik dari awal. Invite `raisinmee`, `nabilland`, `yonakatitin`
-   sebagai collaborator **write**.
+1. **Turunkan bundle ke `data\tactical\`** dengan nama file persis seperti aslinya. Yang dibutuhkan cuma
+   empat file — `tactical.mp4` tidak dipakai pipeline kita sama sekali. Kalau Drive tidak mengizinkan
+   unduh, email penyelenggara **hari ini**; itu satu-satunya hal di proyek ini yang tidak bisa dikejar
+   dengan kerja keras.
+2. **Sudah jalan:** repo `mtah-DeculGirl` publik, commit pertama ter-push. Sisa satu langkah — atur
+   aksesnya: **Dyang = owner**, **Billa = Admin** (co-admin), **Raissa & Yona = Write**. Dua admin, bukan
+   satu: Admin adalah satu-satunya role yang bisa mengubah Settings, mengatur akses, dan menyentuh
+   Actions, jadi kalau cuma satu orang yang memegangnya dan dia tidak bisa dihubungi di minggu terakhir,
+   tim kehilangan kemampuan memperbaiki repo tepat di saat paling berbahaya.
 3. **Sudah disiapkan:** `tools/fetch_official.py` — ambil repo resmi di commit `f8f2629` ke
    `third_party/`. Kalian cuma perlu menjalankannya.
 4. **Sudah disiapkan dan sudah diuji:** `tools/gate0.py` — **tidak butuh data pertandingan sama
@@ -363,8 +387,10 @@ menit publik **memilih baseline yang salah** — `smooth125` menang di publik (0
 pertandingan penuh (0,2242). Itu cuma satu hyperparameter pada baseline sepele. Jangan pernah memilih
 versi berdasarkan jendela publik. Pakai dia untuk memverifikasi pipeline itu **benar**, tidak lebih.
 
-Di gate ini juga: **10 November registrasi tutup.** Kalau ada proses enrollment yang belum beres,
-selesaikan jauh sebelum tanggal ini.
+Di gate ini juga: kalau `--bootstrap 1000` belum pernah kalian jalankan, lakukan sekali di sini. Dan
+apa pun hasilnya, **tulis di `docs/experiments.md`** — termasuk kalau ternyata selisihnya di dalam noise
+band. "Tidak terbukti lebih baik" itu hasil yang sah, dan itu justru bahan untuk bagian keterbatasan di
+dokumen teknis.
 
 ---
 

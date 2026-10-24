@@ -94,6 +94,9 @@ supaya tidak ada ambiguitas "possession" vs "spell".
 
 ## Cara kerja
 
+- **Akses repo:** Dyang = owner · **Billa = Admin** (co-admin) · Raissa & Yona = Write. Dua admin
+  disengaja — Admin satu-satunya role yang bisa mengubah Settings dan mengatur akses, jadi jangan
+  bergantung pada satu orang saja untuk membukanya.
 - **Tidak ada yang push langsung ke `main`.** Semua lewat branch + PR.
 - **`docs/decisions.md` sumber kebenaran tunggal.** Kalau sebuah keputusan tidak ada di sana, keputusan
   itu belum ada.
