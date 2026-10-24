@@ -158,32 +158,45 @@ Kesimpulan yang harus dipegang seluruh tim sampai 17 November:
 Empat orang, empat seat, satu pemilik per output. Kolom terakhir itu yang dipakai di rapat harian —
 kalau output-nya tidak ada, seat itu merah.
 
-### Seat 1 — Domain, Aturan & PM · **Dyang** (`DyangPB`)
+> **Semua seat di bawah ini masih sementara.** Ini usulan yang dipetakan ke rekam jejak, bukan
+> keputusan. Rapat pertama yang mengunci — dan sesudah Gate 1 mulai, mengubahnya jadi mahal.
+>
+> **PM sengaja dikosongkan** (lihat §4.5). Sisanya tetap harus punya nama.
 
-**Kenapa dia:** satu-satunya yang menonton LaLiga konsisten (terutama Barça) dan menulis soal bola
-bertahun-tahun. Dan ini satu-satunya seat yang 80%-nya penilaian, bukan koding.
+### Seat 1 — Domain & Aturan · **Dyang** (`DyangPB`)
+
+**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola bertahun-tahun. Seat
+ini 80%-nya penilaian, bukan koding — dan itu tetap alasan utamanya.
 
 **Tugas:**
 - Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
+  Dibagi dengan Raissa, yang juga paham bola.
 - Menuliskan aturan `D` vs `H`/`A` dalam bentuk yang **bisa dikodekan** Billa.
 - Pemilik kebijakan `X`: kapan sistem menyerah, kapan wajib menebak.
-- Pemilik timeline, pemilik form submission, pemilik file final.
-- Pemelihara `docs/decisions.md` — sumber kebenaran tunggal tim.
+- **Topi kedua — tooling & diagnosa.** Kamu juga menulis kode: pemilik alat yang dipakai semua orang
+  untuk melihat apa yang sedang terjadi (§8). Plot bola di jendela publik, ringkasan laporan transisi
+  dari evaluator, perbandingan dua versi. Ini pekerjaan visual/dashboard, dan jejak kode GitHub-mu
+  (TypeScript, Blade, UI/UX) memang paling kuat di situ.
 
-**Output yang bisa dicek:** `docs/possession-rules.md` · `docs/decisions.md` · file submission akhir
+**Output yang bisa dicek:** `docs/possession-rules.md` · alat diagnosa di `metrics/` · laporan
+perbandingan versi
 
 **Definisi selesai:** Billa bisa mengimplementasikan deteksi dead-ball **tanpa bertanya lagi** ke Dyang.
 
-**Bahaya utama:** kamu satu-satunya orang yang paham bola di tim ini. Kamu **single point of failure**
-untuk bagian yang tidak bisa digantikan keahlian teknis. Jawabannya bukan bekerja lebih banyak, tapi
-**menuliskan pengetahuannya lebih cepat supaya ia berhenti tinggal di kepalamu.**
+**Catatan risiko — direvisi 24 Oktober.** Rencana awal menganggap Dyang satu-satunya yang paham bola di
+tim ini, dan memperlakukan itu sebagai *single point of failure*. **Itu keliru:** Raissa juga paham bola.
+Risikonya turun dari satu orang jadi dua, dan itu mengubah dua hal — lembar 21 transisi bisa dibagi dua
+orang, dan tekanan "tuliskan semuanya secepat mungkin" jadi jauh lebih ringan. Menuliskan aturannya
+tetap wajib, tapi sekarang karena itu bagian dari deliverable #3, **bukan** karena takut tidak ada yang
+bisa menggantikan.
 
 ---
 
 ### Seat 2 — Data & Sinyal Bola · **Raissa** (`raisinmee`)
 
 **Kenapa dia:** rekam jejak EDA, clustering, segmentation, dan dashboard — pekerjaan yang 80%-nya
-sanitasi data dan pemeriksaan distribusi.
+sanitasi data dan pemeriksaan distribusi. **Dan dia juga paham sepak bola** — jadi dia co-owner domain
+bersama Dyang, bukan cuma penerima aturan.
 
 **Tugas:**
 - Memuat ATD (EPTS XML + raw txt), Smart Tagging, dan homography. **Mengkanonikalisasi** semuanya ke satu
@@ -191,6 +204,9 @@ sanitasi data dan pemeriksaan distribusi.
 - Menjaga alignment: `video_frame = id_frame − 1`, Smart Tagging `round(seconds × 25)`, homography
   `frame` = baris submission.
 - Membangun fitur per frame (§7.2, §7.3).
+- **Co-owner domain:** memvalidasi apakah aturan Dyang masuk akal **secara sepak bola**, dan mengambil
+  separuh lembar 21 transisi (§`docs/gt-public-transitions.md`). Dua orang membaca 21 transisi itu akan
+  melihat hal yang berbeda — dan perbedaan itulah gunanya.
 - Pemilik diagnosa: distribusi label, panjang gap bola, peta serpihan.
 
 **Output yang bisa dicek:** `src/deculgirl/features/` · tabel fitur per frame · laporan diagnosa
@@ -240,6 +256,35 @@ dan file yang dihasilkan identik byte-per-byte dengan yang tadi.
 > mekanika pipeline dibangun berpasangan di Gate 0 lalu **dibekukan**, gate-nya **diotomasi** (robot,
 > bukan orang), dan fungsi "apakah bedanya nyata?" pindah ke Raissa. Yona tetap pemilik metriknya;
 > Raissa pemilik keraguannya.
+
+---
+
+### 4.5 ⬜ PM — sengaja dikosongkan
+
+Siapa yang jadi PM **belum ditetapkan**, dan itu disengaja. Ini satu-satunya peran di dokumen ini yang
+tidak dipetakan ke rekam jejak siapa pun — karena PM bukan soal keahlian, tapi soal **kesediaan**.
+Tanyakan langsung di rapat, jangan tunggu ada yang mengangkat tangan sendiri.
+
+**PM itu topi, bukan seat.** Pemegangnya tetap punya seat teknisnya sendiri. Jadi kalian **tidak**
+butuh orang kelima — kalian butuh salah satu dari empat ini yang bersedia memegang dua hal sekaligus.
+
+| Tanggung jawab | Kalau tidak ada yang pegang |
+|---|---|
+| Menjalankan sync harian: "apa yang hijau, apa yang merah, apa yang menghalangi" | Tim remote akan drift dalam empat hari, dan tidak ada yang menyadarinya |
+| Memutuskan di akhir tiap gate: **lanjut atau perbaiki** | Gate-nya jadi dekorasi — tanggal lewat tanpa ada yang memutuskan |
+| **Pemilik file submission**: dry run 15 Nov, mengisi form, menyimpan bukti | Ini penyebab kegagalan paling umum, dan tidak bisa diselamatkan di menit terakhir |
+| Memastikan `docs/decisions.md` terisi | Keputusan hilang dan diulang minggu depan |
+
+**Batas waktunya: harus ada yang memegang selambat-lambatnya akhir Gate 1 — Senin, 2 November.**
+
+Sampai itu terisi, dua hal jalan dengan cara sementara — dan dua-duanya sengaja tidak dipaksakan:
+
+- `docs/decisions.md` diisi **notulis bergilir**: yang mencatat di rapat itu, bukan satu orang tetap.
+- Kepemilikan file submission belum punya nama. Itu **wajar** untuk hari kedua, dan **tidak wajar**
+  untuk hari kesepuluh.
+
+Kalau sampai 2 November tidak ada yang bersedia, jatuh ke **Dyang secara default** — bukan karena itu
+bagian dari tugas domainnya, tapi karena file submission harus punya satu nama dan kamu pemilik repo-nya.
 
 ---
 

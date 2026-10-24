@@ -46,13 +46,21 @@ bergerak 0,04, `spellF1` bergerak 11×. Itu satu-satunya konsep yang wajib dipah
 |---|---|---|---|
 | 1 | Owner repo | **Dyang** (`DyangPB`) | Kamu sudah punya badge Pull Shark — ini bukan kerjaan baru bagimu |
 | 2 | Nama repo | **`mtah-DeculGirl`** | Publik dari hari pertama |
-| 3 | Seat 1–4 | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** — setelah Gate 1 mulai, mengubahnya mahal |
-| 4 | Siapa enroll | **Dyang** | Malam ini |
-| 5 | Jam sync harian | **Putuskan di sini** | 20 menit, jam tetap. Tanpa ini, tim remote akan drift dalam 4 hari |
-| 6 | Zona waktu | Semua WIB | Konfirmasi cepat |
+| 3 | Seat 1–4 (domain · data · model · metrik) | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** |
+| 4 | **Siapa jadi PM** | **Sengaja dikosongkan** | Tidak harus Dyang. Tanyakan langsung di rapat — siapa yang bersedia |
+| 5 | Siapa enroll | **Dyang** | Malam ini |
+| 6 | Jam sync harian | **Putuskan di sini** | 20 menit, jam tetap. Tanpa ini, tim remote akan drift dalam 4 hari |
+| 7 | Zona waktu | Semua WIB | Konfirmasi cepat |
 
-Keputusan #5 yang paling sering diremehkan dan paling mahal akibatnya. Pilih jam yang kalian
-berempat benar-benar bisa, lalu **perlakukan seperti jadwal kuliah**.
+Dua keputusan di atas yang paling sering dilewatkan, dan keduanya mahal:
+
+**#4 — PM.** Tidak ada satu pun bagian teknis di proyek ini yang bergantung pada adanya PM. Yang
+bergantung padanya adalah hal-hal yang tidak dihitung sampai semuanya telat: menjaga sync tetap jalan,
+memutuskan "gate ini hijau atau belum", dan — yang paling menentukan — **punya satu nama yang bertanggung
+jawab atas file submission**. Kalau sampai 2 November tidak ada yang bersedia, jatuh ke Dyang secara
+default, karena file submission harus punya satu nama dan kamu pemilik repo-nya.
+
+**#6 — Jam sync.** Pilih jam yang berempat benar-benar bisa, lalu **perlakukan seperti jadwal kuliah**.
 
 ## 3. Aturan main — 10 menit
 

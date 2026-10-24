@@ -62,13 +62,17 @@ possession itu **gratis**; diam di titik hand-over itu **bencana**.
 
 | Seat | Orang | Tugas | Output yang dicek |
 |---|---|---|---|
-| 1 | **Dyang** | Domain + aturan + PM + owner repo | `docs/possession-rules.md`, file submission |
-| 2 | **Raissa** | Data, alignment, fitur per frame | `features.parquet`, laporan diagnosa |
+| 1 | **Dyang** | Domain + aturan + owner repo **+ alat diagnosa** | `docs/possession-rules.md`, laporan diagnosa |
+| 2 | **Raissa** | Data, alignment, fitur per frame **+ co-owner domain** | `features.parquet`, laporan diagnosa |
 | 3 | **Billa** | Dead-ball, atribusi, segmentasi, dokumen teknis | `src/deculgirl/model/`, draf dokumen |
 | 4 | **Yona** | Metrik, validasi, reproducibility (paruh waktu) | `metrics/`, `run.py`, CI |
+| — | ⬜ **PM** | **Belum ditetapkan** — tanyakan di rapat | Pemilik file submission, penjaga timeline |
 
-Yona satu-satunya yang masih intern, dan Seat 4 itu jalur kritis — jadi Gate 0 dikerjakan berpasangan
-lalu dibekukan, gate-nya diotomasi, dan fungsi "apakah bedanya nyata?" pindah ke Raissa.
+Tiga catatan. **Seat-nya masih sementara** — rapat pertama yang mengunci. **PM itu topi, bukan seat**,
+jadi kalian tidak butuh orang kelima; pemegangnya tetap punya seat teknisnya sendiri, dan harus ada yang
+memegang paling lambat **2 November**. Dan Yona satu-satunya yang masih intern, sementara Seat 4 adalah
+jalur kritis — jadi Gate 0 dikerjakan berpasangan lalu dibekukan, gate-nya diotomasi, dan fungsi "apakah
+bedanya nyata?" pindah ke Raissa.
 
 ---
 
