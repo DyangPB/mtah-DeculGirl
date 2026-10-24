@@ -1,0 +1,68 @@
+# --- Data pertandingan: TIDAK PERNAH DI-COMMIT ---------------------------------
+# Bundle dilisensikan hanya untuk kompetisi ini. Menyebarkannya melanggar ToU.
+data/
+*.mp4
+
+# --- Output: bisa direproduksi, jadi tidak perlu di-commit -------------------
+# Yang dijanjikan bukan file-nya ada di repo, tapi repo-nya BISA menghasilkan
+# file itu persis. Repo resmi juga mengabaikan CSV hasilnya.
+#
+# SEMUA .csv diabaikan, bukan cuma results/ -- ini pengaman ToU. Kalau kalian
+# memang butuh meng-commit CSV kecil yang aman (mis. tabel referensi tanpa isi
+# data pertandingan), paksa dengan:  git add -f namafile.csv
+# dan tulis alasannya di docs/decisions.md.
+results/
+*.csv
+
+# --- Repo resmi hasil fetch: diambil ulang oleh tools/fetch_official.py ------
+# Di-pin ke commit tertentu, jadi tidak perlu disimpan.
+third_party/
+
+# --- Catatan internal -------------------------------------------------------
+# Berisi data pribadi anggota tim. JANGAN pernah masuk repo publik.
+team-research.md
+local/
+notes/
+
+# --- Perkakas lokal ---------------------------------------------------------
+# Konfigurasi asisten/AI dan editor yang dipakai di laptop masing-masing.
+# Ada di sini karena ini pernah ketangkap ikut ter-stage. Repo ini publik.
+.commandcode/
+.cursor/
+.aider*
+.claude/
+.windsurf/
+*.log
+
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Jupyter -----------------------------------------------------------------
+# Notebook TIDAK di-commit dalam keadaan sudah dijalankan: outputnya bisa
+# memuat isi data pertandingan, dan repo ini publik.
+*.ipynb
+
+# --- OS / editor -------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

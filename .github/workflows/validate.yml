@@ -1,0 +1,35 @@
+name: gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: validasi submission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: install
+        run: pip install -r requirements.txt
+
+      - name: ambil repo resmi
+        run: python tools/fetch_official.py
+
+      - name: bangun submission
+        # CI tidak punya bundle pertandingan (data-nya gated, dan tidak boleh
+        # ada di repo). Jadi di sini kita menguji RANTAI-nya, bukan skornya:
+        # file harus terbentuk, panjangnya benar, dan kontraknya dipatuhi.
+        # Skor sebenarnya diukur lokal, di mesin yang punya data.
+        run: python run.py --placeholder
+
+      - name: validasi + skor
+        run: python tools/gate0.py

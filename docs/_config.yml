@@ -1,0 +1,37 @@
+# Konfigurasi GitHub Pages.
+#
+# Cara kerjanya: GitHub menjalankan Jekyll sendiri setiap kali `main` berubah,
+# dan setiap file `.md` di folder ini jadi halaman HTML. TIDAK ADA build step,
+# tidak ada Actions, tidak ada yang perlu dijalankan di laptop siapa pun.
+#
+# Cara mengaktifkan (sekali saja, 3 klik):
+#   Settings > Pages > Source: "Deploy from a branch"
+#   Branch: main   Folder: /docs   > Save
+#
+# Alamatnya jadi:  https://dyangpb.github.io/mtah-2027-deculgirl/
+#
+# Referensi Markdown-nya ada di docs/index.md.
+
+title: DeculGirl — More than a Hack 2027
+description: >-
+  Playbook, agenda, dan dokumen kerja tim DeculGirl untuk Phase 1 (Ball
+  Possession). Metrica Sports x FC Barcelona x Mobile World Capital Barcelona.
+
+# Tema bawaan GitHub Pages. Cayman bersih, tabelnya kebaca, dan enak dibuka
+# dari HP -- itu penting karena kalian berempat di kota berbeda.
+theme: jekyll-theme-cayman
+
+# Tanpa ini, link antar-dokumen yang ditulis sebagai `PLAYBOOK.md` akan mati
+# di halaman HTML-nya (Jekyll tidak tahu `.md` harus jadi `.html`).
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+# Catatan: JANGAN menambah blok `exclude:` di sini. Di Jekyll, `exclude`
+# MENIMPA daftar bawaan (Gemfile, node_modules, vendor/...), bukan menambahnya
+# -- jadi menulis satu baris di situ bisa diam-diam memasukkan file yang
+# seharusnya diabaikan. File yang diawali `_` dan `.` sudah otomatis diabaikan,
+# jadi `_config.yml` sendiri tidak perlu didaftarkan.
