@@ -26,7 +26,7 @@ dicari, tetapi bisa menghabiskan seharian kalau mulai dari "buka CSV lalu lihat-
 ## Tabel 1 — 21 transisi, berurutan
 
 Kolom **Alasan** diisi manual oleh Seat 1. Kolom **Sinyal** diisi dengan dugaan fitur yang bisa
-mendeteksinya. Isi kolom itu nanti diteruskan ke Billa (§7.1 playbook).
+mendeteksinya. Isi kolom itu nanti diteruskan ke Billa (bagian 7.1 playbook).
 
 | # | Frame | Transisi | Detik (±) | Alasan (diisi) | Sinyal / fitur (diisi) |
 |---|---|---|---|---|---|
@@ -203,4 +203,4 @@ punya, dan didapat gratis. Kalau lemah, artinya bola mati justru terjadi **saat 
 
 **Jangan** mengisi kolom Alasan dengan ingatan tentang pertandingan aslinya. Kalau kalian ingat ada
 pelanggaran di menit ke-20, itu tidak boleh dimasukkan. Yang boleh hanya apa yang kalian **lihat di
-grafik dan di data**. Lihat `PLAYBOOK.md` §9.
+grafik dan di data**. Lihat `PLAYBOOK.md` bagian 9.

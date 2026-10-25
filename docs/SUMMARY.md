@@ -126,10 +126,10 @@ Hari ini Sabtu **24 Okt**. Batas kumpul Selasa **17 Nov**. Pekerjaan dibagi menj
 |---|---|---|
 | 1 | `docs/SUMMARY.md` | **dokumen ini** — semua orang |
 | 2 | `docs/AGENDA.md` | semua orang, sebelum rapat besok |
-| 3 | `docs/PLAYBOOK.md` §1–3 | semua orang — alasan di balik strategi ini |
-| 4 | `docs/PLAYBOOK.md` §4–5 | semua orang — pembagian tugas dan jadwal |
-| 5 | `docs/PLAYBOOK.md` §9 | **semua orang — larangan yang tidak boleh dilanggar** |
-| 6 | §7 sesuai seat | 7.1, 7.4, 7.5, 7.6 → Billa · 7.2 dan 7.3 → Raissa · 7.7 → Dyang dan Billa |
-| 7 | §6 dan §8 | Yona |
+| 3 | `docs/PLAYBOOK.md` bagian 1–3 | semua orang — alasan di balik strategi ini |
+| 4 | `docs/PLAYBOOK.md` bagian 4–5 | semua orang — pembagian tugas dan jadwal |
+| 5 | `docs/PLAYBOOK.md` bagian 9 | **semua orang — larangan yang tidak boleh dilanggar** |
+| 6 | bagian 7 sesuai seat | 7.1, 7.4, 7.5, 7.6 → Billa · 7.2 dan 7.3 → Raissa · 7.7 → Dyang dan Billa |
+| 7 | bagian 6 dan 8 | Yona |
 | 8 | `docs/gt-public-transitions.md` | Dyang — pekerjaan hari pertama |
 | 9 | `RULES.md` dan `CHALLENGE.md` di repo resmi | semua orang |

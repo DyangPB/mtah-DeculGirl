@@ -54,4 +54,4 @@ python tools/gate0.py
 
 > **Satu aturan yang berlaku untuk semua orang di sini:** tidak ada pelabelan manual, dalam bentuk apa
 > pun dan untuk tujuan apa pun, termasuk **ingatan kalian sendiri tentang pertandingan aslinya**. Semua
-> label harus dihasilkan oleh algoritma. Detailnya ada di **[Playbook §9](PLAYBOOK.md#9-larangan-yang-tidak-boleh-dilanggar)**.
+> label harus dihasilkan oleh algoritma. Detailnya ada di **[Playbook bagian 9](PLAYBOOK.md#9-larangan-yang-tidak-boleh-dilanggar)**.

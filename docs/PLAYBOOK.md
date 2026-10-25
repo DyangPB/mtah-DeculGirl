@@ -15,11 +15,11 @@ versi lengkapnya, tempat semua angka, alasan, dan keputusan dicatat.
 Dokumen ini bukan dokumen penyemangat. Ini dokumen kerja: setiap bagiannya punya akibat yang bisa
 diperiksa. Cara memakainya:
 
-- **Seat 1 (Dyang)** memakai §4, §5, §7, dan §9, serta memelihara `docs/decisions.md`.
-- **Seat 2 (Raissa)** memakai §7.2 dan §7.3 sebagai daftar kerja fitur.
-- **Seat 3 (Billa)** memakai §7.1, §7.4, §7.5, dan §7.6.
-- **Seat 4 (Yona)** memakai §6 dan §8, karena dia penjaga alat ukurnya.
-- **Semua orang** wajib membaca §1, §2, dan §9.
+- **Seat 1 (Dyang)** memakai bagian 4, 5, 7, dan 9, serta memelihara `docs/decisions.md`.
+- **Seat 2 (Raissa)** memakai bagian 7.2 dan 7.3 sebagai daftar kerja fitur.
+- **Seat 3 (Billa)** memakai bagian 7.1, 7.4, 7.5, dan 7.6.
+- **Seat 4 (Yona)** memakai bagian 6 dan 8, karena dia penjaga alat ukurnya.
+- **Semua orang** wajib membaca bagian 1, 2, dan 9.
 
 Kalau isi dokumen ini bertentangan dengan repo resmi penyelenggara, **yang benar adalah repo resmi**.
 Semua angka di sini diambil dari repo itu pada 24 Oktober 2026, dari commit `f8f2629`.
@@ -167,7 +167,7 @@ tabel ringkasan dipakai dalam rapat harian: kalau hasilnya belum ada, seat itu d
 > orang, bukan keputusan final. Rapat pertama yang mengunci pembagiannya. Setelah Gate 1 dimulai,
 > mengubah pembagian ini menjadi mahal.
 >
-> **Peran PM sengaja dikosongkan** (lihat §4.5). Seat lainnya tetap harus ada namanya.
+> **Peran PM sengaja dikosongkan** (lihat bagian 4.5). Seat lainnya tetap harus ada namanya.
 >
 > **Seat 1 dan Seat 2 bisa ditukar.** Profil Dyang dan Raissa hampir sama: keduanya mengikuti Startup
 > Campus Data Science Batch 5, keduanya punya pengalaman EDA, clustering, segmentation, dan dashboard,
@@ -194,11 +194,11 @@ tabel ringkasan dipakai dalam rapat harian: kalau hasilnya belum ada, seat itu d
   lain yang bisa menuliskannya lebih tepat. Billa membangun model **di atas** fitur itu, bukan
   menggantikannya.
 - **Alat diagnosa dan harness eksperimen**, yaitu `metrics/diagnose.py` dan `metrics/compare.py`. Seluruh
-  tim memakainya untuk melihat letak kesalahan (§8), dan Dyang yang menentukan bentuknya.
+  tim memakainya untuk melihat letak kesalahan (bagian 8), dan Dyang yang menentukan bentuknya.
 - **Menjalankan eksperimen.** Setiap perubahan yang bisa diukur dijalankan Dyang dan dicatat di
   `docs/experiments.md` lengkap dengan putusannya. Eksperimen yang gagal juga dicatat, bahkan **terutama**
   yang gagal, karena catatan itulah isi bagian *"tried and dropped"* (yang dicoba lalu dibuang) yang
-  diwajibkan di dokumen teknis (§7.7).
+  diwajibkan di dokumen teknis (bagian 7.7).
 - Pemilik kebijakan `X`: kapan sistem boleh tidak menjawab, dan kapan wajib menebak.
 
 **Hasil yang bisa diperiksa:** `docs/possession-rules.md` · fitur bola mati di `src/deculgirl/features/` ·
@@ -234,7 +234,7 @@ sehingga dia ikut memegang domain bersama Dyang, bukan sekadar menerima aturan.
   menjadi satu tabel dengan satu baris per frame.
 - Menjaga penyelarasan nomor frame: `video_frame = id_frame − 1`, Smart Tagging memakai
   `round(detik × 25)`, dan kolom `frame` di homography sama dengan baris di submission.
-- Membangun fitur per frame (§7.2 dan §7.3).
+- Membangun fitur per frame (bagian 7.2 dan 7.3).
 - **Ikut memegang domain:** memeriksa apakah aturan Dyang masuk akal **dari sudut pandang sepak bola**,
   dan mengambil separuh lembar 21 transisi (`docs/gt-public-transitions.md`). Dua orang yang membaca 21
   transisi itu akan melihat hal yang berbeda, dan perbedaan itulah gunanya.
@@ -253,12 +253,12 @@ sehingga dia ikut memegang domain bersama Dyang, bukan sekadar menerima aturan.
 Bi-GRU). Tugas ini persis jenis masalah itu: 199.319 frame berurutan yang saling memengaruhi.
 
 **Tugas:**
-- Model bola mati yang berdiri sendiri (§7.1). **Inilah kelemahan terbesar baseline**, dan nilainya
+- Model bola mati yang berdiri sendiri (bagian 7.1). **Inilah kelemahan terbesar baseline**, dan nilainya
   paling tinggi.
-- Menentukan tim `H`/`A` untuk frame saat bola hidup (§7.3).
-- Menyusun possession tanpa memecahnya (§7.4), yaitu mengubah probabilitas per frame menjadi rentang
+- Menentukan tim `H`/`A` untuk frame saat bola hidup (bagian 7.3).
+- Menyusun possession tanpa memecahnya (bagian 7.4), yaitu mengubah probabilitas per frame menjadi rentang
   waktu.
-- Model sekuensial di Gate 2 (§7.6).
+- Model sekuensial di Gate 2 (bagian 7.6).
 - **Penulis utama dokumen teknis** (hasil kerja ketiga). Billa satu-satunya yang sudah punya publikasi
   ilmiah.
 
@@ -275,7 +275,7 @@ jelas berbeda, bukan hasil yang tidak bisa dijelaskan.
 re/Start).
 
 **Tugas:**
-- Menjalankan scorer resmi di komputer lokal (§8). Ini **Gate 0, hari pertama**.
+- Menjalankan scorer resmi di komputer lokal (bagian 8). Ini **Gate 0, hari pertama**.
 - Membuat regression suite dan bootstrap CI, supaya selisih 0,01 tidak disangka kemenangan.
 - Menyiapkan `run.py`, satu perintah yang menghasilkan file submission yang **identik**.
 - Mengunci versi semua dependensi (pin). Pemeriksaan validasi berjalan otomatis di setiap PR.
@@ -378,7 +378,7 @@ Daftar pekerjaan:
 **Angka hijau:** `spellF1` di jendela publik melewati baseline buatan kita sendiri, dan `macroF1` untuk
 kelas `D` naik dengan jelas.
 
-Semua seat bekerja bersamaan tanpa saling menunggu. Rincian teknisnya ada di §7.
+Semua seat bekerja bersamaan tanpa saling menunggu. Rincian teknisnya ada di bagian 7.
 
 | Seat | Hasil kerja di gate ini |
 |---|---|
@@ -421,7 +421,7 @@ mendapatkan file yang **identik**, hanya dengan membaca `REPRODUCE.md`.
 
 | Tanggal | Pekerjaan |
 |---|---|
-| 10 – 13 Nov | Dokumen teknis (§7.7), `REPRODUCE.md`, dan merapikan repo |
+| 10 – 13 Nov | Dokumen teknis (bagian 7.7), `REPRODUCE.md`, dan merapikan repo |
 | **14 Nov** | **FREEZE (kode dibekukan).** Tidak ada perubahan kode setelah tanggal ini. |
 | 15 Nov | Uji coba pengiriman: isi form lengkap dengan file dan URL final. Pastikan file bisa dibuka. |
 | 16 Nov | Cadangan waktu. Hanya untuk memperbaiki yang rusak. |
@@ -536,12 +536,12 @@ Pendekatan bertahap, dari yang murah ke yang mahal:
 1. **Celah pendek** (kurang dari ± 0,5 detik atau 12 frame): isi dengan interpolasi linear atau filter
    Kalman. Bola bergerak mulus, jadi mengisi celah pendek hampir selalu benar.
 2. **Celah panjang**: **jangan diisi.** Biarkan tetap sebagai ketidakpastian dan pakai sebagai sinyal.
-   Celah panjang itu sendiri sudah membawa informasi (lihat §7.1).
+   Celah panjang itu sendiri sudah membawa informasi (lihat bagian 7.1).
 3. **Pemeriksaan geometri:** proyeksikan posisi bola hasil pengisian ke piksel lewat homography, lalu
    periksa apakah hasilnya masuk akal. Ini penggunaan homography yang paling langsung berguna, dan
    homography feed taktis **100% valid**.
 4. **Satu gangguan ditambah satu tebakan buruk lebih mahal daripada satu celah.** Ingat bahwa `X` di
-   tengah possession itu **tidak merugikan** (§7.5). Jadi tidak ada alasan memaksakan posisi bola yang
+   tengah possession itu **tidak merugikan** (bagian 7.5). Jadi tidak ada alasan memaksakan posisi bola yang
    tidak kalian yakini.
 
 **Jangan pakai video.** GPU GTX 1650 Ti dengan VRAM 4 GB cukup untuk menjalankan model kecil.
@@ -635,7 +635,7 @@ persis:
 5. **Keterbatasan** — tulis dengan jujur. Kejujuran menaikkan kredibilitas, bukan menurunkannya.
 6. **Cara mereproduksi hasil** — satu perintah.
 
-Lampirkan juga fakta mana dari dokumentasi resmi yang kalian pakai (§7.1), dan keputusan apa saja yang
+Lampirkan juga fakta mana dari dokumentasi resmi yang kalian pakai (bagian 7.1), dan keputusan apa saja yang
 bersifat kalibrasi atau dilakukan manual, kalau ada.
 
 ---
@@ -681,11 +681,11 @@ lebih berguna untuk pekerjaan harian:
 | **`poss`** | jumlah possession yang kalian laporkan | Yang benar **17** di jendela ini. 26 sudah mulai menyimpang; 131 itu tanda bahaya |
 | **`dur`** | rata-rata durasi possession | Yang benar **14,2 detik**. Kalau terlalu pendek, berarti possession kalian terpecah |
 | **`shareE`** | selisih porsi penguasaan tim home dibandingkan yang benar | Yang benar 0,5727: Barcelona menguasai 57% frame bola hidup di jendela ini |
-| **`lat_f`** | rata-rata keterlambatan, dalam jumlah frame | Di bawah 25 frame masih murah (§3 poin 3); di atas itu mahal |
+| **`lat_f`** | rata-rata keterlambatan, dalam jumlah frame | Di bawah 25 frame masih murah (bagian 3 poin 3); di atas itu mahal |
 
 Laporan per submission (file `.txt` yang ditulis evaluator) lebih tajam lagi. Isinya matriks konfusi
 4×4, presisi/recall/F1 per kelas, `alive/dead F1`, akurasi tim, dan, yang paling berkaitan dengan
-§7.5, **berapa banyak frame `X` kalian yang jatuh pada frame yang dinilai.** Itu ukuran langsung dari
+bagian 7.5, **berapa banyak frame `X` kalian yang jatuh pada frame yang dinilai.** Itu ukuran langsung dari
 kebijakan tidak-menjawab yang kalian pakai. Evaluator juga menulis `scoreboard.csv`.
 
 ---
@@ -703,7 +703,7 @@ melainkan soal **apa yang dihitung**.
 | **Mengunggah data ke LLM cloud** | Syarat penggunaan (ToU) melarang mengunggah video, dataset, atau **potongan-potongannya** ke LLM pihak ketiga berbasis cloud. Memakai AI untuk menulis kode tetap boleh; yang dilarang adalah mengirim isi datanya |
 | **Menyebarkan data** | Jangan commit `data/` ke repo publik. Jangan menerbitkan turunan yang bisa dipakai untuk merekonstruksi data |
 | **Repo yang tidak bisa mereproduksi file** | *"A private in-house model or an unavailable internal dataset is the one thing this rules out"* (model internal yang tidak dipublikasikan atau dataset internal yang tidak tersedia adalah satu-satunya hal yang dilarang) |
-| **Menyetel parameter di 5 menit publik** | Ini aturan, bukan saran. Dan terbukti merugikan (§8) |
+| **Menyetel parameter di 5 menit publik** | Ini aturan, bukan saran. Dan terbukti merugikan (bagian 8) |
 
 **Yang justru diizinkan**, dan mungkin belum kalian sadari:
 
@@ -772,7 +772,7 @@ Dijalankan pada **15 November**, tidak boleh lebih lambat.
 - [ ] `README.md` menjelaskan cara menjalankan dengan bahasa yang bisa diikuti orang luar
 
 **Dokumen teknis**
-- [ ] `DeculGirl.pdf` atau `.md`, beberapa halaman, mengikuti susunan di §7.7
+- [ ] `DeculGirl.pdf` atau `.md`, beberapa halaman, mengikuti susunan di bagian 7.7
 - [ ] Menyebut aset yang dicoba **lalu dibuang**, bukan hanya yang dipakai
 - [ ] Menyebut ada atau tidaknya data latih, lengkap dengan sumbernya
 - [ ] Mencantumkan fakta resmi yang dipakai sebagai kalibrasi

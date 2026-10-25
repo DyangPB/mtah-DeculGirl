@@ -59,7 +59,7 @@ publik. Inilah satu-satunya konsep yang wajib dipahami semua orang.
 |---|---|---|---|
 | 1 | Hak akses repo | **Owner: Dyang** (`DyangPB`) · **admin kedua: Billa** (`nabilland`) · Raissa dan Yona: **Write** | Adminnya dua orang, bukan satu. Alasannya ada di bawah |
 | 2 | Nama repo | **`mtah-DeculGirl`** | Dibuat publik sejak hari pertama |
-| 3 | Seat 1–4 (domain · data · model · metrik) | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** |
+| 3 | Seat 1–4 (domain · data · model · metrik) | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` bagian 4. **Ubah sekarang kalau ada yang tidak setuju** |
 | 4 | **Siapa yang jadi PM** | **Sengaja dikosongkan** | Tidak harus Dyang. Tanyakan langsung di rapat siapa yang bersedia |
 | 5 | Akses ke bundle data | **Sudah ada** | Pastikan bisa diunduh, bukan hanya dilihat |
 | 6 | Jam rapat harian | **Putuskan di rapat ini** | 20 menit, jamnya tetap. Tanpa ini, tim remote akan berjalan sendiri-sendiri dalam 4 hari |
@@ -121,7 +121,7 @@ Pembagian kerja **tiga hari ke depan**:
 |---|---|---|
 | **Dyang** | Repo sudah jadi dan ter-push. Undang tiga anggota lain dengan akses **Write** | Mulai mengisi `docs/possession-rules.md` dengan bantuan `docs/gt-public-transitions.md`, dan buka `docs/experiments.md` untuk mencatat variasi pertama |
 | **Raissa** | Jalankan `tools/fetch_official.py` dan `tools/gate0.py`, pastikan evaluator resmi berjalan di laptopnya. Ekstrak data ke `data/` dan pastikan jumlah baris tracking = **199.319** | Kerjakan `src/deculgirl/features/`: pembaca data dan penyeragaman formatnya |
-| **Billa** | Baca `CHALLENGE.md` dan `FAQ.md` sampai habis. Pikirkan baik-baik §7.1 di playbook | Rancang pendeteksi bola mati (§7.1) |
+| **Billa** | Baca `CHALLENGE.md` dan `FAQ.md` sampai habis. Pikirkan baik-baik bagian 7.1 di playbook | Rancang pendeteksi bola mati (bagian 7.1) |
 | **Yona** | Siapkan `run.py`, `metrics/`, dan CI. Ukur baseline resmi di jendela publik; angka itu jadi titik awal | Buat regression suite dan bootstrap CI |
 
 **Semua orang hari ini:** clone repo, simpan di **drive D:** (drive C: Dyang hanya tersisa 8 GB), lalu

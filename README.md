@@ -103,7 +103,7 @@ chat, supaya tidak ada salah paham, misalnya antara "possession" dan "spell".
   tertulis di sana dianggap belum ada.
 - **Pemeriksaan otomatis berjalan di setiap PR** (`.github/workflows/validate.yml`).
 - **Dilarang memberi label secara manual, dalam bentuk apa pun dan untuk tujuan apa pun.** Baca
-  [`docs/PLAYBOOK.md`](docs/PLAYBOOK.md) §9 sebelum menyentuh data.
+  [`docs/PLAYBOOK.md`](docs/PLAYBOOK.md) bagian 9 sebelum menyentuh data.
 
 ---
 

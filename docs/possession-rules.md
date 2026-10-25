@@ -24,7 +24,7 @@ Hanya ada tiga keadaan. Tidak ada "diperebutkan", tidak ada "peralihan", dan tid
 | `A` | Athletic menguasai bola **dan** bola hidup |
 | `D` | Bola mati |
 
-`X` bukan keadaan keempat. `X` adalah keputusan sistem untuk tidak menjawab. Lihat §5.
+`X` bukan keadaan keempat. `X` adalah keputusan sistem untuk tidak menjawab. Lihat bagian 5.
 
 **Yang sengaja tidak ditanyakan:** siapa yang memegang bola saat bola mati. Data tracking tetap
 menyebut satu tim saat bola keluar lapangan (misalnya tim yang akan memulai kembali permainan, atau
