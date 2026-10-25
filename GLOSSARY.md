@@ -1,85 +1,111 @@
 # More than a Hack 2027 — Phase 1: Ball Possession
 
-Domain untuk tantangan Metrica Sports / FC Barcelona / Mobile World Capital: memberi satu label
-penguasaan bola untuk **setiap frame** dari satu pertandingan LaLiga (Barça vs Athletic).
-Glosarium ini menetapkan istilah kanonik yang dipakai di dokumen, kode, dan percakapan tim.
+Tantangan dari Metrica Sports, FC Barcelona, dan Mobile World Capital: memberi satu label penguasaan
+bola untuk **setiap frame** dalam satu pertandingan LaLiga (Barça vs Athletic).
 
-## Waktu & indeks
+Glosarium ini menetapkan istilah baku yang dipakai di dokumen, kode, dan percakapan tim. Kalau ragu
+sebuah istilah berarti apa, cari di sini dulu. Bagian _Hindari_ berisi kata yang sering dipakai untuk
+hal yang sama tetapi menimbulkan salah paham.
 
-**Video frame** (frame video):
-Indeks frame di timeline video taktis, 25 fps, mencakup 0–199318. Inilah nilai kolom `frame` di submission.
-_Avoid_: frame_id, timestamp, "detik"
+## Waktu dan nomor frame
+
+**Video frame** (nomor frame video):
+Nomor urut frame pada video taktis, dengan kecepatan 25 frame per detik (fps), dari 0 sampai 199318.
+Inilah isi kolom `frame` pada file submission.
+_Hindari_: frame_id, timestamp, "detik"
 
 **ID frame**:
-Indeks frame di file tracking ATD, 1-based, mencakup 1–199319. `video_frame = id_frame - 1`.
-_Avoid_: frame
+Nomor urut frame pada file tracking ATD. Dimulai dari 1, jadi rentangnya 1–199319.
+Rumus pengubahnya: `video_frame = id_frame - 1`.
+_Hindari_: "frame" saja tanpa keterangan
 
-**Half**:
-Babak 1 atau 2. Pengisian label `X` oleh scorer dilakukan per half, tidak lintas babak.
+**Half** (babak):
+Babak 1 atau babak 2. Scorer mengganti label `X` per babak; penggantian tidak pernah melewati batas babak.
 
-**Graded frame**:
-Frame yang punya ground truth dan ikut dinilai: 158.857 dari 199.319 frame (isi kedua babak, di luar jeda dan di luar pertandingan).
+**Graded frame** (frame yang dinilai):
+Frame yang punya ground truth, sehingga ikut dihitung dalam skor. Jumlahnya 158.857 dari 199.319 frame,
+yaitu isi kedua babak. Jeda dan waktu di luar pertandingan tidak dinilai.
 
-**Public window**:
-5 menit pertama permainan (video frame 11185–18684; 7.500 frame dinilai; 17 possession) — satu-satunya ground truth yang dipegang tim.
-Untuk memverifikasi pipeline itu benar, bukan untuk ranking, bukan data latih, bukan set tuning.
+**Public window** (jendela publik):
+5 menit pertama permainan: video frame 11185–18684, berisi 7.500 frame yang dinilai dan 17 possession.
+Hanya ini ground truth yang dipegang tim. Gunanya untuk memeriksa bahwa pipeline kita benar. Jangan
+dipakai untuk meranking versi, sebagai data latih, atau untuk menyetel parameter.
 
-**Private ground truth**:
-Ground truth seluruh pertandingan, hanya dipegang penyelenggara. Inilah yang menentukan ranking.
+**Private ground truth** (ground truth privat):
+Ground truth seluruh pertandingan, yang hanya dipegang penyelenggara. Inilah yang menentukan peringkat.
 
-## State & label
+## Status dan label
 
-**Possession**:
-Run maksimal frame berlabel sama (`H` atau `A`) selama bola hidup. Ini unit yang dihitung spellF1.
-_Avoid_: spell, phase, sequence
+**Possession** (penguasaan bola):
+Rentang frame berurutan yang labelnya sama (`H` atau `A`) selama bola hidup, dan terputus kalau label
+berubah. Possession adalah satuan yang dihitung `spellF1`.
+_Hindari_: spell, phase, sequence
 
-**Controlled possession**:
-Penguasaan bola yang dianggap sah — bukan sentuhan sekilas, defleksi, atau duel udara tanpa kontrol lanjutan.
+**Controlled possession** (penguasaan yang sah):
+Penguasaan bola yang diakui. Sentuhan sekilas, bola yang hanya membelok, atau duel udara tanpa
+kontrol lanjutan tidak termasuk.
 
-**Change of possession**:
-Momen possession berpindah ke tim lawan, yaitu saat pemain lawan memperoleh controlled possession.
+**Change of possession** (pergantian penguasaan):
+Saat bola berpindah ke tim lawan, yaitu ketika pemain lawan mendapat penguasaan yang sah.
 
-**Dead ball** (`D`):
-Bola tidak dalam permainan. Ini stoppage, bukan possession. Kepemilikan bola saat dead ball sengaja tidak ditanyakan.
+**Dead ball** (bola mati, label `D`):
+Bola tidak sedang dalam permainan. Ini masa berhenti, bukan possession. Siapa yang memegang bola
+saat bola mati sengaja tidak ditanyakan.
 
-**Ball alive**:
-Kondisi bola sedang dalam permainan. Setiap graded frame dengan bola hidup harus `H` atau `A`.
+**Ball alive** (bola hidup):
+Bola sedang dalam permainan. Setiap frame yang dinilai dan bolanya hidup harus berlabel `H` atau `A`.
 
-**Stoppage**:
-Periode bola mati; memisahkan dua possession. `H H D D H H` adalah dua possession, bukan satu.
+**Stoppage** (masa berhenti):
+Periode bola mati. Masa ini memisahkan dua possession: `H H D D H H` adalah dua possession, bukan satu.
 
-**Abstention** (`X`):
-Sistem memilih tidak menjawab. macroF1 menghitungnya sebagai salah; spellF1 menggantinya dengan label non-`X` terakhir di babak itu.
+**Abstention** (tidak menjawab, label `X`):
+Sistem memilih tidak menjawab untuk frame itu. `macroF1` menganggap `X` sebagai jawaban salah. `spellF1`
+mengganti `X` dengan label terakhir yang bukan `X` di babak yang sama.
 
 **macroF1**:
-Rata-rata F1 per kelas `H`/`A`/`D` atas graded frame. Dilaporkan berdampingan dengan spellF1 dan menjadi tie-break pertama. Noise ~0,01; lantai ~0,16.
+Rata-rata F1 untuk tiga kelas `H`, `A`, dan `D` pada frame yang dinilai. Skor ini dilaporkan
+berdampingan dengan `spellF1` dan dipakai sebagai pemutus pertama kalau `spellF1` seri.
+Noise sekitar 0,01; skor terendah yang mungkin sekitar 0,16.
 
 **spellF1**:
-Metrik ranking. Possession prediksi dipasangkan satu-ke-satu dengan possession asli lewat temporal IoU, lalu F1-nya dirata-rata pada threshold 0,3/0,4/0,5/0,6/0,7. Noise ~0,04 di full match. Label konstan bernilai tepat 0.
+Metrik yang menentukan peringkat. Cara hitungnya: possession prediksi dipasangkan satu lawan satu
+dengan possession asli berdasarkan temporal IoU, lalu F1-nya dirata-rata pada lima ambang
+(0,3 / 0,4 / 0,5 / 0,6 / 0,7). Noise sekitar 0,04 pada pertandingan penuh. Label yang sama untuk
+semua frame selalu bernilai tepat 0.
 
 **Temporal IoU**:
-Rasio durasi irisan terhadap gabungan dua rentang waktu — ukuran seberapa pas satu possession prediksi menimpa satu possession asli.
+Perbandingan antara panjang waktu yang tumpang tindih dan panjang gabungan dua rentang waktu. Ukuran
+ini menunjukkan seberapa pas satu possession prediksi menimpa satu possession asli.
 
 ## Aset data
 
 **ATD** (automatic tracking data):
-Ekspor FIFA/EPTS dari Metrica: XML metadata + txt raw. 25 record per detik, koordinat ternormalisasi 0–1 (bukan meter), tanpa identitas pemain. 199.319 record untuk feed taktis, 164.488 untuk broadcast.
-_Avoid_: "data tracking" generik
+Data pelacakan otomatis dari Metrica dalam format FIFA/EPTS: satu file XML berisi metadata dan satu
+file txt berisi data mentah. Isinya 25 catatan per detik, dengan koordinat yang dinormalisasi ke
+rentang 0–1 (bukan meter) dan tanpa identitas pemain. Ada 199.319 catatan untuk feed taktis dan
+164.488 untuk feed broadcast.
+_Hindari_: "data tracking" tanpa keterangan
 
 **Track slot**:
-Slot di ATD (`Track 1`…`Track 46` pada taktis; 51 pada broadcast). Slot bukan orangnya dan bukan nomor punggung; identitas bisa berpindah antar frame.
-_Avoid_: player, shirt number
+Satu "tempat" di ATD (`Track 1`…`Track 46` pada feed taktis; 51 pada feed broadcast). Slot bukan orang
+tertentu dan bukan nomor punggung; pemain yang menempati slot itu bisa berganti dari frame ke frame.
+_Hindari_: player, shirt number
 
 **Smart Tagging**:
-Anotasi taktis otomatis (SportsCode XML, 638 fase) seperti `BUILD UP`, `SET PIECES`, `BALL IN THE BOX`. Ini phase, bukan possession.
-_Avoid_: event, possession label
+Anotasi taktis otomatis (XML SportsCode, 638 fase) dengan tag seperti `BUILD UP`, `SET PIECES`, dan
+`BALL IN THE BOX`. Isinya fase permainan, bukan possession.
+_Hindari_: event, possession label
 
 **Homography**:
-Matriks 3×3 per frame yang memetakan koordinat pitch ternormalisasi ke piksel gambar, disertai flag `valid`. Feed taktis 100% valid; broadcast hanya 65,8%.
+Matriks 3×3 untuk setiap frame yang mengubah koordinat lapangan ternormalisasi menjadi koordinat piksel
+pada gambar, lengkap dengan penanda `valid`. Pada feed taktis 100% valid; pada feed broadcast hanya 65,8%.
 
-**Feed taktis** / **feed broadcast**:
-Dua video yang disediakan. Timeline taktis adalah referensi submission; broadcast punya timeline sendiri (ada cut dan replay) dan tidak selaras frame dengannya.
-_Avoid_: "video utama" tanpa menyebut yang mana
+**Feed taktis** dan **feed broadcast**:
+Dua video yang disediakan. Timeline feed taktis menjadi acuan submission. Feed broadcast punya
+timeline sendiri (ada potongan gambar dan tayangan ulang), sehingga nomor framenya tidak sama dengan
+feed taktis.
+_Hindari_: "video utama" tanpa menyebut yang mana
 
-**Baseline floor**:
-`baseline_smooth50`, spellF1 0,2433 di full match — angka minimum yang harus dilewati.
+**Baseline floor** (batas minimum baseline):
+`baseline_smooth50` dengan `spellF1` 0,2433 pada pertandingan penuh. Ini angka minimum yang harus
+dilewati.

@@ -3,65 +3,67 @@
 **More than a Hack 2027 · Phase 1: Ball Possession**
 Metrica Sports × FC Barcelona (Barça Innovation Hub) × Mobile World Capital Barcelona
 
-Ditulis 24 Oktober 2026 · Deadline submission **17 November 2026**
+Ditulis 24 Oktober 2026 · Batas pengumpulan **17 November 2026**
 
 ---
 
-## 0. Cara pakai dokumen ini
+## 0. Cara memakai dokumen ini
 
-**Kalau kamu cuma punya 5 menit, baca [`SUMMARY.md`](SUMMARY.md), bukan dokumen ini.** Dokumen ini
-adalah versi lengkapnya — tempat semua angka, alasan, dan keputusan tinggal.
+**Kalau hanya punya 5 menit, baca [`SUMMARY.md`](SUMMARY.md), bukan dokumen ini.** Dokumen ini adalah
+versi lengkapnya, tempat semua angka, alasan, dan keputusan dicatat.
 
-Ini bukan dokumen motivasi. Ini dokumen operasional: setiap bagian di sini punya konsekuensi yang bisa
-dicek. Cara pakainya:
+Dokumen ini bukan dokumen penyemangat. Ini dokumen kerja: setiap bagiannya punya akibat yang bisa
+diperiksa. Cara memakainya:
 
-- **Seat 1 (Dyang)** memakai §4, §5, §7, §9 dan memelihara `docs/decisions.md`.
+- **Seat 1 (Dyang)** memakai §4, §5, §7, dan §9, serta memelihara `docs/decisions.md`.
 - **Seat 2 (Raissa)** memakai §7.2 dan §7.3 sebagai daftar kerja fitur.
-- **Seat 3 (Billa)** memakai §7.1, §7.4, §7.5, §7.6.
-- **Seat 4 (Yona)** memakai §6 dan §8 — dia penjaga ukurannya.
-- **Semua orang** wajib baca §1, §2, §9.
+- **Seat 3 (Billa)** memakai §7.1, §7.4, §7.5, dan §7.6.
+- **Seat 4 (Yona)** memakai §6 dan §8, karena dia penjaga alat ukurnya.
+- **Semua orang** wajib membaca §1, §2, dan §9.
 
-Kalau isi dokumen ini bertentangan dengan repo resmi penyelenggara, **repo resmi yang benar**. Semua
-angka di sini diambil dari sana pada 24 Oktober 2026, dari commit `f8f2629`.
+Kalau isi dokumen ini bertentangan dengan repo resmi penyelenggara, **yang benar adalah repo resmi**.
+Semua angka di sini diambil dari repo itu pada 24 Oktober 2026, dari commit `f8f2629`.
 
 ---
 
 ## 1. Apa yang sebenarnya kita kerjakan
 
-Satu pertandingan LaLiga lengkap: **FC Barcelona vs Athletic Club**, LaLiga EA Sports 2024-25 matchday 2.
-Kita diberi rekaman dua kamera, tracking otomatis setiap pemain dan bola, tagging taktis otomatis
-(Smart Tagging), dan geometri kamera-ke-lapangan (homography).
+Kita mengerjakan satu pertandingan LaLiga lengkap: **FC Barcelona vs Athletic Club**, LaLiga EA Sports
+2024-25 matchday 2. Penyelenggara memberi kita rekaman dari dua kamera, pelacakan otomatis posisi setiap
+pemain dan bola, penandaan taktik otomatis (Smart Tagging), serta pemetaan kamera ke lapangan
+(homography).
 
-Tugasnya satu kalimat:
+Tugasnya bisa dirangkum dalam satu kalimat:
 
-> **Untuk setiap frame pertandingan, katakan siapa yang menguasai bola.**
+> **Untuk setiap frame pertandingan, tentukan tim mana yang sedang menguasai bola.**
 
-Outputnya satu file CSV: `frame,label`, **199.319 baris**, frame `0`–`199318`, label `H` / `A` / `D` / `X`.
+Hasilnya satu file CSV: `frame,label`, **199.319 baris**, dengan frame `0` sampai `199318` dan label
+`H` / `A` / `D` / `X`.
 
-| Label | Arti |
+| Label | Artinya |
 |---|---|
-| `H` | Barcelona (home) menguasai bola, bola hidup |
-| `A` | Athletic (away) menguasai bola, bola hidup |
-| `D` | bola mati — bola tidak dalam permainan |
-| `X` | tidak menjawab |
+| `H` | Barcelona (home) menguasai bola, dan bola sedang hidup |
+| `A` | Athletic (away) menguasai bola, dan bola sedang hidup |
+| `D` | Bola mati, yaitu bola tidak sedang dalam permainan |
+| `X` | Sistem tidak menjawab |
 
-**Dan ini bagian yang paling sering disalahpahami orang:** tugas ini **bukan** tantangan computer vision,
-**bukan** multi-object tracking, dan **bukan** rekonstruksi game state. Tracking, tagging, dan homography
-sudah diberikan supaya tidak ada yang perlu membangun deteksi, re-identifikasi, dan kalibrasi kamera
-dari nol. Yang dinilai murni: apa yang geometri 22 pemain dan satu bola katakan tentang siapa yang
-menguasai bola.
+**Bagian ini paling sering disalahpahami:** tugas ini **bukan** tantangan computer vision, **bukan**
+pelacakan banyak objek (multi-object tracking), dan **bukan** rekonstruksi keadaan permainan. Data
+pelacakan, penandaan, dan pemetaan kamera sudah disediakan, jadi kita tidak perlu membangun deteksi,
+pengenalan ulang pemain, atau kalibrasi kamera dari nol. Yang dinilai hanya satu hal: apa yang
+ditunjukkan oleh posisi 22 pemain dan satu bola tentang siapa yang menguasai bola.
 
-Dan yang lebih penting lagi — dari `CHALLENGE.md`:
+Yang lebih penting lagi, `CHALLENGE.md` menyatakan:
 
 > *"The ground truth is derived from corrected tracking data — not from a human watching video, and not
 > from event data. The derivation is mechanical: a frame is `D` where the corrected tracking marks the
 > ball dead, and otherwise takes the team the tracking names as owning it. Nothing is smoothed,
 > interpolated or hand-adjusted afterwards."*
 
-Artinya: **ground truth-nya bukan penilaian manusia soal sepak bola.** GT adalah output dari sebuah
-sistem pelacakan versi terkoreksi. Yang kalian kejar bukan "kebenaran sepak bola", tapi **menebak apa
-yang akan dikatakan tracking terkoreksi itu**. Dan satu-satunya jendela untuk melihat logikanya adalah
-**5 menit ground truth publik** yang ada di repo.
+Artinya: **ground truth (jawaban benar) bukan penilaian manusia tentang sepak bola.** Ground truth
+adalah keluaran sistem pelacakan yang sudah dikoreksi. Jadi yang kalian kejar bukan "kebenaran dalam
+sepak bola", melainkan **menebak apa yang akan dikatakan oleh data pelacakan terkoreksi itu**. Satu-satunya
+jendela untuk memahami cara kerjanya adalah **5 menit ground truth publik** yang ada di repo.
 
 ---
 
@@ -69,397 +71,423 @@ yang akan dikatakan tracking terkoreksi itu**. Dan satu-satunya jendela untuk me
 
 | | |
 |---|---|
-| FPS | 25 |
+| FPS (frame per detik) | 25 |
 | Total frame video | 199.319 (0–199318) |
 | **Frame yang dinilai** | **158.857** |
-| Babak 1 dinilai | frame 11.185 – 90.651 (79.467 frame) |
-| Babak 2 dinilai | frame 110.808 – 190.197 (79.390 frame) |
-| Babak 2 kick-off | frame **113.742** — jadi 2.934 frame pertama babak 2 dinilai dan **semuanya `D`** |
-| Bola terdeteksi | 56,9% seluruh frame (113.488 / 199.319) · 59,3% frame dinilai (94.214 / 158.857) |
-| **Bola hilang** | **41% frame yang dinilai**, 43% seluruh frame |
+| Babak 1 yang dinilai | frame 11.185 – 90.651 (79.467 frame) |
+| Babak 2 yang dinilai | frame 110.808 – 190.197 (79.390 frame) |
+| Kick-off babak 2 | frame **113.742**, jadi 2.934 frame pertama babak 2 ikut dinilai dan **semuanya `D`** |
+| Bola terdeteksi | 56,9% dari seluruh frame (113.488 / 199.319) · 59,3% dari frame yang dinilai (94.214 / 158.857) |
+| **Bola tidak terdeteksi** | **41% dari frame yang dinilai**, 43% dari seluruh frame |
 | Track slot | 46 (feed taktis) · 51 (broadcast) |
-| Tracker broadcast | 164.488 record (timeline sendiri, tidak selaras frame) |
+| Catatan tracker broadcast | 164.488 (timeline-nya sendiri, tidak sama dengan nomor frame feed taktis) |
 | Smart Tagging | 638 fase |
-| Homography valid | taktis 100% · broadcast 65,8% |
-| Pitch | 105,3 × 68,0 m (versi `games.py`; metadata menulis 105,0 × 68,0) |
-| Frame offset | `{1: 1702057, 2: 1702058}` — beda satu frame antar babak |
-| `video_frame` | `= id_frame − 1` (tracking 1-based, submission 0-based) |
+| Homography yang valid | taktis 100% · broadcast 65,8% |
+| Ukuran lapangan | 105,3 × 68,0 m (menurut `games.py`; metadata menulis 105,0 × 68,0) |
+| Selisih nomor frame (frame offset) | `{1: 1702057, 2: 1702058}`, berbeda satu frame antar babak |
+| `video_frame` | `= id_frame − 1` (data tracking mulai dari 1, submission mulai dari 0) |
 
-**5 menit ground truth publik** (satu-satunya yang kita punya):
+**5 menit ground truth publik** (satu-satunya ground truth yang kita punya):
 
 | | |
 |---|---|
-| Cakupan | frame 11.185 – 18.684 |
-| Frame dinilai | 7.500 |
+| Rentang | frame 11.185 – 18.684 |
+| Frame yang dinilai | 7.500 |
 | Possession | **17** · 21 segmen · rata-rata 14,2 detik |
 | Komposisi | `H` 3.454 · `A` 2.577 · `D` 1.469 |
 
-**Lantai yang harus dilewati** — `baseline_smooth50`, diukur pada pertandingan penuh:
+**Batas minimum yang harus dilewati** adalah `baseline_smooth50`, diukur pada pertandingan penuh:
 
 | Baseline | macroF1 | spellF1 |
 |---|---|---|
 | `baseline_raw` | 0,6532 | 0,0486 |
 | `baseline_smooth25` | **0,6752** | 0,1996 |
-| `baseline_smooth50` | 0,6724 | **0,2433** ← lantai |
+| `baseline_smooth50` | 0,6724 | **0,2433** ← batas minimum |
 | `baseline_smooth125` | 0,6356 | 0,2242 |
 
-Baca tabel itu sekali lagi. Empat baris itu **algoritma yang sama, empat kali** — pemain tracked terdekat
-ke bola, lalu voting mayoritas atas sebuah window. Yang berubah cuma lebar window-nya. `macroF1` bergerak
-**0,04**. `spellF1` bergerak **lima kali lipat**.
+Perhatikan tabel itu sekali lagi. Keempat baris itu adalah **algoritma yang sama, dijalankan empat
+kali**: cari pemain yang terdekat ke bola, lalu ambil suara terbanyak (voting mayoritas) dalam sebuah
+window. Satu-satunya yang berubah adalah lebar window. Namun `macroF1` hanya bergeser **0,04**, sedangkan
+`spellF1` berubah **lima kali lipat**.
 
-Itu bukan kebetulan — itu inti dari seluruh kompetisi ini.
+Itu bukan kebetulan. Itulah inti dari seluruh kompetisi ini.
 
 ---
 
 ## 3. Kenapa kita bisa menang, dan kenapa model bukan jawabannya
 
-`spellF1` mengukur **fragmentasi**, bukan ketepatan per frame. Setiap possession (run maksimal `H` atau
-`A`) diperlakukan sebagai satu objek, dipasangkan satu-ke-satu dengan possession asli lewat **temporal
-IoU**, lalu F1-nya dirata-rata pada threshold 0,3 / 0,4 / 0,5 / 0,6 / 0,7.
+`spellF1` mengukur **seberapa terpecah-pecah** possession kita, bukan ketepatan tiap frame. Setiap
+possession (rentang `H` atau `A` yang tidak terputus) diperlakukan sebagai satu objek. Possession itu
+dipasangkan satu lawan satu dengan possession asli lewat **temporal IoU** (ukuran tumpang tindih
+waktu), lalu F1-nya dirata-rata pada ambang 0,3 / 0,4 / 0,5 / 0,6 / 0,7.
 
-Konsekuensinya yang menentukan strategi:
+Empat akibatnya yang menentukan strategi kita:
 
-1. **Serpihan kecil bukan setengah benar — dia salah penuh.** Scorer **tidak punya minimum panjang
-   possession**. Satu frame pun dihitung possession utuh. Dan `fp` bukan cuma possession hantu:
-   possession kita yang overlap dengan yang asli tapi IoU-nya di bawah ambang **juga** dihitung FP.
-   Jadi memecah satu possession asli jadi dua menghasilkan **1 FP + 1 FN sekaligus**. "Jangan
-   fragmentasi" itu aritmetika, bukan saran gaya.
-2. **Satu kesalahan bisa bergerak 6 poin.** Di jendela publik, satu possession yang meleset ≈ 6 poin
-   `spellF1`. Efeknya besar per unit kerja.
-3. **Terlambat 1 frame itu gratis.** Terlambat 1 detik jatuhnya ke 0,6539. Artinya: **tepat di tepi
-   tidak penting, memotong di tengah itu fatal.**
-4. **Label konstan bernilai tepat 0.** Tidak ada jalan aman.
+1. **Potongan kecil bukan "setengah benar". Potongan kecil itu salah sepenuhnya.** Scorer **tidak punya
+   batas minimum panjang possession**, jadi satu frame pun dihitung sebagai satu possession utuh. Yang
+   dihitung `fp` (positif palsu) bukan hanya possession hantu. Possession kita yang beririsan dengan
+   possession asli tetapi IoU-nya di bawah ambang **juga** dihitung `fp`. Jadi memecah satu possession
+   asli menjadi dua menghasilkan **1 `fp` dan 1 `fn` sekaligus**. "Jangan memecah possession" adalah
+   hitungan matematika, bukan sekadar saran.
+2. **Satu kesalahan bisa menggeser skor 6 poin.** Di jendela publik, satu possession yang meleset kira-kira
+   mengurangi 6 poin `spellF1`. Pengaruhnya besar untuk setiap kesalahan.
+3. **Terlambat 1 frame tidak apa-apa.** Terlambat 1 detik hanya menurunkan skor ke 0,6539. Artinya,
+   **ketepatan di ujung batas tidak penting, tetapi memotong di tengah possession itu fatal.**
+4. **Label yang sama untuk semua frame bernilai tepat 0.** Tidak ada jalan pintas yang aman.
 
-**Buktinya, dari menjalankan scorer resmi pada 5 menit publik.** Kolom `frag` adalah rasio jumlah
-segmen prediksi terhadap 21 segmen kebenaran:
+**Buktinya** datang dari menjalankan scorer resmi pada 5 menit publik. Kolom `frag` adalah perbandingan
+antara jumlah segmen prediksi dan 21 segmen yang benar:
 
-| Versi baseline | `frag` | `spellF1` | possession dilaporkan (GT: 17) |
+| Versi baseline | `frag` | `spellF1` | possession yang dilaporkan (GT: 17) |
 |---|---|---|---|
 | `baseline_smooth125` | 0,81 | **0,4242** | 16 (−1) |
 | `baseline_smooth50` | 1,43 | 0,3256 | 26 (+9) |
 | `baseline_smooth25` | 1,90 | 0,2868 | 36 (+19) |
 | `baseline_raw` | 6,52 | 0,0378 | 131 (+114) |
 
-Kolom `frag` hampir menjadi prediktor langsung `spellF1`, dan hubungannya monoton. Angka itu dicetak
-oleh evaluator resmi setiap kali kalian menjalankan `tools/gate0.py` — **jadikan itu angka yang
-dipantau setiap hari, bukan `macroF1`.**
+Kolom `frag` hampir bisa dipakai langsung untuk memperkirakan `spellF1`, dan hubungannya konsisten:
+makin kecil `frag`, makin besar `spellF1`. Angka itu dicetak oleh evaluator resmi setiap kali kalian
+menjalankan `tools/gate0.py`. **Pantau angka itu setiap hari, bukan `macroF1`.**
 
 Kesimpulan yang harus dipegang seluruh tim sampai 17 November:
 
-> Skor kita datang dari **empat hal struktural** — deteksi dead-ball, imputasi bola, atribusi tim, dan
-> segmentasi yang tidak memecah possession. Tidak satu pun dari empat itu adalah "model yang lebih
-> canggih". Keempatnya bisa dikerjakan dengan fitur + aturan + threshold, dan masing-masing bisa
-> diverifikasi sendiri-sendiri.
+> Skor kita berasal dari **empat hal struktural**: deteksi bola mati, pengisian posisi bola yang hilang
+> (imputasi), penentuan tim yang menguasai bola, dan penyusunan possession tanpa memecahnya. Tidak ada
+> satu pun yang berupa "model yang lebih canggih". Keempatnya bisa dikerjakan dengan fitur, aturan, dan
+> ambang batas, dan masing-masing bisa diuji sendiri-sendiri.
 
 ---
 
-## 4. Job desk
+## 4. Pembagian tugas
 
-Empat orang, empat seat, satu pemilik per output. Kolom terakhir itu yang dipakai di rapat harian —
-kalau output-nya tidak ada, seat itu merah.
+Ada empat orang, empat seat, dan satu penanggung jawab untuk setiap hasil kerja. Kolom terakhir di
+tabel ringkasan dipakai dalam rapat harian: kalau hasilnya belum ada, seat itu dianggap merah.
 
-> **Semua seat di bawah ini masih sementara.** Ini usulan yang dipetakan ke rekam jejak, bukan
-> keputusan. Rapat pertama yang mengunci — dan sesudah Gate 1 mulai, mengubahnya jadi mahal.
+> **Semua seat di bawah ini masih sementara.** Isinya usulan yang dicocokkan dengan pengalaman masing-masing
+> orang, bukan keputusan final. Rapat pertama yang mengunci pembagiannya. Setelah Gate 1 dimulai,
+> mengubah pembagian ini menjadi mahal.
 >
-> **PM sengaja dikosongkan** (lihat §4.5). Sisanya tetap harus punya nama.
+> **Peran PM sengaja dikosongkan** (lihat §4.5). Seat lainnya tetap harus ada namanya.
 >
-> **Seat 1 dan Seat 2 bisa ditukar.** Dyang dan Raissa punya profil yang tumpang tindih hampir
-> seluruhnya: keduanya lewat Startup Campus Data Science Batch 5, keduanya punya rekam jejak EDA,
-> clustering, segmentation, dan dashboard — **dan keduanya sama-sama paham sepak bola.** Jadi
-> pembagiannya sebaiknya ditentukan oleh **preferensi**, bukan oleh kemampuan. Yang **tidak** bisa
-> ditukar: Seat 3 (Billa satu-satunya dengan jejak *sequence labelling*) dan Seat 4 (Yona satu-satunya
-> dengan kode berbentuk produksi).
+> **Seat 1 dan Seat 2 bisa ditukar.** Profil Dyang dan Raissa hampir sama: keduanya mengikuti Startup
+> Campus Data Science Batch 5, keduanya punya pengalaman EDA, clustering, segmentation, dan dashboard,
+> **dan keduanya sama-sama paham sepak bola.** Jadi pembagiannya sebaiknya ditentukan oleh **preferensi**,
+> bukan kemampuan. Yang **tidak bisa** ditukar adalah Seat 3 (Billa satu-satunya yang punya pengalaman
+> *sequence labelling*, yaitu memberi label pada data berurutan) dan Seat 4 (Yona satu-satunya yang
+> pernah menulis kode berstandar produksi).
 
-### Seat 1 — Domain, Aturan & Eksperimen · **Dyang** (`DyangPB`)
+### Seat 1 — Domain, Aturan, dan Eksperimen · **Dyang** (`DyangPB`)
 
-**Kenapa dia:** menonton LaLiga konsisten (terutama Barça) dan menulis soal bola.
+**Kenapa dia:** menonton LaLiga secara rutin (terutama Barça) dan menulis tentang sepak bola.
 
 **Tugas:**
 
-*Fase 1 — domain (3–4 hari pertama, pekerjaan terdepan):*
-- Membedah 5 menit GT publik frame demi frame — pakai lembar kerja `docs/gt-public-transitions.md`.
-  Dibagi dengan Raissa, yang juga paham bola.
-- Menuliskan aturan `D` vs `H`/`A` dalam bentuk yang bisa dikodekan.
+*Fase 1 — domain (3–4 hari pertama, pekerjaan paling depan):*
+- Membedah 5 menit GT publik frame demi frame, memakai lembar kerja `docs/gt-public-transitions.md`.
+  Pekerjaan ini dibagi dengan Raissa, yang juga paham sepak bola.
+- Menuliskan aturan `D` dan `H`/`A` dalam bentuk yang bisa langsung diubah menjadi kode.
 
-*Fase 2 — teknis (sisa waktu, jalan terus):*
-- **Menulis kode fitur dead-ball** di `src/deculgirl/features/`. Aturan yang kamu tulis di `possession-rules.md`
-  langsung jadi fungsi di situ — dan **kamu yang menulisnya**, bukan Billa. Ini terjemahan paling langsung
-  dari cara berpikirmu ke kode, dan tidak ada orang lain yang bisa menuliskannya lebih tepat. Billa
-  membangun model **di atas** fitur itu, bukan menggantikannya.
-- **Alat diagnosa & harness eksperimen** — `metrics/diagnose.py` dan `metrics/compare.py`. Ini yang dipakai
-  seluruh tim untuk melihat di mana kesalahannya (§8), dan kamu yang memutuskan bentuknya.
-- **Penjalan eksperimen** — setiap perubahan yang bisa diukur kamu jalankan dan kamu catat di
-  `docs/experiments.md`, lengkap dengan putusannya. Termasuk yang gagal, **terutama** yang gagal: itu isi
-  bagian *"tried and dropped"* yang diwajibkan di dokumen teknis (§7.7).
-- Pemilik kebijakan `X`: kapan sistem menyerah, kapan wajib menebak.
+*Fase 2 — teknis (sisa waktu, berjalan terus):*
+- **Menulis kode fitur bola mati (dead ball)** di `src/deculgirl/features/`. Aturan yang ditulis Dyang di
+  `possession-rules.md` langsung menjadi fungsi di situ, dan **Dyang sendiri yang menuliskannya**, bukan
+  Billa. Ini cara paling langsung untuk mengubah cara berpikir Dyang menjadi kode, dan tidak ada orang
+  lain yang bisa menuliskannya lebih tepat. Billa membangun model **di atas** fitur itu, bukan
+  menggantikannya.
+- **Alat diagnosa dan harness eksperimen**, yaitu `metrics/diagnose.py` dan `metrics/compare.py`. Seluruh
+  tim memakainya untuk melihat letak kesalahan (§8), dan Dyang yang menentukan bentuknya.
+- **Menjalankan eksperimen.** Setiap perubahan yang bisa diukur dijalankan Dyang dan dicatat di
+  `docs/experiments.md` lengkap dengan putusannya. Eksperimen yang gagal juga dicatat, bahkan **terutama**
+  yang gagal, karena catatan itulah isi bagian *"tried and dropped"* (yang dicoba lalu dibuang) yang
+  diwajibkan di dokumen teknis (§7.7).
+- Pemilik kebijakan `X`: kapan sistem boleh tidak menjawab, dan kapan wajib menebak.
 
-**Output yang bisa dicek:** `docs/possession-rules.md` · fitur dead-ball di `src/deculgirl/features/` ·
+**Hasil yang bisa diperiksa:** `docs/possession-rules.md` · fitur bola mati di `src/deculgirl/features/` ·
 `metrics/diagnose.py` · `docs/experiments.md`
 
-**Definisi selesai:** Billa bisa membangun model dead-ball **tanpa bertanya lagi** ke Dyang, karena
-fiturnya sudah ada dan sudah terdokumentasi.
-**Definisi selesai (topi eksperimen):** setiap perubahan yang masuk `main` punya entri di
-`docs/experiments.md`, lengkap dengan angka dan putusan ✅/❌/⚠️ — bukan cuma "terasa lebih baik".
+**Definisi selesai:** Billa bisa membangun model bola mati **tanpa bertanya lagi** ke Dyang, karena
+fiturnya sudah ada dan sudah didokumentasikan.
+**Definisi selesai (untuk tugas eksperimen):** setiap perubahan yang masuk `main` punya catatan di
+`docs/experiments.md`, lengkap dengan angka dan putusan ✅/❌/⚠️, bukan sekadar "rasanya lebih baik".
 
-**Catatan risiko — direvisi 24 Oktober.** Rencana awal menganggap Dyang satu-satunya yang paham bola di
-tim ini, dan memperlakukan itu sebagai *single point of failure*. **Itu keliru:** Raissa juga paham bola.
-Risikonya turun dari satu orang jadi dua, dan itu mengubah dua hal — lembar 21 transisi bisa dibagi dua
-orang, dan tekanan "tuliskan semuanya secepat mungkin" jadi jauh lebih ringan. Menuliskan aturannya
-tetap wajib, tapi sekarang karena itu bagian dari deliverable #3, **bukan** karena takut tidak ada yang
-bisa menggantikan.
+**Catatan risiko — direvisi 24 Oktober.** Rencana awal menganggap Dyang satu-satunya orang di tim yang
+paham sepak bola, sehingga ia dianggap *single point of failure* (satu titik yang kalau hilang, semuanya
+terhenti). **Anggapan itu keliru:** Raissa juga paham sepak bola. Risikonya turun dari satu orang
+menjadi dua. Dampaknya ada dua: lembar 21 transisi bisa dibagi dua orang, dan tekanan untuk
+"menuliskan semuanya secepat mungkin" jauh berkurang. Menuliskan aturan tetap wajib, tetapi sekarang
+alasannya karena itu bagian dari hasil kerja ketiga (dokumen teknis), **bukan** karena takut tidak ada
+yang bisa menggantikan.
 
 ---
 
-### Seat 2 — Data & Sinyal Bola · **Raissa** (`raisinmee`)
+### Seat 2 — Data dan Sinyal Bola · **Raissa** (`raisinmee`)
 
-**Kenapa dia:** rekam jejak EDA, clustering, segmentation, dan dashboard — pekerjaan yang sebagian besar
-isinya sanitasi data dan pemeriksaan distribusi. **Dan dia juga paham sepak bola** — jadi dia co-owner domain
-bersama Dyang, bukan cuma penerima aturan.
+**Kenapa dia:** punya pengalaman EDA, clustering, segmentation, dan dashboard, yaitu pekerjaan yang
+sebagian besar berisi membersihkan data dan memeriksa sebaran nilainya. **Dia juga paham sepak bola**,
+sehingga dia ikut memegang domain bersama Dyang, bukan sekadar menerima aturan.
 
-> Seat ini bisa ditukar dengan Seat 1: Dyang punya rekam jejak EDA/clustering/segmentation/dashboard
-> yang setara dan juga paham bola. Kalau kalian bertukar, tidak ada yang hilang — yang berpindah cuma
-> siapa memegang aturan dan siapa memegang fitur.
+> Seat ini bisa ditukar dengan Seat 1. Dyang punya pengalaman EDA/clustering/segmentation/dashboard yang
+> setara dan juga paham bola. Kalau kalian bertukar, tidak ada yang hilang. Yang berpindah hanya siapa
+> yang memegang aturan dan siapa yang memegang fitur.
 
 **Tugas:**
-- Memuat ATD (EPTS XML + raw txt), Smart Tagging, dan homography. **Mengkanonikalisasi** semuanya ke satu
-  tabel per frame.
-- Menjaga alignment: `video_frame = id_frame − 1`, Smart Tagging `round(seconds × 25)`, homography
-  `frame` = baris submission.
-- Membangun fitur per frame (§7.2, §7.3).
-- **Co-owner domain:** memvalidasi apakah aturan Dyang masuk akal **secara sepak bola**, dan mengambil
-  separuh lembar 21 transisi (§`docs/gt-public-transitions.md`). Dua orang membaca 21 transisi itu akan
-  melihat hal yang berbeda — dan perbedaan itulah gunanya.
-- Pemilik diagnosa: distribusi label, panjang gap bola, peta serpihan.
+- Memuat ATD (XML EPTS dan txt mentah), Smart Tagging, dan homography, lalu **menyeragamkan** semuanya
+  menjadi satu tabel dengan satu baris per frame.
+- Menjaga penyelarasan nomor frame: `video_frame = id_frame − 1`, Smart Tagging memakai
+  `round(detik × 25)`, dan kolom `frame` di homography sama dengan baris di submission.
+- Membangun fitur per frame (§7.2 dan §7.3).
+- **Ikut memegang domain:** memeriksa apakah aturan Dyang masuk akal **dari sudut pandang sepak bola**,
+  dan mengambil separuh lembar 21 transisi (`docs/gt-public-transitions.md`). Dua orang yang membaca 21
+  transisi itu akan melihat hal yang berbeda, dan perbedaan itulah gunanya.
+- Pemilik diagnosa: sebaran label, panjang celah bola yang hilang, dan peta potongan possession.
 
-**Output yang bisa dicek:** `src/deculgirl/features/` · tabel fitur per frame · laporan diagnosa
+**Hasil yang bisa diperiksa:** `src/deculgirl/features/` · tabel fitur per frame · laporan diagnosa
 
 **Definisi selesai:** satu perintah menghasilkan `features.parquet` dengan tepat 199.319 baris, tanpa
-`NaN` yang tak dijelaskan, dan Billa bisa memakainya tanpa menyentuh file mentah.
+`NaN` yang tidak dijelaskan, dan Billa bisa memakainya tanpa menyentuh file mentah.
 
 ---
 
-### Seat 3 — Model Sekuensial & Dead-Ball · **Billa** (`nabilland`)
+### Seat 3 — Model Sekuensial dan Bola Mati · **Billa** (`nabilland`)
 
-**Kenapa dia:** satu-satunya di tim dengan rekam jejak *sequence labelling* (LSTM / Bi-LSTM / Bi-GRU) —
-dan ini persis masalah sequence labelling: 199.319 frame berurutan yang saling bergantung.
+**Kenapa dia:** satu-satunya di tim yang punya pengalaman *sequence labelling* (LSTM / Bi-LSTM /
+Bi-GRU). Tugas ini persis jenis masalah itu: 199.319 frame berurutan yang saling memengaruhi.
 
 **Tugas:**
-- Model dead-ball terpisah (§7.1) — **ini lubang terbesar di baseline**, dan nilainya paling tinggi.
-- Atribusi `H`/`A` untuk frame bola hidup (§7.3).
-- Segmentasi anti-fragmentasi (§7.4) — dari probabilitas per frame jadi interval.
+- Model bola mati yang berdiri sendiri (§7.1). **Inilah kelemahan terbesar baseline**, dan nilainya
+  paling tinggi.
+- Menentukan tim `H`/`A` untuk frame saat bola hidup (§7.3).
+- Menyusun possession tanpa memecahnya (§7.4), yaitu mengubah probabilitas per frame menjadi rentang
+  waktu.
 - Model sekuensial di Gate 2 (§7.6).
-- **Penulis utama dokumen teknis** (deliverable #3) — satu-satunya yang sudah punya publikasi ilmiah.
+- **Penulis utama dokumen teknis** (hasil kerja ketiga). Billa satu-satunya yang sudah punya publikasi
+  ilmiah.
 
-**Output yang bisa dicek:** `src/deculgirl/model/` · file label mentah · draf dokumen teknis
+**Hasil yang bisa diperiksa:** `src/deculgirl/model/` · file label mentah · draf dokumen teknis
 
-**Definisi selesai:** perubahan konfigurasi apa pun bisa dijalankan ulang dan menghasilkan skor yang
-berbeda dengan jelas — bukan hasil yang tidak bisa dijelaskan.
+**Definisi selesai:** setiap perubahan konfigurasi bisa dijalankan ulang dan menghasilkan skor yang
+jelas berbeda, bukan hasil yang tidak bisa dijelaskan.
 
 ---
 
-### Seat 4 — Metrik, Validasi & Reproducibility · **Yona** (`yonakatitin`)
+### Seat 4 — Pengukuran, Validasi, dan Reproduksi Hasil · **Yona** (`yonakatitin`)
 
-**Kenapa dia:** satu-satunya dengan kode berbentuk produksi (FastAPI, RAG pipeline, AWS re/Start).
+**Kenapa dia:** satu-satunya yang pernah menulis kode berstandar produksi (FastAPI, RAG pipeline, AWS
+re/Start).
 
 **Tugas:**
-- Scorer resmi jalan lokal (§8) — **Gate 0, hari pertama**.
-- Regression suite + bootstrap CI, supaya perbedaan 0,01 tidak dipercaya sebagai kemenangan.
-- `run.py`: satu perintah yang mereproduksi file submission **identik**.
-- Dependensi di-pin. Gate validasi jalan otomatis di setiap PR.
-- Penjaga gerbang terakhir sebelum submit.
+- Menjalankan scorer resmi di komputer lokal (§8). Ini **Gate 0, hari pertama**.
+- Membuat regression suite dan bootstrap CI, supaya selisih 0,01 tidak disangka kemenangan.
+- Menyiapkan `run.py`, satu perintah yang menghasilkan file submission yang **identik**.
+- Mengunci versi semua dependensi (pin). Pemeriksaan validasi berjalan otomatis di setiap PR.
+- Penjaga terakhir sebelum submit.
 
-**Output yang bisa dicek:** `metrics/` · `run.py` · `.github/workflows/validate.yml` · `REPRODUCE.md`
+**Hasil yang bisa diperiksa:** `metrics/` · `run.py` · `.github/workflows/validate.yml` · `REPRODUCE.md`
 
-**Definisi selesai:** Dyang bisa menghapus semua output, menjalankan satu perintah di laptopnya sendiri,
-dan file yang dihasilkan identik byte-per-byte dengan yang tadi.
+**Definisi selesai:** Dyang bisa menghapus semua hasil, menjalankan satu perintah di laptopnya sendiri,
+dan file yang dihasilkan identik byte demi byte dengan yang sebelumnya.
 
-> **Catatan penting — Yona satu-satunya yang masih intern.** Seat 4 itu jalur kritis: kalau dia hilang
-> tiga hari di minggu terakhir, tidak ada yang bisa menghasilkan ulang submission. Karena itu:
-> mekanika pipeline dibangun berpasangan di Gate 0 lalu **dibekukan**, gate-nya **diotomasi** (robot,
-> bukan orang), dan fungsi "apakah bedanya nyata?" pindah ke Raissa. Yona tetap pemilik metriknya;
-> Raissa pemilik keraguannya.
+> **Catatan penting — Yona satu-satunya yang masih intern.** Seat 4 adalah jalur yang tidak boleh
+> terputus. Kalau Yona tidak bisa dihubungi selama tiga hari di minggu terakhir, tidak ada yang bisa
+> menghasilkan ulang submission. Karena itu, cara kerja pipeline dibangun berpasangan di Gate 0 lalu
+> **dibekukan**, pemeriksaannya **diotomatiskan** (dikerjakan robot, bukan orang), dan tugas menjawab
+> "apakah selisih ini nyata?" dipindahkan ke Raissa. Yona tetap pemilik metriknya, sedangkan Raissa
+> pemilik keraguannya.
 
 ---
 
 ### 4.5 ⬜ PM — sengaja dikosongkan
 
-Siapa yang jadi PM **belum ditetapkan**, dan itu disengaja. Ini satu-satunya peran di dokumen ini yang
-tidak dipetakan ke rekam jejak siapa pun — karena PM bukan soal keahlian, tapi soal **kesediaan**.
-Tanyakan langsung di rapat, jangan tunggu ada yang mengangkat tangan sendiri.
+Siapa yang menjadi PM **belum ditetapkan**, dan itu disengaja. Ini satu-satunya peran di dokumen ini
+yang tidak dicocokkan dengan pengalaman siapa pun, karena PM bukan soal keahlian, melainkan soal
+**kesediaan**. Tanyakan langsung di rapat. Jangan menunggu ada yang mengangkat tangan sendiri.
 
-**PM itu topi, bukan seat.** Pemegangnya tetap punya seat teknisnya sendiri. Jadi kalian **tidak**
-butuh orang kelima — kalian butuh salah satu dari empat ini yang bersedia memegang dua hal sekaligus.
+**PM adalah peran tambahan, bukan seat tersendiri.** Siapa pun yang memegangnya tetap mengerjakan seat
+teknisnya. Jadi kalian **tidak** butuh orang kelima. Kalian hanya butuh satu dari empat orang ini yang
+bersedia memegang dua tugas sekaligus.
 
-| Tanggung jawab | Kalau tidak ada yang pegang |
+| Tanggung jawab | Kalau tidak ada yang memegang |
 |---|---|
-| Menjalankan sync harian: "apa yang hijau, apa yang merah, apa yang menghalangi" | Tim remote akan drift dalam empat hari, dan tidak ada yang menyadarinya |
-| Memutuskan di akhir tiap gate: **lanjut atau perbaiki** | Gate-nya jadi dekorasi — tanggal lewat tanpa ada yang memutuskan |
-| **Pemilik file submission**: dry run 15 Nov, mengisi form, menyimpan bukti | Ini penyebab kegagalan paling umum, dan tidak bisa diselamatkan di menit terakhir |
-| Memastikan `docs/decisions.md` terisi | Keputusan hilang dan diulang minggu depan |
+| Memimpin rapat harian: "apa yang hijau, apa yang merah, apa yang menghalangi" | Tim remote akan berjalan sendiri-sendiri dalam empat hari, dan tidak ada yang menyadarinya |
+| Memutuskan di akhir tiap gate: **lanjut atau perbaiki** | Gate hanya jadi hiasan, tanggalnya lewat tanpa ada yang memutuskan |
+| **Pemilik file submission**: uji coba pengiriman 15 Nov, mengisi form, menyimpan bukti | Ini penyebab kegagalan paling umum, dan tidak bisa diselamatkan di menit terakhir |
+| Memastikan `docs/decisions.md` terisi | Keputusan hilang dan dibahas ulang minggu depan |
 
-**Batas waktunya: harus ada yang memegang selambat-lambatnya akhir Gate 1 — Senin, 2 November.**
+**Batas waktunya: harus sudah ada yang memegang paling lambat di akhir Gate 1, yaitu Senin, 2 November.**
 
-Sampai itu terisi, dua hal jalan dengan cara sementara — dan dua-duanya sengaja tidak dipaksakan:
+Sampai peran itu terisi, dua hal berjalan dengan cara sementara, dan keduanya sengaja tidak dipaksakan:
 
-- `docs/decisions.md` diisi **notulis bergilir**: yang mencatat di rapat itu, bukan satu orang tetap.
-- Kepemilikan file submission belum punya nama. Itu **wajar** untuk hari kedua, dan **tidak wajar**
-  untuk hari kesepuluh.
+- `docs/decisions.md` diisi oleh **notulis bergilir**, yaitu siapa pun yang mencatat di rapat itu, bukan
+  satu orang tetap.
+- Kepemilikan file submission belum punya nama. Itu **wajar** di hari kedua, tetapi **tidak wajar** di
+  hari kesepuluh.
 
-Kalau sampai 2 November tidak ada yang bersedia, jatuh ke **Dyang secara default** — bukan karena itu
-bagian dari tugas domainnya, tapi karena file submission harus punya satu nama dan kamu pemilik repo-nya.
+Kalau sampai 2 November tidak ada yang bersedia, tugas ini jatuh ke **Dyang secara otomatis**. Alasannya
+bukan karena itu bagian dari tugas domainnya, tetapi karena file submission harus punya satu nama dan
+Dyang adalah pemilik repo.
 
 ---
 
-## 5. Flow 25 hari — empat gate
+## 5. Alur 25 hari: empat gate
 
-Format gate, bukan kalender. **Setiap gate punya satu angka yang harus hijau sebelum lanjut.** Kalau
-gate-nya merah, jangan naik — perbaiki dulu.
+Pekerjaan dibagi per **gate** (tahap), bukan per tanggal. **Setiap gate punya satu angka yang harus
+hijau sebelum lanjut.** Kalau gatenya masih merah, jangan naik ke gate berikutnya. Perbaiki dulu.
 
-Hari ini **Sabtu, 24 Oktober 2026**. Deadline **Selasa, 17 November 2026**. Registrasi tutup
-**Selasa, 10 November 2026**.
+Hari ini **Sabtu, 24 Oktober 2026**. Batas pengumpulan **Selasa, 17 November 2026**. Pendaftaran
+ditutup **Selasa, 10 November 2026**.
 
-### 🔴 GATE 0 — Pipeline & fail-safe · Sab 24 – Sen 26 Okt (3 hari)
+### 🔴 GATE 0 — Pipeline dan pengaman · Sab 24 – Sen 26 Okt (3 hari)
 
 **Angka hijau:** `run.py` menghasilkan file 199.319 baris yang **lolos `validate_submission.py`**, dan
-kita punya skor `spellF1` terukur di jendela publik.
+kita punya skor `spellF1` yang terukur di jendela publik.
 
-**Angka kedua:** kita sudah **terdaftar dan sudah pegang bundle data.**
+**Angka kedua:** kita sudah **terdaftar dan sudah memegang bundle data.**
 
-Daftar kerja:
-1. **Turunkan bundle ke `data\tactical\`** dengan nama file persis seperti aslinya. Yang dibutuhkan cuma
-   empat file — `tactical.mp4` tidak dipakai pipeline kita sama sekali. Kalau Drive tidak mengizinkan
-   unduh, email penyelenggara **hari ini**; itu satu-satunya hal di proyek ini yang tidak bisa dikejar
-   dengan kerja keras.
-2. **Sudah jalan:** repo `mtah-DeculGirl` publik, commit pertama ter-push. Sisa satu langkah — atur
-   aksesnya: **Dyang = owner**, **Billa = Admin** (co-admin), **Raissa & Yona = Write**. Dua admin, bukan
-   satu: Admin adalah satu-satunya role yang bisa mengubah Settings, mengatur akses, dan menyentuh
-   Actions, jadi kalau cuma satu orang yang memegangnya dan dia tidak bisa dihubungi di minggu terakhir,
-   tim kehilangan kemampuan memperbaiki repo tepat di saat paling berbahaya.
-3. **Sudah disiapkan:** `tools/fetch_official.py` — ambil repo resmi di commit `f8f2629` ke
-   `third_party/`. Kalian cuma perlu menjalankannya.
-4. **Sudah disiapkan dan sudah diuji:** `tools/gate0.py` — **tidak butuh data pertandingan sama
-   sekali.** Dia membuktikan scorer, validator, dan GT publik bekerja di mesin kalian.
-5. **Sudah disambungkan:** versi pertama `submit.py` memakai **baseline resmi** — bukan rekaan kita,
-   tapi kode MIT dari penyelenggara yang mereka sendiri sebut *"a starting point, not a constraint"*.
-   Begitu data kalian turun, `python run.py` langsung menghasilkan submission berskor. **Itu
-   fail-safe kalian, dan itu sebabnya langkah ini tidak boleh dilewati.** Setiap perbaikan
-   ditambahkan sebagai varian; `main` selalu bisa menghasilkan submission yang valid.
-6. Unpack data ke `data/` (**di drive D:, gitignored**). Konfirmasi jumlah baris tracking = 199.319.
-   Kalau tidak sama, **jangan di-pad atau di-trim** — cari tahu kenapa bedanya.
+Daftar pekerjaan:
+1. **Unduh bundle ke `data\tactical\`** dengan nama file yang persis sama dengan aslinya. Yang
+   dibutuhkan hanya empat file, karena `tactical.mp4` tidak dipakai pipeline kita sama sekali. Kalau
+   Drive tidak mengizinkan unduhan, kirim email ke penyelenggara **hari ini juga**. Itu satu-satunya
+   masalah di proyek ini yang tidak bisa diatasi dengan kerja keras.
+2. **Sudah berjalan:** repo `mtah-DeculGirl` sudah publik dan commit pertama sudah di-push. Tinggal satu
+   langkah, yaitu mengatur hak akses: **Dyang = owner**, **Billa = Admin** (admin kedua), **Raissa dan
+   Yona = Write**. Adminnya dua orang, bukan satu, karena Admin adalah satu-satunya peran yang bisa
+   mengubah Settings, mengatur akses, dan mengelola Actions. Kalau hanya satu orang yang memegangnya dan
+   dia tidak bisa dihubungi di minggu terakhir, tim tidak bisa memperbaiki repo di saat yang paling
+   berbahaya.
+3. **Sudah disiapkan:** `tools/fetch_official.py`, yang mengunduh repo resmi pada commit `f8f2629` ke
+   `third_party/`. Kalian tinggal menjalankannya.
+4. **Sudah disiapkan dan sudah diuji:** `tools/gate0.py`, yang **sama sekali tidak butuh data
+   pertandingan**. Alat ini membuktikan bahwa scorer, validator, dan GT publik berfungsi di komputer
+   kalian.
+5. **Sudah disambungkan:** versi pertama `submit.py` memakai **baseline resmi**. Itu bukan buatan kita,
+   melainkan kode berlisensi MIT dari penyelenggara yang mereka sebut sendiri sebagai *"a starting
+   point, not a constraint"* (titik awal, bukan batasan). Begitu data selesai diunduh, `python run.py`
+   langsung menghasilkan submission yang sudah berskor. **Itulah pengaman kalian, dan karena itu
+   langkah ini tidak boleh dilewati.** Setiap perbaikan ditambahkan sebagai varian baru, sehingga
+   `main` selalu bisa menghasilkan submission yang valid.
+6. Ekstrak data ke `data/` (**di drive D:, tidak masuk git**). Pastikan jumlah baris tracking = 199.319.
+   Kalau jumlahnya berbeda, **jangan ditambah atau dipotong sendiri**. Cari tahu dulu kenapa berbeda.
 
 > ### ⚠️ Kalau Gate 0 selesai, kalian sudah punya submission. Itu asuransi.
-> Setelah ini, **tidak ada yang boleh menghapus file yang sudah valid.** Setiap perbaikan ditambahkan
+> Setelah ini, **tidak boleh ada yang menghapus file yang sudah valid.** Setiap perbaikan ditambahkan
 > sebagai varian, dan `main` selalu bisa menghasilkan submission yang valid.
 
 ---
 
-### 🟠 GATE 1 — Empat pilar struktural · Sel 27 Okt – Sen 2 Nov (7 hari)
+### 🟠 GATE 1 — Empat hal struktural · Sel 27 Okt – Sen 2 Nov (7 hari)
 
-**Angka hijau:** `spellF1` publik melewati baseline kita sendiri, dan `macroF1` kelas `D` naik jelas.
+**Angka hijau:** `spellF1` di jendela publik melewati baseline buatan kita sendiri, dan `macroF1` untuk
+kelas `D` naik dengan jelas.
 
-Semua seat bekerja paralel, tanpa saling menunggu. Detail teknis di §7.
+Semua seat bekerja bersamaan tanpa saling menunggu. Rincian teknisnya ada di §7.
 
-| Seat | Deliverable gate ini |
+| Seat | Hasil kerja di gate ini |
 |---|---|
-| 1 (Dyang) | `docs/possession-rules.md` jadi, ditinjau Billa |
-| 2 (Raissa) | `features.parquet` + laporan diagnosa gap bola |
-| 3 (Billa) | Dead-ball classifier + segmentasi anti-fragmentasi jalan |
-| 4 (Yona) | Regression suite + bootstrap CI; Gate 0 dibekukan |
+| 1 (Dyang) | `docs/possession-rules.md` selesai dan sudah ditinjau Billa |
+| 2 (Raissa) | `features.parquet` dan laporan diagnosa celah bola yang hilang |
+| 3 (Billa) | Pengklasifikasi bola mati dan penyusunan possession tanpa memecah sudah berjalan |
+| 4 (Yona) | Regression suite dan bootstrap CI selesai; Gate 0 dibekukan |
 
-**Aturan gate ini:** setiap pilar harus bisa **diverifikasi sendiri**. Kalau dead-ball detector
-memperbaiki `macroF1` kelas `D` **tanpa** merusak `spellF1`, itu terbukti bekerja. Kalau skor naik tapi
-kalian tidak tahu bagian mana yang menyebabkan — itu bukan hasil, itu kebetulan, dan tidak bisa ditulis
-di dokumen teknis.
+**Aturan gate ini:** setiap hal struktural harus bisa **dibuktikan sendiri-sendiri**. Kalau pendeteksi
+bola mati memperbaiki `macroF1` kelas `D` **tanpa** merusak `spellF1`, berarti ia terbukti berfungsi.
+Kalau skor naik tetapi kalian tidak tahu bagian mana penyebabnya, itu bukan hasil, melainkan
+kebetulan, dan tidak bisa ditulis di dokumen teknis.
 
 ---
 
-### 🟡 GATE 2 — Model sekuensial & tuning jujur · Sel 3 – Sen 9 Nov (7 hari)
+### 🟡 GATE 2 — Model sekuensial dan penyetelan yang jujur · Sel 3 – Sen 9 Nov (7 hari)
 
-**Angka hijau:** model sekuensial mengalahkan versi aturan **pada confidence interval yang tidak
-tumpang tindih** (`--bootstrap 1000`). Kalau tumpang tindih, **pertahankan yang lebih sederhana** dan
-berhenti di situ. Tidak ada rasa malu di situ — ada riset yang jujur.
+**Angka hijau:** model sekuensial mengalahkan versi berbasis aturan dengan **confidence interval yang
+tidak saling tumpang tindih** (`--bootstrap 1000`). Kalau intervalnya tumpang tindih, **pertahankan
+versi yang lebih sederhana** dan berhenti di situ. Itu bukan hal yang memalukan. Itulah riset yang
+jujur.
 
-**Peringatan yang paling mahal di seluruh proyek ini:** `EVALUATION.md` menunjukkan bahwa tuning di 5
-menit publik **memilih baseline yang salah** — `smooth125` menang di publik (0,4242) tapi kalah di
-pertandingan penuh (0,2242). Itu cuma satu hyperparameter pada baseline sepele. Jangan pernah memilih
-versi berdasarkan jendela publik. Pakai dia untuk memverifikasi pipeline itu **benar**, tidak lebih.
+**Peringatan paling mahal di seluruh proyek ini:** `EVALUATION.md` menunjukkan bahwa menyetel parameter
+di 5 menit publik **memilih baseline yang salah**. `smooth125` menang di jendela publik (0,4242) tetapi
+kalah di pertandingan penuh (0,2242). Padahal itu baru satu parameter pada baseline yang sangat
+sederhana. Jangan pernah memilih versi berdasarkan jendela publik. Pakai jendela itu hanya untuk
+memastikan pipeline-nya **benar**, tidak lebih.
 
-Di gate ini juga: kalau `--bootstrap 1000` belum pernah kalian jalankan, lakukan sekali di sini. Dan
-apa pun hasilnya, **tulis di `docs/experiments.md`** — termasuk kalau ternyata selisihnya di dalam noise
-band. "Tidak terbukti lebih baik" itu hasil yang sah, dan itu justru bahan untuk bagian keterbatasan di
+Di gate ini juga: kalau `--bootstrap 1000` belum pernah dijalankan, lakukan sekali di sini. Apa pun
+hasilnya, **catat di `docs/experiments.md`**, termasuk kalau ternyata selisihnya masih di dalam noise.
+"Tidak terbukti lebih baik" adalah hasil yang sah, dan justru menjadi bahan untuk bagian keterbatasan di
 dokumen teknis.
 
 ---
 
-### 🟢 GATE 3 — Reproducibility & dokumen · Sel 10 – Sel 17 Nov (8 hari)
+### 🟢 GATE 3 — Reproduksi hasil dan dokumen · Sel 10 – Sel 17 Nov (8 hari)
 
-**Angka hijau:** seseorang yang bukan pemilik Seat 4 bisa menjalankan `run.py` di laptop bersih dan
-mendapatkan file **identik**, sambil membaca `REPRODUCE.md` saja.
+**Angka hijau:** orang yang bukan pemilik Seat 4 bisa menjalankan `run.py` di laptop yang bersih dan
+mendapatkan file yang **identik**, hanya dengan membaca `REPRODUCE.md`.
 
-| Tanggal | Kerjaan |
+| Tanggal | Pekerjaan |
 |---|---|
-| 10 – 13 Nov | Dokumen teknis (§7.7) + `REPRODUCE.md` + bersihkan repo |
-| **14 Nov** | **FREEZE.** Tidak ada perubahan kode setelah tanggal ini. |
-| 15 Nov | Dry run submission: isi form lengkap dengan file & URL final. Cek file bisa dibuka. |
-| 16 Nov | Buffer. Hanya untuk memperbaiki yang rusak. |
-| **17 Nov** | **Submit.** |
+| 10 – 13 Nov | Dokumen teknis (§7.7), `REPRODUCE.md`, dan merapikan repo |
+| **14 Nov** | **FREEZE (kode dibekukan).** Tidak ada perubahan kode setelah tanggal ini. |
+| 15 Nov | Uji coba pengiriman: isi form lengkap dengan file dan URL final. Pastikan file bisa dibuka. |
+| 16 Nov | Cadangan waktu. Hanya untuk memperbaiki yang rusak. |
+| **17 Nov** | **Kumpulkan.** |
 
-> **Freeze itu bukan saran.** Mayoritas poin yang hilang di kompetisi seperti ini hilang di 72 jam
-> terakhir, dan hilangnya bukan karena skor — tapi karena file yang tadinya valid jadi tidak valid,
-> atau repo yang tadinya jalan jadi tidak jalan. `SUBMISSION.md`: file yang gagal validasi
-> **"is skipped with a one-line reason and scores nothing."**
+> **Freeze bukan sekadar saran.** Kebanyakan poin dalam kompetisi seperti ini hilang di 72 jam
+> terakhir, dan penyebabnya bukan skor. Penyebabnya adalah file yang tadinya valid menjadi tidak valid,
+> atau repo yang tadinya berjalan menjadi tidak berjalan. Menurut `SUBMISSION.md`, file yang gagal
+> validasi **"is skipped with a one-line reason and scores nothing"** (dilewati dengan satu baris alasan
+> dan tidak mendapat nilai).
 
 ---
 
 ## 6. Cara mengelola proyek ini
 
-### Ritual
+### Kebiasaan rutin
 
 | Kapan | Apa | Lama |
 |---|---|---|
-| Setiap hari, jam tetap | Sync harian: **apa yang hijau, apa yang merah, apa yang menghalangi** | 20 menit |
-| Setiap Minggu | Review gate: apakah angka hijaunya tercapai? Lanjut atau perbaiki? | 45 menit |
-| Kapan saja | Kalau macet > 2 jam → **post di channel**, jangan diam | — |
+| Setiap hari, jam tetap | Rapat harian: **apa yang hijau, apa yang merah, apa yang menghalangi** | 20 menit |
+| Setiap Minggu | Tinjauan gate: apakah angka hijaunya tercapai? Lanjut atau perbaiki? | 45 menit |
+| Kapan saja | Kalau tersendat lebih dari 2 jam → **tulis di channel**, jangan diam saja | — |
 
-Aturan sync harian: **tidak ada laporan status panjang.** Tiga kalimat: hijau, merah, penghalang. Kalau
-butuh lebih dari 20 menit, berarti masalahnya belum dirumuskan dan itu sendiri masalahnya.
+Aturan rapat harian: **tidak ada laporan status yang panjang.** Cukup tiga kalimat: hijau, merah,
+penghalang. Kalau butuh lebih dari 20 menit, berarti masalahnya belum dirumuskan dengan jelas, dan itu
+sendiri sudah menjadi masalah.
 
 ### Repo
 
-- **Tidak ada yang push langsung ke `main`.** Semua lewat branch + PR, walau dua baris.
+- **Tidak ada yang push langsung ke `main`.** Semua lewat branch dan PR, walaupun hanya dua baris.
   Nama branch: `dyang/rules`, `raissa/features`, `billa/model`, `yona/metrics`.
-- **Semua PR lewat gate otomatis** (`.github/workflows/validate.yml`). Kalau gate merah, jangan merge.
-- **`docs/decisions.md` adalah sumber kebenaran tunggal.** Di tim remote, keputusan yang cuma diucapkan
-  di chat akan hilang dalam dua hari dan diulang lagi minggu depan. Satu keputusan = satu baris.
-- **Commit kecil dan sering.** Riwayat commit kalian adalah bukti pekerjaan yang dilihat siapa pun yang
-  membuka repo — termasuk juri Innovation Challenge nanti.
+- **Semua PR melewati pemeriksaan otomatis** (`.github/workflows/validate.yml`). Kalau pemeriksaannya
+  merah, jangan di-merge.
+- **`docs/decisions.md` adalah satu-satunya sumber yang sah untuk keputusan.** Di tim remote, keputusan
+  yang hanya diucapkan di chat akan hilang dalam dua hari dan dibahas lagi minggu depan. Satu keputusan =
+  satu baris.
+- **Commit kecil dan sering.** Riwayat commit adalah bukti pekerjaan yang bisa dilihat siapa pun yang
+  membuka repo, termasuk juri Innovation Challenge nanti.
 
-### Kenapa remote bukan masalah
+### Kenapa bekerja remote bukan masalah
 
-Seluruh tugas ini berbentuk **artifact**: CSV, repo, dokumen. Tidak ada satu pun bagian yang butuh
-kalian di ruangan yang sama. Yang biasanya rusak di tim remote bukan hasil kerjanya, tapi tiga hal ini —
-dan ketiganya sudah dicegah di atas: tidak ada jejak pekerjaan (→ PR), keputusan hilang (→
-`decisions.md`), dan orang macet diam-diam (→ aturan 2 jam).
+Seluruh tugas ini berbentuk **berkas**: CSV, repo, dan dokumen. Tidak ada bagian yang mengharuskan
+kalian berada di ruangan yang sama. Yang biasanya bermasalah di tim remote bukan hasil kerjanya,
+melainkan tiga hal berikut, dan ketiganya sudah dicegah di atas: pekerjaan tidak meninggalkan jejak
+(→ lewat PR), keputusan hilang (→ `decisions.md`), dan orang tersendat tanpa memberi tahu (→ aturan
+2 jam).
 
 ---
 
 ## 7. Strategi teknis
 
-Urutan pengerjaan yang direkomendasikan: **aturan & fitur dulu, model belakangan.** Alasannya bukan
-konservatif — alasannya karena **setiap pilar bisa diverifikasi sendiri-sendiri**, dan itu satu-satunya
-cara kalian punya sesuatu yang benar-benar bisa ditulis di dokumen teknis.
+Urutan kerja yang disarankan: **aturan dan fitur dulu, model belakangan.** Alasannya bukan karena ingin
+aman. Alasannya karena **setiap hal struktural bisa dibuktikan sendiri-sendiri**, dan hanya dengan cara
+itu kalian punya sesuatu yang benar-benar bisa ditulis di dokumen teknis.
 
-### 7.1 Deteksi dead ball — pilar bernilai tertinggi
+### 7.1 Deteksi bola mati — bagian dengan nilai tertinggi
 
-Baseline tidak punya logika dead ball sama sekali. Docstring `starter/baseline.py` mengakuinya sendiri:
+Baseline sama sekali tidak punya logika bola mati. Docstring `starter/baseline.py` mengakuinya sendiri:
 
 > *"It has no notion of a dead ball beyond 'the tracking lost the ball', which is why its D class is weak."*
 
-Satu-satunya sinyal `D` di baseline: bola tidak ada di frame itu. Itu berarti satu-satunya `D` yang
-benar adalah ketika bola kebetulan sedang tidak terdeteksi **dan** bola memang mati.
+Satu-satunya tanda `D` di baseline adalah bola tidak ada di frame itu. Artinya, baseline hanya benar
+saat memberi `D` kalau bola kebetulan sedang tidak terdeteksi **dan** bola memang sedang mati.
 
-**Dan smoothing memperburuk kelas `D`, bukan memperbaikinya.** F1 kelas `D` per varian, dari
-menjalankan scorer resmi pada jendela publik:
+**Menghaluskan hasil malah memperburuk kelas `D`, bukan memperbaikinya.** Berikut F1 kelas `D` untuk
+tiap varian, dari scorer resmi pada jendela publik:
 
 | Versi | F1 `D` | presisi `D` | recall `D` |
 |---|---|---|---|
@@ -468,89 +496,101 @@ menjalankan scorer resmi pada jendela publik:
 | `baseline_smooth50` | 0,3225 | 0,6569 | 0,2138 |
 | `baseline_smooth125` | 0,1464 | **1,0000** | **0,0790** |
 
-Bacanya begini: `smooth125` **tidak pernah salah** ketika bilang `D` — presisinya sempurna — tapi ia
-cuma menangkap **7,9%** frame bola mati yang sesungguhnya. Dan keempat varian lebih buruk dari `raw`
-di kelas ini. Artinya detektor dead-ball yang lebih baik **bukan penyempurnaan kecil di atas
-baseline** — itu wilayah yang sama sekali belum digarap, dan setiap perbaikan di situ tidak diambil
-dari siapa pun.
+Cara membacanya: `smooth125` **tidak pernah salah** saat menyebut `D`, jadi presisinya sempurna, tetapi
+ia hanya menemukan **7,9%** dari frame bola mati yang sebenarnya. Dan keempat varian lebih buruk
+daripada `raw` untuk kelas ini. Jadi pendeteksi bola mati yang lebih baik **bukan sekadar penyempurnaan
+kecil di atas baseline**. Ini wilayah yang belum digarap sama sekali, dan setiap perbaikan di sini tidak
+mengambil poin dari siapa pun.
 
-Fitur yang tersedia, dan belum dipakai siapa pun:
+Fitur yang tersedia dan belum dipakai siapa pun:
 
 | Fitur | Kenapa relevan |
 |---|---|
-| Panjang gap bola beruntun | Bola mati sering muncul sebagai gap panjang, bukan pendek |
-| Kecepatan bola | Ada di file mentah sebagai angka **ketiga** setiap grup (`x,y,speed`) — baseline cuma membaca dua yang pertama |
-| Pergerakan pemain | Pemain berjalan (bukan berlari), atau berhenti, saat bola mati |
-| Sebaran & kepadatan pemain | Posisi pemain saat restart (kick-off, throw-in) punya bentuk yang khas |
-| Smart Tagging | **Setiap set piece adalah restart** — dan restart mengakhiri bentang bola mati. Setiap fase punya tag tim juga |
-| Jeda antar babak, sebelum kick-off | Babak 2 dinilai dari frame 110.808, kick-off 113.742 — 2.934 frame yang semuanya `D` |
+| Panjang celah bola yang hilang berturut-turut | Bola mati sering muncul sebagai celah yang panjang, bukan yang pendek |
+| Kecepatan bola | Ada di file mentah sebagai angka **ketiga** di setiap kelompok (`x,y,speed`). Baseline hanya membaca dua angka pertama |
+| Gerakan pemain | Saat bola mati, pemain berjalan (bukan berlari) atau berhenti |
+| Sebaran dan kerapatan pemain | Posisi pemain saat memulai kembali permainan (kick-off, lemparan ke dalam) punya pola yang khas |
+| Smart Tagging | **Setiap set piece adalah awal permainan kembali**, dan itu mengakhiri masa bola mati. Setiap fase juga punya tag tim |
+| Jeda antar babak, sebelum kick-off | Babak 2 mulai dinilai dari frame 110.808, kick-off di 113.742. Ada 2.934 frame yang semuanya `D` |
 
-> **Catatan kepatuhan untuk poin terakhir.** Fakta 2.934 frame itu **diterbitkan di `FAQ.md` resmi**, jadi
-> memakainya bukan pelanggaran. Tapi `RULES.md` melarang *"rules and constants tied to specific frames of
-> the game"* yang kalian **turunkan sendiri dari pengamatan**. Jadi bentuk yang aman: bangun detektor
-> dead-ball yang **umum**, lalu pakai fakta FAQ itu sebagai **pemeriksa** — apakah detektormu memang
-> menandai `D` di sana? Kalau kalian memutuskan untuk meng-hardcode, **cantumkan dan sumbernya** di
-> dokumen teknis. Kalau ada keraguan, tanya penyelenggara lewat issue — `FAQ.md` secara eksplisit
-> mengundang itu: *"If a rule is unclear or your approach sits near a line, ask before you build on it."*
+> **Catatan kepatuhan untuk poin terakhir.** Fakta tentang 2.934 frame itu **diterbitkan di `FAQ.md`
+> resmi**, jadi memakainya bukan pelanggaran. Tetapi `RULES.md` melarang *"rules and constants tied to
+> specific frames of the game"* (aturan dan konstanta yang terikat pada frame tertentu) yang kalian
+> **turunkan sendiri dari pengamatan**. Cara yang aman: bangun pendeteksi bola mati yang **bersifat
+> umum**, lalu pakai fakta dari FAQ itu sebagai **alat pemeriksa**, yaitu apakah pendeteksimu memang
+> menandai `D` di sana. Kalau kalian memutuskan untuk menuliskan angka itu langsung di kode
+> (hardcode), **cantumkan beserta sumbernya** di dokumen teknis. Kalau ragu, tanyakan ke penyelenggara
+> lewat issue. `FAQ.md` mengundang hal itu secara terbuka: *"If a rule is unclear or your approach sits
+> near a line, ask before you build on it."*
 
-### 7.2 Imputasi bola
+### 7.2 Mengisi posisi bola yang hilang (imputasi)
 
-Bola hilang di **41% frame yang dinilai** — dan `DATA.md` bilang hilangnya justru *"disproportionately on
-the frames that matter"*: kotak penuh, duel udara, tackle. Tidak ada indikator kepercayaan atau
-visibilitas sama sekali di data. `DATA.md`-nya sendiri memberi instruksi: *"design for it on day one."*
+Bola tidak terdeteksi di **41% frame yang dinilai**. Menurut `DATA.md`, hilangnya justru
+*"disproportionately on the frames that matter"* (tidak seimbang: lebih sering di frame yang penting),
+yaitu di kotak penalti yang penuh pemain, duel udara, dan tekel. Di data tidak ada indikator tingkat
+keyakinan atau keterlihatan bola. `DATA.md` sendiri berpesan: *"design for it on day one."*
+(rancang untuk hal ini sejak hari pertama).
 
-Pendekatan bertingkat, dari murah ke mahal:
+Pendekatan bertahap, dari yang murah ke yang mahal:
 
-1. **Gap pendek** (< ~0,5 detik / 12 frame): interpolasi linear atau Kalman. Bola bergerak kontinu;
-   mengisi gap pendek hampir selalu benar.
-2. **Gap panjang**: **jangan diimputasi.** Kembalikan sebagai ketidakpastian, dan biarkan sistem
-   memakainya sebagai sinyal — gap panjang itu sendiri informatif (lihat §7.1).
-3. **Validasi geometris:** proyeksikan posisi bola hasil imputasi ke piksel lewat homography dan periksa
-   apakah hasilnya masuk akal. Ini pemakaian homography yang paling langsung berguna, dan homography
-   feed taktis **100% valid**.
-4. **Satu interrupt + satu tebakan buruk lebih mahal dari satu gap.** Ingat: `X` di tengah possession
-   itu **gratis** (§7.5). Jadi tidak ada alasan memaksakan posisi bola yang tidak kalian percaya.
+1. **Celah pendek** (kurang dari ± 0,5 detik atau 12 frame): isi dengan interpolasi linear atau filter
+   Kalman. Bola bergerak mulus, jadi mengisi celah pendek hampir selalu benar.
+2. **Celah panjang**: **jangan diisi.** Biarkan tetap sebagai ketidakpastian dan pakai sebagai sinyal.
+   Celah panjang itu sendiri sudah membawa informasi (lihat §7.1).
+3. **Pemeriksaan geometri:** proyeksikan posisi bola hasil pengisian ke piksel lewat homography, lalu
+   periksa apakah hasilnya masuk akal. Ini penggunaan homography yang paling langsung berguna, dan
+   homography feed taktis **100% valid**.
+4. **Satu gangguan ditambah satu tebakan buruk lebih mahal daripada satu celah.** Ingat bahwa `X` di
+   tengah possession itu **tidak merugikan** (§7.5). Jadi tidak ada alasan memaksakan posisi bola yang
+   tidak kalian yakini.
 
-**Jangan pakai video.** GTX 1650 Ti-mu punya 4 GB VRAM dan itu cukup untuk inferensi model kecil, tapi
-`RULES.md` melarang hand annotation *"in any amount and for any purpose"* — termasuk untuk melatih model.
-Artinya kalian harus bergantung pada model pra-latih yang kebetulan bisa menemukan bola, lalu
-memvalidasinya tanpa ground truth. Itu eksperimen, bukan rencana — tidak ada satu pun bagiannya yang
-bisa kalian buktikan benar sebelum 17 November.
+**Jangan pakai video.** GPU GTX 1650 Ti dengan VRAM 4 GB cukup untuk menjalankan model kecil.
+Tetapi `RULES.md` melarang anotasi manual *"in any amount and for any purpose"* (berapa pun jumlahnya
+dan untuk tujuan apa pun), termasuk untuk melatih model. Artinya kalian harus mengandalkan model yang
+sudah dilatih pihak lain dan kebetulan bisa menemukan bola, lalu memvalidasinya tanpa ground truth.
+Itu eksperimen, bukan rencana. Tidak ada bagiannya yang bisa kalian buktikan benar sebelum 17 November.
 
-### 7.3 Atribusi tim
+### 7.3 Menentukan tim yang menguasai bola
 
-Baseline: pemain tracked terdekat ke bola, jarak Euclidean kuadrat dalam satuan meter. Itu saja.
+Baseline: pemain tracked yang paling dekat ke bola, memakai jarak Euclidean kuadrat dalam meter.
+Hanya itu.
 
-Fitur pengganti, panjang tapi murah semuanya:
+Fitur pengganti. Daftarnya panjang, tetapi semuanya murah dikerjakan:
 
-- Jarak bola ke **2–3 pemain terdekat per tim**, lalu bandingkan — bukan hanya yang paling dekat global.
-- **Arah gerak:** apakah pemain bergerak **menuju** bola (dot product kecepatan pemain dengan vektor
-  pemain→bola). Pemain yang mendekati bola jauh lebih mungkin menguasainya daripada yang kebetulan dekat.
-- **Konteks sebelum gap:** siapa yang terakhir mengontrol sebelum bola menghilang.
-- **Prior dari Smart Tagging:** setiap fase punya tag tim. Dua peringatan dari dokumentasinya:
-  `Team = N/A` pada **setiap throw-in**, dan *"the intervals are phases, not possessions"*.
-- **Persistensi adalah fitur, bukan bug:** possession adalah *state* yang bertahan, bukan keputusan per
-  frame. Frame ini `H` sebagian besar karena frame sebelumnya `H`.
+- Jarak bola ke **2–3 pemain terdekat dari tiap tim**, lalu dibandingkan, bukan hanya pemain yang paling
+  dekat secara keseluruhan.
+- **Arah gerak:** apakah pemain bergerak **menuju** bola (hasil kali titik (dot product) antara
+  kecepatan pemain dan vektor dari pemain ke bola). Pemain yang mendekati bola jauh lebih mungkin
+  menguasainya daripada pemain yang kebetulan berada di dekatnya.
+- **Konteks sebelum celah:** tim mana yang terakhir mengontrol bola sebelum bola menghilang.
+- **Petunjuk dari Smart Tagging:** setiap fase punya tag tim. Dua peringatan dari dokumentasinya:
+  `Team = N/A` pada **setiap lemparan ke dalam**, dan *"the intervals are phases, not possessions"*
+  (rentang waktunya adalah fase permainan, bukan possession).
+- **Kelanjutan dari frame sebelumnya adalah fitur, bukan masalah:** possession adalah *keadaan* yang
+  bertahan, bukan keputusan yang dibuat terpisah di tiap frame. Sebuah frame berlabel `H` sebagian besar
+  karena frame sebelumnya `H`.
 
-### 7.4 Segmentasi anti-fragmentasi
+### 7.4 Menyusun possession tanpa memecahnya
 
-Dari probabilitas per frame ke interval. Ini pilar yang langsung menyentuh metriknya.
+Langkah ini mengubah probabilitas per frame menjadi rentang waktu. Inilah bagian yang langsung
+berhubungan dengan metriknya.
 
-- **Minimum spell.** Scorer tidak punya minimum panjang possession — jadi **kalian** yang harus punya.
-  Gabungkan serpihan pendek ke tetangga yang dominan, atau buang. Setiap serpihan yang dibuang adalah FP
-  yang hilang.
-- **HMM / Viterbi** dengan matriks transisi yang membuat perpindahan `H → A` mahal. Ini bentuk alami dari
-  "possession itu state, bukan keputusan independen".
-- **Median filter** adalah versi termurah dari ide yang sama — dan baseline sudah membuktikan idenya
-  bekerja: cuma dengan memperlebar window, `spellF1` bergerak 5×.
-- **Perhatikan jumlah possession kalian.** `validate_submission.py` mencetaknya. Baseline `raw`
-  melaporkan **131 possession** pada 5 menit, sementara kebenarannya **17**. Itu rasio fragmentasi 7,7×,
-  dan itu alasan `spellF1`-nya 0,0378.
+- **Panjang minimum possession.** Scorer tidak punya batas minimum panjang possession, jadi **kitalah**
+  yang harus punya aturannya. Gabungkan potongan pendek ke tetangga yang dominan, atau buang. Setiap
+  potongan yang dibuang berarti satu `fp` yang hilang.
+- **HMM / Viterbi** dengan matriks transisi yang membuat perpindahan `H → A` mahal. Ini bentuk yang
+  paling wajar untuk gagasan "possession itu keadaan yang bertahan, bukan keputusan yang berdiri
+  sendiri".
+- **Median filter** adalah versi termurah dari gagasan yang sama, dan baseline sudah membuktikan bahwa
+  gagasan ini berhasil: hanya dengan melebarkan window, `spellF1` bergerak 5 kali lipat.
+- **Perhatikan jumlah possession kalian.** `validate_submission.py` mencetak angkanya. Baseline `raw`
+  melaporkan **131 possession** untuk 5 menit publik, padahal yang benar **17**. Itu berarti possession
+  terpecah 7,7 kali lipat, dan itulah sebabnya `spellF1`-nya hanya 0,0378.
 
-### 7.5 Kebijakan `X` — tool paling kuat yang kita punya
+### 7.5 Kebijakan `X` — alat paling kuat yang kita punya
 
-Scorer mengganti setiap `X` dengan label non-`X` terakhir **di babak yang sama** (back-fill di awal
-babak), **sebelum** possession disusun. Jadi:
+Sebelum menyusun possession, scorer mengganti setiap `X` dengan label terakhir yang bukan `X` **di babak
+yang sama** (di awal babak, diisi dengan label non-`X` pertama yang ditemui). Jadi:
 
 ```
 H H H X X X H H H   →   H H H H H H H H H   →   SATU possession
@@ -558,191 +598,208 @@ H H H X X X H H H   →   H H H H H H H H H   →   SATU possession
 
 **`X` bukan tombol menyerah. `X` adalah tombol "sama seperti sebelumnya".**
 
-Terjemahan operasionalnya:
+Penerapannya:
 
 | Situasi | Tindakan | Alasan |
 |---|---|---|
-| Bola hilang **di tengah** possession | Tulis `X` | Gratis. Possession tetap utuh. Lebih aman dari tebakan yang bisa memecahnya |
-| Di titik **hand-over** | **Wajib menebak** | `X` akan menarik label lama ke wilayah tim lawan. Ini mahal sekali |
-| Di luar jam pertandingan | `X` | Tidak dinilai sama sekali |
+| Bola hilang **di tengah** possession | Tulis `X` | Tidak merugikan. Possession tetap utuh. Lebih aman daripada tebakan yang bisa memecahnya |
+| Saat **possession berpindah ke tim lawan** | **Wajib menebak** | `X` akan menarik label lama ke wilayah tim lawan. Ini sangat merugikan |
+| Di luar waktu pertandingan | `X` | Sama sekali tidak dinilai |
 
-Dan soal biayanya: `macroF1` menghitung `X` sebagai salah, tapi `macroF1` hanya **tie-break**.
-`spellF1` — yang menentukan ranking — tidak pernah melihatnya. Jadi secara praktis **`X` itu murah**,
-dan tidak ada alasan untuk malu memakainya.
+Soal biayanya: `macroF1` menghitung `X` sebagai salah, tetapi `macroF1` hanya pemutus kalau seri.
+`spellF1`, yang menentukan peringkat, tidak pernah melihatnya. Jadi dalam praktiknya **`X` itu murah**,
+dan tidak ada alasan untuk sungkan memakainya.
 
 ### 7.6 Model sekuensial (Gate 2, bukan Gate 1)
 
-Baru setelah empat pilar berdiri dan terbukti. Bentuk yang paling masuk akal: **CRF atau GRU/Bi-GRU
-atas fitur per frame**, dengan pilar 1–4 sebagai fitur input, bukan sebagai pengganti. Billa sudah
-mengerjakan bentuk ini sebelumnya.
+Baru dikerjakan setelah keempat hal struktural berdiri dan terbukti. Bentuk yang paling masuk akal:
+**CRF atau GRU/Bi-GRU di atas fitur per frame**, dengan empat hal struktural tadi sebagai fitur masukan,
+bukan sebagai pengganti. Billa sudah pernah mengerjakan model seperti ini.
 
-Aturan gate: kalau tidak mengalahkan versi aturan pada CI yang tidak tumpang tindih, **pertahankan versi
-aturan.** Model sekuensial itu bonus, bukan jalan keluar.
+Aturan gate: kalau tidak mengalahkan versi aturan dengan confidence interval yang tidak tumpang tindih,
+**pertahankan versi aturan.** Model sekuensial hanyalah bonus, bukan jalan keluar.
 
-### 7.7 Dokumen teknis (deliverable #3)
+### 7.7 Dokumen teknis (hasil kerja ketiga)
 
-`SUBMISSION.md` meminta *"a few pages"*. Struktur yang diminta, dan sebaiknya diikuti persis:
+`SUBMISSION.md` meminta *"a few pages"* (beberapa halaman). Susunan yang diminta, sebaiknya diikuti
+persis:
 
-1. **Pendekatan dan alasannya** — kenapa begitu, bukan cuma apa.
+1. **Pendekatan dan alasannya** — kenapa dipilih begitu, bukan hanya apa yang dikerjakan.
 2. **Aset mana yang dipakai dan bagaimana** — termasuk **yang sudah dicoba lalu dibuang**. Bagian ini
-   yang paling sering dilewatkan orang, dan justru yang paling menunjukkan kalian serius. Isinya
-   diambil apa adanya dari `docs/experiments.md` — **itu sebabnya file itu ada**, dan itu sebabnya ia
-   harus diisi sementara kalian bekerja, bukan direkonstruksi di bulan November.
-3. **Data latih** — setiap dataset berlabel, sumbernya, siapa yang melabeli, berapa banyak. Kalau tidak
-   ada, tulis "tidak ada" — itu jawaban yang sah.
-4. **Aturan possession yang diimplementasikan** — dari `docs/possession-rules.md`.
-5. **Keterbatasan** — jujur. Ini menaikkan kredibilitas, bukan menurunkannya.
-6. **Cara reproduksi** — satu perintah.
+   paling sering dilewatkan, padahal justru yang paling menunjukkan kesungguhan kalian. Isinya diambil
+   apa adanya dari `docs/experiments.md`. **Itulah alasan file itu ada**, dan karena itu file tersebut
+   harus diisi selama pekerjaan berlangsung, bukan disusun ulang di bulan November.
+3. **Data latih** — setiap dataset berlabel, sumbernya, siapa yang melabeli, dan jumlahnya. Kalau tidak
+   ada, tulis "tidak ada". Itu jawaban yang sah.
+4. **Aturan possession yang diterapkan** — diambil dari `docs/possession-rules.md`.
+5. **Keterbatasan** — tulis dengan jujur. Kejujuran menaikkan kredibilitas, bukan menurunkannya.
+6. **Cara mereproduksi hasil** — satu perintah.
 
-Lampirkan juga: fakta mana dari dokumentasi resmi yang kalian pakai (§7.1), dan keputusan apa saja yang
-kalibrasi/manual — kalau ada.
+Lampirkan juga fakta mana dari dokumentasi resmi yang kalian pakai (§7.1), dan keputusan apa saja yang
+bersifat kalibrasi atau dilakukan manual, kalau ada.
 
 ---
 
 ## 8. Cara mengukur tanpa menipu diri sendiri
 
-**Scorer yang kalian jalankan lokal adalah scorer yang menentukan kompetisi.** `EVALUATION.md`:
-*"Organisers run this exact script against the private full-match ground truth; the published board is
-its output. There is no stricter version held back."* Ini hadiah besar — manfaatkan sampai habis.
+**Scorer yang kalian jalankan di komputer sendiri adalah scorer yang menentukan peringkat kompetisi.**
+Kata `EVALUATION.md`: *"Organisers run this exact script against the private full-match ground truth;
+the published board is its output. There is no stricter version held back."* (Penyelenggara menjalankan
+skrip yang persis sama terhadap ground truth pertandingan penuh yang dirahasiakan; papan skor yang
+diterbitkan adalah keluarannya. Tidak ada versi yang lebih ketat yang disembunyikan.) Ini keuntungan
+besar, jadi manfaatkan sepenuhnya.
 
 ```bash
-python tools/gate0.py              # ambil repo resmi, jalankan evaluator resmi
+python tools/gate0.py              # unduh repo resmi, jalankan evaluator resmi
 python evaluation/validate_submission.py <file>   # SEBELUM setiap submission
 ```
 
 Aturan pengukuran:
 
-- **Noise band `spellF1` di pertandingan penuh ≈ 0,04.** Di bawah itu bukan perbaikan.
-  Noise band `macroF1` ≈ 0,01.
-- **Selalu jalankan `--bootstrap 1000`** sebelum percaya bahwa satu versi lebih baik dari versi lain.
-  Intervalnya biasanya tumpang tindih.
-- **Jendela publik 5 menit bukan leaderboard.** 17 possession, dan satu possession yang meleset ≈ 6 poin.
-  `EVALUATION.md` membuktikan tuning di situ memilih baseline yang salah. Pakai untuk memverifikasi
-  **kebenaran pipeline**, bukan untuk memilih versi.
-- **Reproducibility itu deterministik.** Kalau skor berubah antar run, ada bug — bukan keberuntungan.
-- **`reports/<nama>_transitions.csv`** dari evaluator resmi mendaftar setiap transisi
-  `matched` / `missed` / `spurious` per video frame. Itu alat debug terbaik yang kalian punya, dan tidak
-  banyak yang tahu dia ada.
+- **Noise `spellF1` di pertandingan penuh ≈ 0,04.** Selisih di bawah itu bukan perbaikan.
+  Noise `macroF1` ≈ 0,01.
+- **Selalu jalankan `--bootstrap 1000`** sebelum percaya bahwa satu versi lebih baik daripada versi
+  lain. Biasanya intervalnya tumpang tindih.
+- **Jendela publik 5 menit bukan leaderboard.** Isinya hanya 17 possession, dan satu possession yang
+  meleset kira-kira berarti 6 poin. `EVALUATION.md` membuktikan bahwa menyetel parameter di situ
+  memilih baseline yang salah. Pakai hanya untuk memastikan **pipeline-nya benar**, bukan untuk memilih
+  versi.
+- **Hasilnya harus selalu sama (deterministik).** Kalau skor berubah di antara dua kali menjalankan
+  program yang sama, itu bug, bukan keberuntungan.
+- **`reports/<nama>_transitions.csv`** dari evaluator resmi mendaftar setiap transisi sebagai
+  `matched` (cocok), `missed` (terlewat), atau `spurious` (palsu) untuk setiap video frame. Ini alat
+  debug terbaik yang kalian punya, dan tidak banyak yang tahu ada.
 
 ### Kolom papan skor yang wajib kalian baca
 
-`tools/gate0.py` mencetak papan resminya. Selain `spellF1` / `macroF1`, ada empat kolom yang jauh
-lebih berguna untuk kerja harian:
+`tools/gate0.py` mencetak papan skor resminya. Selain `spellF1` dan `macroF1`, ada lima kolom yang jauh
+lebih berguna untuk pekerjaan harian:
 
 | Kolom | Artinya | Yang kalian cari |
 |---|---|---|
-| **`frag`** | segmen prediksi ÷ segmen kebenaran | **Mendekati 1,0 atau sedikit di bawah.** Ini kolom terpenting di seluruh papan |
-| **`poss`** | jumlah possession yang kalian laporkan | Kebenarannya **17** di jendela ini. 26 sudah mulai melenceng; 131 itu alarm |
-| **`dur`** | rata-rata durasi possession | Kebenarannya **14,2 s**. Terlalu pendek = kalian memecah possession |
-| **`shareE`** | selisih porsi penguasaan home dibanding kebenaran | Kebenarannya 0,5727 — Barcelona menguasai 57% frame hidup di jendela ini |
-| **`lat_f`** | latency rata-rata, dalam frame | Di bawah 25 frame masih murah (§3 poin 3); di atas itu mahal |
+| **`frag`** | jumlah segmen prediksi ÷ jumlah segmen yang benar | **Mendekati 1,0 atau sedikit di bawahnya.** Ini kolom terpenting di seluruh papan |
+| **`poss`** | jumlah possession yang kalian laporkan | Yang benar **17** di jendela ini. 26 sudah mulai menyimpang; 131 itu tanda bahaya |
+| **`dur`** | rata-rata durasi possession | Yang benar **14,2 detik**. Kalau terlalu pendek, berarti possession kalian terpecah |
+| **`shareE`** | selisih porsi penguasaan tim home dibandingkan yang benar | Yang benar 0,5727: Barcelona menguasai 57% frame bola hidup di jendela ini |
+| **`lat_f`** | rata-rata keterlambatan, dalam jumlah frame | Di bawah 25 frame masih murah (§3 poin 3); di atas itu mahal |
 
-Dan di laporan per-submission (yang ditulis evaluator sebagai file `.txt`) ada yang lebih tajam lagi:
-matriks konfusi 4×4, presisi/recall/F1 per kelas, `alive/dead F1`, akurasi tim, dan — ini yang paling
-berhubungan dengan §7.5 — **berapa frame `X` kalian jatuh pada ground truth yang dinilai.** Itu ukuran
-langsung dari kebijakan abstain kalian. Evaluator juga menulis `scoreboard.csv`.
+Laporan per submission (file `.txt` yang ditulis evaluator) lebih tajam lagi. Isinya matriks konfusi
+4×4, presisi/recall/F1 per kelas, `alive/dead F1`, akurasi tim, dan, yang paling berkaitan dengan
+§7.5, **berapa banyak frame `X` kalian yang jatuh pada frame yang dinilai.** Itu ukuran langsung dari
+kebijakan tidak-menjawab yang kalian pakai. Evaluator juga menulis `scoreboard.csv`.
 
 ---
 
-## 9. Garis merah
+## 9. Larangan yang tidak boleh dilanggar
 
-Ini daftar hal yang bisa membuat kerja tiga minggu bernilai nol. Bukan soal etika — soal **apa yang
-dihitung**.
+Daftar ini berisi hal-hal yang bisa membuat kerja tiga minggu bernilai nol. Ini bukan soal etika,
+melainkan soal **apa yang dihitung**.
 
 | ❌ Dilarang | Detail yang mudah terlewat |
 |---|---|
-| **Hand label pada pertandingan ini** | *"in any amount and for any purpose"* — untuk submission, **untuk melatih model, maupun untuk memvalidasi**. Termasuk memperbaiki output algoritma secara manual: *frame by frame, segment by segment, atau hanya di transisi* |
-| **Data buatan manusia tentang pertandingan ini** | Event data (Opta, StatsBomb, Wyscout, LaLiga, siapa pun), corrected tracking, data possession, atau anotasi apa pun — dari sumber mana pun |
-| ⚠️ **Ingatan kalian sendiri tentang pertandingan ini** | Ini turunannya, dan ini jebakan spesifik untuk **Dyang**. Kalau ada yang ingat skor akhir, menit gol, atau kejadian VAR, itu **pengetahuan manusia tentang pertandingan ini**. Memakainya sebagai fitur, label, atau konstanta adalah pelanggaran. Yang boleh: memahami **arti** sepak bola. Yang tidak boleh: mengingat **pertandingan ini** |
-| **Upload data ke LLM cloud** | ToU melarang mengunggah video, dataset, atau **ekstraknya** ke LLM pihak ketiga berbasis cloud. Pakai AI untuk menulis kode tetap boleh — yang dilarang mengirim isi datanya |
-| **Menyebarkan data** | Jangan commit `data/` ke repo publik. Jangan publikasikan turunan yang bisa merekonstruksi data |
-| **Repo yang tidak bisa mereproduksi file** | *"A private in-house model or an unavailable internal dataset is the one thing this rules out"* |
-| **Menuning di 5 menit publik** | Bukan saran — aturan. Dan terbukti merugikan (§8) |
+| **Melabeli pertandingan ini secara manual** | *"in any amount and for any purpose"* (berapa pun jumlahnya dan untuk tujuan apa pun): untuk submission, **untuk melatih model, maupun untuk memvalidasi**. Termasuk memperbaiki keluaran algoritma dengan tangan, baik *frame demi frame, segmen demi segmen, maupun hanya di titik transisi* |
+| **Data buatan manusia tentang pertandingan ini** | Data event (Opta, StatsBomb, Wyscout, LaLiga, atau siapa pun), tracking yang sudah dikoreksi, data possession, atau anotasi apa pun dari sumber mana pun |
+| ⚠️ **Ingatan kalian sendiri tentang pertandingan ini** | Ini turunan dari larangan di atas, dan jebakan khusus bagi **Dyang** serta Raissa yang paham sepak bola. Kalau ada yang ingat skor akhir, menit gol, atau kejadian VAR, itu adalah **pengetahuan manusia tentang pertandingan ini**. Memakainya sebagai fitur, label, atau konstanta adalah pelanggaran. Yang boleh: memahami **arti** sepak bola. Yang tidak boleh: mengingat **pertandingan ini** |
+| **Mengunggah data ke LLM cloud** | Syarat penggunaan (ToU) melarang mengunggah video, dataset, atau **potongan-potongannya** ke LLM pihak ketiga berbasis cloud. Memakai AI untuk menulis kode tetap boleh; yang dilarang adalah mengirim isi datanya |
+| **Menyebarkan data** | Jangan commit `data/` ke repo publik. Jangan menerbitkan turunan yang bisa dipakai untuk merekonstruksi data |
+| **Repo yang tidak bisa mereproduksi file** | *"A private in-house model or an unavailable internal dataset is the one thing this rules out"* (model internal yang tidak dipublikasikan atau dataset internal yang tidak tersedia adalah satu-satunya hal yang dilarang) |
+| **Menyetel parameter di 5 menit publik** | Ini aturan, bukan saran. Dan terbukti merugikan (§8) |
 
 **Yang justru diizinkan**, dan mungkin belum kalian sadari:
 
-- Memperbaiki atau **mengganti** tracking yang diberikan — asal **oleh algoritma**, bukan tangan.
-- Memakai model pra-latih apa pun, LLM apa pun, framework apa pun.
-- Memakai data eksternal — **asal tentang pertandingan lain**.
-- Hand label pada pertandingan **lain** — sebanyak apa pun.
-- Memakai `Smart Tagging`. FAQ-nya menjawab curiga ini langsung: *"Use it — that is why it is there."*
-- Model milik sendiri: detektor, pelacak, pengenal event. *"If it produces a better answer, it is a better answer."*
+- Memperbaiki atau **mengganti** data tracking yang diberikan, asalkan dilakukan **oleh algoritma**,
+  bukan oleh tangan.
+- Memakai model yang sudah dilatih pihak lain, LLM apa pun, dan framework apa pun.
+- Memakai data dari luar, **asalkan tentang pertandingan lain**.
+- Melabeli secara manual **pertandingan lain**, sebanyak apa pun.
+- Memakai Smart Tagging. FAQ menjawab kecurigaan ini langsung: *"Use it — that is why it is there."*
+  (Pakailah, memang untuk itu ia disediakan.)
+- Memakai model buatan sendiri: pendeteksi, pelacak, atau pengenal kejadian. *"If it produces a better
+  answer, it is a better answer."* (Kalau hasilnya lebih baik, berarti jawabannya lebih baik.)
 
 ---
 
-## 10. Sepuluh hal yang menentukan — urut dari yang paling sering diabaikan
+## 10. Sepuluh hal penentu — dari yang paling sering diabaikan
 
-1. **Pemenangnya bukan yang modelnya paling canggih.** Empat baseline di repo itu algoritma **yang sama**
-   dengan window berbeda: `macroF1` bergerak 0,04, `spellF1` bergerak 11×.
-2. **`X` adalah tombol "ulangi jawaban sebelumnya".** Diam di tengah possession itu gratis; diam di titik
-   hand-over itu bencana. Satu kebijakan, dua arah berlawanan.
-3. **Scorer tidak punya minimum panjang possession.** Serpihan kecil bukan setengah benar — dia FP murni,
-   dan memecah satu possession jadi dua menghasilkan FP + FN sekaligus.
-4. **Kelas `D` adalah lubang terbesar.** Baseline mengakuinya sendiri. Smart Tagging memberi tag tim dan
-   set-piece gratis, dan **tidak ada yang memakainya**.
-5. **Bola hilang di 41% frame yang dinilai, dan hilangnya tepat di frame yang penting.** Ini bukan
-   gangguan yang harus ditoleransi — ini soalnya.
-6. **5 menit publik tidak bisa meranking siapa pun.** `smooth125` menang di publik, kalah di pertandingan
-   penuh. Dan itu cuma satu hyperparameter pada baseline sepele.
-7. **Kebanyakan poin hilang di meja administrasi.** File yang gagal validasi dinilai **nol**, dan repo
-   yang tidak bisa mereproduksi file adalah syarat gugur. `validate_submission.py` berjalan dua detik.
-8. **Di luar dua babak, label kalian tidak berpengaruh apa pun.** `macroF1` hanya menghitung frame yang
-   dinilai, `spellF1` hanya menyusun possession di dalam bentang yang dinilai. Jangan buang waktu di jeda.
+1. **Pemenangnya bukan yang modelnya paling canggih.** Keempat baseline di repo memakai algoritma
+   **yang sama** dengan window berbeda: `macroF1` bergeser 0,04, sedangkan `spellF1` berbeda 11 kali
+   lipat di jendela publik (5 kali lipat di pertandingan penuh).
+2. **`X` adalah tombol "ulangi jawaban sebelumnya".** Tidak menjawab di tengah possession itu tidak
+   merugikan; tidak menjawab saat possession berpindah ke tim lawan itu bencana. Satu kebijakan, dua
+   arah yang berlawanan.
+3. **Scorer tidak punya batas minimum panjang possession.** Potongan kecil bukan "setengah benar". Ia
+   adalah `fp` murni, dan memecah satu possession menjadi dua menghasilkan `fp` dan `fn` sekaligus.
+4. **Kelas `D` adalah kelemahan terbesar.** Baseline mengakuinya sendiri. Smart Tagging memberi tag tim
+   dan tanda set piece secara gratis, dan **belum ada yang memakainya**.
+5. **Bola tidak terdeteksi di 41% frame yang dinilai, dan hilangnya tepat di frame yang penting.** Ini
+   bukan gangguan yang harus ditoleransi. Ini adalah soalnya.
+6. **5 menit publik tidak bisa dipakai untuk meranking siapa pun.** `smooth125` menang di jendela
+   publik tetapi kalah di pertandingan penuh. Padahal itu hanya satu parameter pada baseline yang
+   sederhana.
+7. **Kebanyakan poin hilang di urusan administrasi.** File yang gagal validasi dinilai **nol**, dan repo
+   yang tidak bisa mereproduksi file membuat tim gugur. `validate_submission.py` hanya butuh dua detik.
+8. **Di luar kedua babak, label kalian tidak berpengaruh apa pun.** `macroF1` hanya menghitung frame
+   yang dinilai, dan `spellF1` hanya menyusun possession di dalam rentang yang dinilai. Jangan
+   buang waktu untuk bagian jeda.
 9. **2.934 frame pertama babak 2 semuanya `D`**, dan itu diterbitkan resmi di `FAQ.md`. Pakai sebagai
-   pemeriksa detektor dead-ball kalian, dan cantumkan sumbernya.
-10. **Semua yang kalian hasilkan akan dibaca.** Dua dari tiga deliverable bukan angka — repo dan dokumen.
-    Dan keduanya ikut menentukan nasib kalian di Innovation Challenge, di mana penilaiannya berubah
-    total: ada juri, ada presentasi, ada desain.
+   alat pemeriksa pendeteksi bola mati kalian, dan cantumkan sumbernya.
+10. **Semua yang kalian hasilkan akan dibaca.** Dua dari tiga hasil kerja bukan angka, yaitu repo dan
+    dokumen. Keduanya ikut menentukan nasib kalian di Innovation Challenge, yang penilaiannya sangat
+    berbeda: ada juri, ada presentasi, dan ada desain.
 
 ---
 
-## 11. Checklist submission
+## 11. Daftar periksa pengumpulan
 
-Dijalankan **15 November**, tidak boleh lebih lambat.
+Dijalankan pada **15 November**, tidak boleh lebih lambat.
 
 **File CSV**
 - [ ] `DeculGirl.csv` — tepat **199.319** baris data, header `frame,label`
-- [ ] Kolom `frame` = 0…199318, berurutan, tidak ada duplikat
-- [ ] Tidak ada satu pun sel kosong — tulis `X` untuk abstain
+- [ ] Kolom `frame` berisi 0…199318, berurutan, tanpa duplikat
+- [ ] Tidak ada sel yang kosong — tulis `X` kalau sistem tidak menjawab
 - [ ] `python evaluation/validate_submission.py DeculGirl.csv` → **`Valid.`**
-- [ ] Jumlah possession yang dilaporkan masuk akal (bandingkan dengan 17 pada 5 menit; 131 itu alarm)
-- [ ] Kolom `frag` mendekati 1,0 atau sedikit di bawah — bukan 2 ke atas
+- [ ] Jumlah possession yang dilaporkan masuk akal (bandingkan dengan 17 pada 5 menit publik; 131 itu
+      tanda bahaya)
+- [ ] Kolom `frag` mendekati 1,0 atau sedikit di bawahnya, bukan 2 ke atas
 - [ ] Baris `abstained ... frames of X on graded ground truth` di laporan sesuai dengan kebijakan `X`
       kalian, bukan 0% dan bukan 100%
 
 **Repo publik**
-- [ ] `mtah-DeculGirl` **public**, URL bisa dibuka di jendela incognito
-- [ ] `data/` **tidak ada** di repo
-- [ ] `run.py` mereproduksi file yang identik, diuji di laptop orang lain
-- [ ] Dependensi di-pin (`requirements.txt` dengan versi)
-- [ ] `README.md` menjelaskan cara menjalankan, dalam bahasa yang bisa diikuti orang luar
+- [ ] `mtah-DeculGirl` berstatus **public**, dan URL-nya bisa dibuka di jendela incognito
+- [ ] Folder `data/` **tidak ada** di repo
+- [ ] `run.py` menghasilkan file yang identik, sudah diuji di laptop orang lain
+- [ ] Versi dependensi dikunci (`requirements.txt` dengan nomor versi)
+- [ ] `README.md` menjelaskan cara menjalankan dengan bahasa yang bisa diikuti orang luar
 
 **Dokumen teknis**
-- [ ] `DeculGirl.pdf` atau `.md`, beberapa halaman, struktur §7.7
+- [ ] `DeculGirl.pdf` atau `.md`, beberapa halaman, mengikuti susunan di §7.7
 - [ ] Menyebut aset yang dicoba **lalu dibuang**, bukan hanya yang dipakai
-- [ ] Menyebut tidak ada / ada data latih, dengan sumbernya
+- [ ] Menyebut ada atau tidaknya data latih, lengkap dengan sumbernya
 - [ ] Mencantumkan fakta resmi yang dipakai sebagai kalibrasi
 
 **Form**
-- [ ] Satu response per tim. **Response terakhir sebelum deadline yang dinilai.**
+- [ ] Satu tanggapan per tim. **Tanggapan terakhir sebelum batas waktu yang akan dinilai.**
 - [ ] Nama tim: `DeculGirl` · file: `DeculGirl.csv`, `DeculGirl.pdf`
-- [ ] Butuh akun Google · tidak ada leaderboard langsung dan tidak ada feedback
-- [ ] Screenshot konfirmasi submission, simpan di tempat yang bisa diakses berempat
+- [ ] Butuh akun Google · tidak ada leaderboard langsung dan tidak ada umpan balik
+- [ ] Simpan tangkapan layar bukti pengiriman di tempat yang bisa diakses keempat anggota
 
 ---
 
 ## 12. Setelah 17 November
 
-Hasil diumumkan **sebelum 26 November**. Kalau lolos **top 20**, kalian masuk Innovation Challenge
-(**26 Nov – 14 Jan**, online): dataset **10 pertandingan profesional**, tantangan desain terbuka, dan
-mentoring teknis. Kalau lolos **top 5** di situ, Final Pitch **2 Maret 2027** di Talent Arena Barcelona —
-travel dan akomodasi ditanggung, plus jersey resmi Barça dan pengalaman eksklusif. Tidak ada hadiah uang.
+Hasil diumumkan **sebelum 26 November**. Kalau masuk **top 20**, kalian lanjut ke Innovation Challenge
+(**26 Nov – 14 Jan**, online) dengan dataset **10 pertandingan profesional**, tantangan desain yang
+terbuka, dan bimbingan teknis. Kalau masuk **top 5** di sana, kalian tampil di Final Pitch pada
+**2 Maret 2027** di Talent Arena Barcelona. Biaya perjalanan dan akomodasi ditanggung, dan kalian
+mendapat jersey resmi Barça serta pengalaman eksklusif. Tidak ada hadiah uang.
 
-Dan kalau tidak lolos: kalian tetap punya repo publik berisi analisis satu pertandingan LaLiga sungguhan
-dengan pipeline yang reproducible, dokumen teknis yang bisa dibaca orang, dan empat orang yang sudah
-terbukti bisa mengirim hasil kerja bareng secara remote dalam tiga minggu. Itu bukan hasil yang kecil.
+Kalau tidak lolos pun, kalian tetap punya repo publik berisi analisis satu pertandingan LaLiga yang
+nyata, dengan pipeline yang bisa direproduksi, dokumen teknis yang bisa dibaca orang lain, dan empat
+orang yang sudah terbukti sanggup menyelesaikan pekerjaan bersama secara remote dalam tiga minggu. Itu
+bukan hasil yang kecil.
 
-**Penilaiannya berubah total di fase berikutnya.** Phase 1 murni angka tanpa juri — tidak ada nilai untuk
-ide bagus. Innovation Challenge justru menilai desain, interpretasi, dan cara bercerita. Jadi selama 25
-hari ini: **skornya dulu, ceritanya nanti.** Tapi mulai sekarang, catat setiap keputusan di
-`docs/decisions.md` — bahan cerita itu tidak bisa dirakit ulang di bulan Desember.
+**Penilaian berubah total di fase berikutnya.** Phase 1 murni dinilai dari angka tanpa juri, jadi ide
+yang bagus tidak mendapat nilai. Innovation Challenge justru menilai desain, interpretasi, dan cara
+bercerita. Karena itu, selama 25 hari ini: **kejar skornya dulu, ceritanya belakangan.** Tetapi mulai
+sekarang, catat setiap keputusan di `docs/decisions.md`. Bahan cerita itu tidak bisa disusun ulang di
+bulan Desember.

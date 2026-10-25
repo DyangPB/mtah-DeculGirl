@@ -1,156 +1,167 @@
 # AGENDA — Rapat Perdana DeculGirl
 
 **Minggu, 25 Oktober 2026 · online · 90 menit**
-Dipimpin: Dyang. Notulen: siapa pun yang paling cepat mengetik.
+Pemimpin rapat: Dyang. Notulis: siapa pun yang paling cepat mengetik.
 
-> Tujuan rapat ini **bukan** membahas ide. Tujuannya: supaya pada Senin malam, kalian sudah punya
-> submission valid pertama dan empat orang tahu persis apa yang dikerjakannya. Ide dibahas di Gate 1.
-
----
-
-## ✅ Sudah selesai sebelum rapat
-
-**Kalian sudah terdaftar, dan bundle pertandingannya sudah ada** — lima file di folder Drive:
-`tactical.mp4`, `atd.txt`, `atd.xml`, `smart_tagging.xml`, `homography.csv`.
-
-Yang perlu dipastikan di rapat cuma satu: **bisa diunduh**, bukan cuma dilihat. Ikon "shared" di Drive
-itu tanda file-nya dibagikan, bukan tanda kalian boleh mengunduhnya.
-
-- **Kalau bisa diunduh** → taruh di `data\tactical\` dengan **nama file persis seperti aslinya**, lalu
-  jalankan `python run.py`. Angka `spellF1` pertama kalian akan muncul.
-- **Kalau tidak bisa** → kirim email ke **hackathon.talentarena@mobileworldcapital.com** sekarang,
-  jangan tunggu besok. Ini satu-satunya hal di proyek ini yang tidak bisa dikejar dengan kerja keras.
-
-Dan yang **tidak** kalian butuhkan: `tactical.mp4`. Itu 2¼ jam video yang tidak dipakai pipeline kita
-sama sekali — alasannya di `decisions.md` #005. Kalau ukuran file-nya yang jadi masalah, lewati saja.
-
-Satu catatan soal administrasi: **tidak ada tanda tangan yang diminta di form itu, dan itu tidak
-mengurangi apa pun.** Aturan di `RULES.md` berlaku karena kalian peserta, bukan karena kalian
-menandatangani sesuatu — larangan hand label dan larangan mengunggah data ke LLM cloud tetap berlaku
-penuh. Jangan sampai "tidak ada tanda tangan" terbaca sebagai "tidak ada aturan".
+> Tujuan rapat ini **bukan** membahas ide. Tujuannya adalah supaya pada Senin malam kalian sudah punya
+> submission valid yang pertama, dan keempat anggota tahu persis apa yang harus dikerjakan. Ide baru
+> dibahas di Gate 1.
 
 ---
 
-## 1. Fakta kompetisi — 10 menit
+## ✅ Yang sudah selesai sebelum rapat
 
-Yang harus dipahami berempat sebelum lanjut:
+**Tim sudah terdaftar, dan bundle data pertandingan sudah tersedia.** Ada lima file di folder Drive:
+`tactical.mp4`, `atd.txt`, `atd.xml`, `smart_tagging.xml`, dan `homography.csv`.
 
-- **Ini bukan hackathon akhir pekan.** Tiga fase, ~6 bulan. Kalian di Fase 1.
-- **Fase 1 murni angka.** Tidak ada juri, tidak ada presentasi. Ide sebagus apa pun bernilai nol.
-- **Tugasnya:** satu CSV `frame,label`, 199.319 baris, label `H`/`A`/`D`/`X`.
-- **Ranking:** `spellF1` (bukan akurasi, bukan `macroF1`). `macroF1` cuma tie-break.
-- **Lantai:** `spellF1` 0,2433.
-- **Tiga deliverable:** file CSV · repo publik yang bisa mereproduksi file itu **persis** · dokumen
-  teknis beberapa halaman.
-- **Tim 3–5 orang.** Kalian 4. Aman.
+Yang perlu dipastikan di rapat hanya satu: file-file itu **bisa diunduh**, bukan sekadar bisa dilihat.
+Ikon "shared" di Drive hanya menandakan file itu dibagikan. Itu belum berarti kalian boleh mengunduhnya.
 
-Kalau ada yang belum paham kenapa `spellF1` bukan akurasi, **berhenti di sini dan jelaskan** sampai
-semua paham. Empat baseline di repo resmi adalah algoritma yang sama dengan window berbeda: `macroF1`
-bergerak 0,04, `spellF1` bergerak 11×. Itu satu-satunya konsep yang wajib dipahami semua orang.
+- **Kalau bisa diunduh:** taruh di `data\tactical\` dengan **nama file yang persis sama dengan aslinya**,
+  lalu jalankan `python run.py`. Angka `spellF1` pertama kalian akan langsung muncul.
+- **Kalau tidak bisa:** kirim email ke **hackathon.talentarena@mobileworldcapital.com** sekarang juga,
+  jangan menunggu besok. Ini satu-satunya masalah di proyek ini yang tidak bisa diatasi dengan kerja keras.
+
+Yang **tidak** kalian butuhkan adalah `tactical.mp4`. Video berdurasi 2¼ jam itu sama sekali tidak
+dipakai pipeline kita. Alasannya ada di `decisions.md` nomor 005. Kalau ukuran filenya jadi masalah,
+lewati saja.
+
+Satu catatan soal administrasi: **form pendaftaran tidak meminta tanda tangan, dan itu tidak
+mengurangi kewajiban apa pun.** Aturan di `RULES.md` berlaku karena kalian adalah peserta, bukan karena
+kalian menandatangani sesuatu. Larangan pelabelan manual dan larangan mengunggah data ke LLM cloud
+tetap berlaku penuh. Jangan sampai "tidak ada tanda tangan" dibaca sebagai "tidak ada aturan".
+
+---
+
+## 1. Fakta tentang kompetisi — 10 menit
+
+Hal-hal yang harus dipahami keempat anggota sebelum lanjut:
+
+- **Ini bukan hackathon akhir pekan.** Ada tiga fase selama sekitar 6 bulan, dan kalian ada di Fase 1.
+- **Fase 1 murni dinilai dari angka.** Tidak ada juri dan tidak ada presentasi. Ide sebagus apa pun
+  tidak bernilai.
+- **Tugasnya:** membuat satu CSV `frame,label` berisi 199.319 baris, dengan label `H`/`A`/`D`/`X`.
+- **Peringkat ditentukan oleh `spellF1`**, bukan akurasi dan bukan `macroF1`. `macroF1` hanya dipakai
+  sebagai pemutus kalau `spellF1` seri.
+- **Batas minimum:** `spellF1` 0,2433.
+- **Tiga hal yang harus dikumpulkan:** file CSV, repo publik yang bisa menghasilkan file itu **persis
+  sama**, dan dokumen teknis setebal beberapa halaman.
+- **Satu tim boleh 3–5 orang.** Kalian berempat, jadi aman.
+
+Kalau ada yang belum paham kenapa `spellF1` bukan akurasi, **berhenti dulu dan jelaskan** sampai
+semuanya paham. Keempat baseline di repo resmi memakai algoritma yang sama dan hanya berbeda pada lebar
+window. Akibatnya `macroF1` hanya bergeser 0,04, sedangkan `spellF1` berbeda 11 kali lipat di jendela
+publik. Inilah satu-satunya konsep yang wajib dipahami semua orang.
 
 ## 2. Keputusan yang harus diambil hari ini — 20 menit
 
 | # | Keputusan | Usulan | Catatan |
 |---|---|---|---|
-| 1 | Akses repo | **Owner: Dyang** (`DyangPB`) · **co-admin: Billa** (`nabilland`) · Raissa & Yona: **Write** | Dua admin, bukan satu — lihat alasannya di bawah |
-| 2 | Nama repo | **`mtah-DeculGirl`** | Publik dari hari pertama |
+| 1 | Hak akses repo | **Owner: Dyang** (`DyangPB`) · **admin kedua: Billa** (`nabilland`) · Raissa dan Yona: **Write** | Adminnya dua orang, bukan satu. Alasannya ada di bawah |
+| 2 | Nama repo | **`mtah-DeculGirl`** | Dibuat publik sejak hari pertama |
 | 3 | Seat 1–4 (domain · data · model · metrik) | Dyang · Raissa · Billa · Yona | Lihat `PLAYBOOK.md` §4. **Ubah sekarang kalau ada yang tidak setuju** |
-| 4 | **Siapa jadi PM** | **Sengaja dikosongkan** | Tidak harus Dyang. Tanyakan langsung di rapat — siapa yang bersedia |
-| 5 | Akses bundle data | **Sudah ada** | Pastikan bisa diunduh, bukan cuma dilihat |
-| 6 | Jam sync harian | **Putuskan di sini** | 20 menit, jam tetap. Tanpa ini, tim remote akan drift dalam 4 hari |
-| 7 | Zona waktu | Semua WIB | Konfirmasi cepat |
+| 4 | **Siapa yang jadi PM** | **Sengaja dikosongkan** | Tidak harus Dyang. Tanyakan langsung di rapat siapa yang bersedia |
+| 5 | Akses ke bundle data | **Sudah ada** | Pastikan bisa diunduh, bukan hanya dilihat |
+| 6 | Jam rapat harian | **Putuskan di rapat ini** | 20 menit, jamnya tetap. Tanpa ini, tim remote akan berjalan sendiri-sendiri dalam 4 hari |
+| 7 | Zona waktu | Semua WIB | Cukup dikonfirmasi |
 
-Dua keputusan di atas yang paling sering dilewatkan, dan keduanya mahal:
+Dua keputusan berikut paling sering terlewat, dan akibatnya mahal.
 
-**#1 — Kenapa dua admin.** Di GitHub tidak ada peran "co-owner"; yang ada **Admin** di samping Read,
-Triage, Write, dan Maintain. Jadi "co-admin" maksudnya Billa diberi role **Admin**, bukan Write.
+**#1 — Kenapa adminnya dua orang.** GitHub tidak punya peran "co-owner". Yang ada adalah **Admin**,
+di samping Read, Triage, Write, dan Maintain. Jadi "admin kedua" berarti Billa diberi peran **Admin**,
+bukan Write.
 
-Alasannya bukan berbagi beban, tapi **bus factor**. Admin adalah satu-satunya role yang bisa mengubah
-Settings, mengatur siapa punya akses, menyalakan branch protection, dan menyentuh Actions. Kalau cuma
-satu orang yang bisa membuka pintu itu, dan orang itu tidak bisa dihubungi di 14 November, tim kalian
-kehilangan kemampuan memperbaiki repo tepat di minggu paling berbahaya. Dua admin adalah kelaziman,
-bukan kelebihan.
+Alasannya bukan membagi beban kerja, melainkan **mengurangi risiko bergantung pada satu orang**. Hanya
+Admin yang bisa mengubah Settings, mengatur siapa yang boleh mengakses repo, menyalakan proteksi
+branch, dan mengelola Actions. Kalau hanya satu orang yang memegang akses itu dan dia tidak bisa
+dihubungi pada 14 November, tim tidak bisa memperbaiki repo tepat di minggu paling genting. Punya dua
+admin itu hal yang wajar, bukan berlebihan.
 
-Dan Billa memang orang yang tepat: dia satu-satunya yang sudah pernah bekerja di dalam dua GitHub
-Organization (`Solo-Digital-Solution` dan `ppw24-teaching-assistant`), jadi urusan akses, review PR,
-dan merge bukan hal baru baginya. Raissa dan Yona cukup **Write** — mereka perlu push dan buka PR, tidak
-perlu mengubah setting.
+Billa dipilih karena dia satu-satunya yang pernah bekerja di dua GitHub Organization
+(`Solo-Digital-Solution` dan `ppw24-teaching-assistant`), sehingga urusan hak akses, review PR, dan
+merge bukan hal baru baginya. Raissa dan Yona cukup diberi **Write**, karena mereka hanya perlu push
+dan membuka PR, bukan mengubah pengaturan.
 
-**#4 — PM.** Tidak ada satu pun bagian teknis di proyek ini yang bergantung pada adanya PM. Yang
-bergantung padanya adalah hal-hal yang tidak dihitung sampai semuanya telat: menjaga sync tetap jalan,
-memutuskan "gate ini hijau atau belum", dan — yang paling menentukan — **punya satu nama yang bertanggung
-jawab atas file submission**. Kalau sampai 2 November tidak ada yang bersedia, jatuh ke Dyang secara
-default, karena file submission harus punya satu nama dan kamu pemilik repo-nya.
+**#4 — PM.** Tidak ada bagian teknis di proyek ini yang bergantung pada adanya PM. Yang bergantung
+padanya adalah hal-hal yang baru terasa penting setelah semuanya terlambat: menjaga rapat harian tetap
+berjalan, memutuskan apakah sebuah gate sudah hijau atau belum, dan yang paling menentukan, **menjadi
+satu nama yang bertanggung jawab atas file submission**. Kalau sampai 2 November belum ada yang
+bersedia, tugas ini otomatis jatuh ke Dyang, karena file submission harus punya satu penanggung jawab
+dan Dyang adalah pemilik repo.
 
-**#6 — Jam sync.** Pilih jam yang berempat benar-benar bisa, lalu **perlakukan seperti jadwal kuliah**.
+**#6 — Jam rapat harian.** Pilih jam yang benar-benar bisa dihadiri keempat orang, lalu **anggap
+seperti jadwal kuliah**.
 
 ## 3. Aturan main — 10 menit
 
-Empat hal, dan nomor 1 tidak bisa ditawar:
+Ada empat aturan, dan aturan nomor 1 tidak bisa ditawar:
 
-1. **Tidak ada hand label, dalam bentuk apa pun, untuk tujuan apa pun.** Bukan untuk submission, bukan
-   untuk melatih model, bukan untuk memvalidasi. Termasuk memperbaiki output algoritma secara manual.
-   Hand label pada pertandingan **lain** boleh, sebanyak apa pun.
-2. **Ingatan kalian soal pertandingan ini tidak boleh masuk ke kode.** Ini jebakan khusus untuk Dyang —
-   satu-satunya yang menonton LaLiga konsisten. Memahami *arti* sepak bola: boleh. Mengingat
-   *pertandingan ini* (skor, menit gol, kejadian VAR): tidak boleh. Kalau ada yang ragu, tanya di chat
-   sebelum memakainya.
-3. **Jangan pernah upload data, video, atau potongannya ke LLM cloud.** Ini ada di ToU. Pakai AI untuk
-   menulis kode tetap boleh — yang dilarang mengirim isi datanya.
-4. **`data/` tidak pernah masuk git.** Repo kalian publik.
+1. **Tidak boleh ada pelabelan manual, dalam bentuk apa pun dan untuk tujuan apa pun.** Tidak untuk
+   submission, tidak untuk melatih model, dan tidak untuk memvalidasi. Memperbaiki hasil algoritma
+   dengan tangan juga termasuk. Pelabelan manual pada pertandingan **lain** boleh, sebanyak apa pun.
+2. **Ingatan kalian tentang pertandingan ini tidak boleh masuk ke kode.** Ini jebakan terutama bagi
+   Dyang dan Raissa, yang paham sepak bola dan rutin menonton LaLiga. Memahami *arti* sepak bola itu
+   boleh. Mengingat *pertandingan ini* (skor, menit gol, kejadian VAR) tidak boleh. Kalau ragu, tanyakan
+   di chat sebelum memakainya.
+3. **Jangan pernah mengunggah data, video, atau potongannya ke LLM cloud.** Larangan ini ada di syarat
+   penggunaan (ToU). Memakai AI untuk menulis kode tetap boleh. Yang dilarang adalah mengirim isi
+   datanya.
+4. **Folder `data/` tidak boleh masuk git.** Repo kalian bersifat publik.
 
-## 4. Kerja Gate 0 — Sel 24 – Sen 26 Okt — 30 menit
+## 4. Pekerjaan Gate 0 — Sab 24 – Sen 26 Okt — 30 menit
 
-Target Gate 0, dan ini yang harus dipegang:
+Target Gate 0 harus dipegang erat:
 
 > Pada Senin malam, `run.py` menghasilkan file 199.319 baris yang **lolos `validate_submission.py`**,
-> dan kita punya angka `spellF1` terukur.
+> dan kita sudah punya angka `spellF1` yang terukur.
 
-Pembagian **tiga hari ke depan**:
+Pembagian kerja **tiga hari ke depan**:
 
 | Orang | Sabtu–Minggu | Senin |
 |---|---|---|
-| **Dyang** | Repo sudah jadi dan ter-push. Invite tiga lainnya sebagai **write** | Mulai `docs/possession-rules.md` pakai `docs/gt-public-transitions.md`, dan buka `docs/experiments.md` — catat variasi pertama kalian di situ |
-| **Raissa** | `tools/fetch_official.py`, `tools/gate0.py`, pastikan evaluator resmi jalan di laptopmu. Unpack data ke `data/`, konfirmasi tracking = **199.319 baris** | `src/deculgirl/features/` — loader + kanonikalisasi |
-| **Billa** | Baca `CHALLENGE.md` + `FAQ.md` sampai habis. Renungkan §7.1 playbook | Rancang dead-ball classifier (§7.1) |
-| **Yona** | `run.py`, `metrics/`, CI. Ukur baseline resmi di jendela publik — angka itu jadi titik nol | Regression suite + bootstrap CI |
+| **Dyang** | Repo sudah jadi dan ter-push. Undang tiga anggota lain dengan akses **Write** | Mulai mengisi `docs/possession-rules.md` dengan bantuan `docs/gt-public-transitions.md`, dan buka `docs/experiments.md` untuk mencatat variasi pertama |
+| **Raissa** | Jalankan `tools/fetch_official.py` dan `tools/gate0.py`, pastikan evaluator resmi berjalan di laptopnya. Ekstrak data ke `data/` dan pastikan jumlah baris tracking = **199.319** | Kerjakan `src/deculgirl/features/`: pembaca data dan penyeragaman formatnya |
+| **Billa** | Baca `CHALLENGE.md` dan `FAQ.md` sampai habis. Pikirkan baik-baik §7.1 di playbook | Rancang pendeteksi bola mati (§7.1) |
+| **Yona** | Siapkan `run.py`, `metrics/`, dan CI. Ukur baseline resmi di jendela publik; angka itu jadi titik awal | Buat regression suite dan bootstrap CI |
 
-**Semua orang hari ini:** clone repo, taruh di **drive D:** (drive C: Dyang tinggal 8 GB), dan
-jalankan `tools/gate0.py`. Gate 0 bukan pekerjaan berempat yang berurutan — ini satu jalan yang
-dilewati berempat, dan siapa pun yang macet mengangkat tangan di chat.
+**Semua orang hari ini:** clone repo, simpan di **drive D:** (drive C: Dyang hanya tersisa 8 GB), lalu
+jalankan `tools/gate0.py`. Gate 0 bukan empat pekerjaan yang berurutan. Ini satu jalur yang dilewati
+berempat, dan siapa pun yang tersendat langsung memberi tahu di chat.
 
-## 5. Pembagian bacaan — 10 menit
+## 5. Pembagian bahan bacaan — 10 menit
 
-Tidak ada yang perlu membaca ketujuh dokumen resmi. Tapi setiap seat **wajib** membaca miliknya, dan
-melaporkan satu hal yang mengejutkan di sync besok.
+Tidak ada yang perlu membaca ketujuh dokumen resmi. Tetapi setiap seat **wajib** membaca bagiannya,
+lalu melaporkan satu hal yang mengejutkan di rapat besok.
 
-| Seat | Baca | Cari |
+| Seat | Baca | Cari tahu |
 |---|---|---|
-| 1 · Dyang | `CHALLENGE.md` (§Possession rules) + `EVALUATION.md` | Apa persisnya yang bikin sebuah frame jadi `D` |
-| 2 · Raissa | `DATA.md` | Setiap aset, formatnya, dan bagaimana frame diselaraskan |
-| 3 · Billa | `CHALLENGE.md` + `FAQ.md` | Kenapa bola hilang 41%, dan apa kata mereka soal `X` |
-| 4 · Yona | `EVALUATION.md` + `SUBMISSION.md` | Kontrak file persis, dan kenapa 5 menit publik bukan leaderboard |
-| **Semua** | **`RULES.md`** | **Garis merah. Ini wajib, tanpa kecuali** |
+| 1 · Dyang | `CHALLENGE.md` (bagian Possession rules) dan `EVALUATION.md` | Apa persisnya yang membuat sebuah frame berlabel `D` |
+| 2 · Raissa | `DATA.md` | Setiap jenis data, formatnya, dan cara menyelaraskan nomor frame |
+| 3 · Billa | `CHALLENGE.md` dan `FAQ.md` | Kenapa bola hilang di 41% frame, dan apa kata penyelenggara soal `X` |
+| 4 · Yona | `EVALUATION.md` dan `SUBMISSION.md` | Format file yang persis diminta, dan kenapa 5 menit publik bukan leaderboard |
+| **Semua** | **`RULES.md`** | **Aturan yang tidak boleh dilanggar. Wajib, tanpa kecuali** |
 
 ## 6. Penutup — 10 menit
 
-- Konfirmasi jam sync harian.
-- Tunjuk satu orang yang menulis `docs/decisions.md` di setiap rapat (usulan: Dyang, karena dia pemilik
-  dokumennya).
-- Setuju target: **top 20**, dengan asuransi **submit valid** di minggu pertama.
-- Satu kalimat penutup dari masing-masing: **apa yang akan kamu selesaikan sebelum sync besok?**
+- Konfirmasi jam rapat harian.
+- Tunjuk satu orang yang mencatat `docs/decisions.md` di setiap rapat (usulan: Dyang, karena dia
+  pemilik dokumennya).
+- Sepakati targetnya: **masuk top 20**, dengan pengaman berupa **submission valid** di minggu pertama.
+- Masing-masing menyebut satu kalimat penutup: **apa yang akan kamu selesaikan sebelum rapat besok?**
 
 ---
 
-## Aksi setelah rapat
+## Tindak lanjut setelah rapat
 
-**Sudah selesai:** enrollment, repo publik, commit pertama, situs dokumen.
-**Besok:** unduh bundle ke `data\tactical\`, invite tiga lainnya sebagai **write**, jalankan `tools/gate0.py` berempat.
-**Senin malam:** submission valid pertama ada. Angka `spellF1` pertama tercatat.
-**Mulai Selasa:** Gate 1 — empat pilar, empat seat, paralel.
+**Sudah selesai:** pendaftaran, repo publik, commit pertama, situs dokumen.
+**Besok:** unduh bundle ke `data\tactical\`, undang tiga anggota lain dengan akses **Write**, lalu
+jalankan `tools/gate0.py` berempat.
+**Senin malam:** submission valid pertama sudah ada, dan angka `spellF1` pertama tercatat.
+**Mulai Selasa:** Gate 1, yaitu empat pekerjaan struktural yang dikerjakan paralel oleh empat seat.
 
 ---
 
-> Satu hal yang perlu diingat berempat: kalian punya **25 hari**, dan kira-kira 20 hari di antaranya
-> efektif setelah dipotong freeze dan dokumen. Itu cukup untuk menembus top 20 — tapi hanya kalau
-> tidak ada hari yang hilang karena tidak jelas siapa mengerjakan apa. Rapat ini gunanya untuk itu.
+> Satu hal yang perlu diingat berempat: waktu kalian **25 hari**, dan sekitar 20 hari di antaranya
+> benar-benar bisa dipakai setelah dikurangi masa freeze dan penulisan dokumen. Itu cukup untuk masuk
+> top 20, tetapi hanya kalau tidak ada hari yang terbuang karena tidak jelas siapa mengerjakan apa.
+> Itulah gunanya rapat ini.
