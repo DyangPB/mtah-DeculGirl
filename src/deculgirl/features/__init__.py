@@ -30,5 +30,5 @@ Detail lengkapnya di ``DATA.md`` repo resmi, dan helper pembacanya di
 ``third_party/mtah2027/starter/`` (``load_atd.py``, ``load_smart_tagging.py``,
 ``load_homography.py``) -- semua MIT, memang disediakan untuk dipakai.
 
-Fitur yang dibutuhkan Seat 3 ada di ``docs/PLAYBOOK.md`` §7.1-7.3.
+Fitur yang dibutuhkan Seat 3 ada di ``docs/PLAYBOOK.md`` bagian 7.1-7.3.
 """

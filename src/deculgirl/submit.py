@@ -33,7 +33,7 @@ CARA MENGGANTINYA -- GATE 1, satu pilar sekaligus
 -------------------------------------------------
 Ganti ``build_labels()`` supaya memanggil pipeline kalian sendiri, lalu
 kerjakan empat pilar di ``src/deculgirl/features/`` dan ``src/deculgirl/model/``
-(lihat ``docs/PLAYBOOK.md`` §7):
+(lihat ``docs/PLAYBOOK.md`` bagian 7):
 
   1. Deteksi dead-ball   -- pilar bernilai tertinggi. Baseline tidak punya
                             logika dead ball sama sekali
@@ -44,7 +44,7 @@ kerjakan empat pilar di ``src/deculgirl/features/`` dan ``src/deculgirl/model/``
 Aturan yang tidak boleh dilanggar di file ini: **tidak ada label yang boleh
 berasal dari tangan manusia.** Semua label harus keluar dari algoritma. Tidak
 untuk submission, tidak untuk melatih model, tidak untuk memvalidasi.
-Lihat ``docs/PLAYBOOK.md`` §9.
+Lihat ``docs/PLAYBOOK.md`` bagian 9.
 
 Ingat juga: label di luar ``GRADED_RUNS`` tidak berpengaruh apa pun pada skor.
 Jangan buang waktu menyempurnakan jeda babak.
