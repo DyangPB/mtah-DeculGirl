@@ -1,7 +1,9 @@
 # --- Data pertandingan: TIDAK PERNAH DI-COMMIT ---------------------------------
 # Bundle dilisensikan hanya untuk kompetisi ini. Menyebarkannya melanggar ToU.
 data/
+src/tactical/
 *.mp4
+*.crdownload
 
 # --- Output: bisa direproduksi, jadi tidak perlu di-commit -------------------
 # Yang dijanjikan bukan file-nya ada di repo, tapi repo-nya BISA menghasilkan
